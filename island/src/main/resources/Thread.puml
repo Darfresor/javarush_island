@@ -1,0 +1,17 @@
+@startuml
+title Activity Diagram для 3 потоков
+
+start
+
+fork
+  :Thread1: Генерация данных;
+fork again
+  :Thread2: Обработка данных;
+fork again
+  :Thread3: Сохранение результата;
+end fork
+
+:Все потоки завершены;
+
+
+@enduml
