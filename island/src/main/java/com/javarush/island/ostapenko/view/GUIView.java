@@ -1,8 +1,6 @@
 package com.javarush.island.ostapenko.view;
 
-import com.javarush.island.ostapenko.entity.Result;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
+import com.javarush.island.ostapenko.model.entity.Result;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;

@@ -1,4 +1,4 @@
-package com.javarush.island.ostapenko.entity.configuration;
+package com.javarush.island.ostapenko.model.entity.island.configuration;
 
 
 public class ConfigurationClass {
