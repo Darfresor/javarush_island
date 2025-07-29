@@ -6,6 +6,13 @@ abstract class Animal
 abstract class Plant
 abstract class Insects
 
+interface Eatable
+interface Edible
+interface Moveable
+interface Killable
+interface Breedable
+
+
 Сreature<|-- Animal
 Animal<|-- Insects
 Сreature<|-- Plant
