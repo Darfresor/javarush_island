@@ -21,4 +21,21 @@ public class Cell {
     public List<Animal> getAnimals(){
         return animals;
     }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    @Override
+    public String toString() {
+        return "Cell{" +
+                "x=" + x +
+                ", y=" + y +
+                ", animals=" + animals +
+                '}';
+    }
 }

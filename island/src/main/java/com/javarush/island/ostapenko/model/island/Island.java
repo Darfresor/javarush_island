@@ -6,4 +6,14 @@ public class Island {
     public Island(Cell[][] grid) {
         this.grid = grid;
     }
+
+    public Cell[][] getCells(){
+        return grid;
+    }
+
+    public void setCell(Cell cell){
+        int x = cell.getX();
+        int y = cell.getY();
+        grid[x][y] = cell;
+    }
 }

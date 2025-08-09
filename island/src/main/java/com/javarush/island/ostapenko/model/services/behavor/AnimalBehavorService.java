@@ -1,4 +1,4 @@
-package com.javarush.island.ostapenko.model.services;
+package com.javarush.island.ostapenko.model.services.behavor;
 
 import com.javarush.island.ostapenko.model.behavor.BehavorFactory;
 import com.javarush.island.ostapenko.model.behavor.interfaces.Breedable;

@@ -1,6 +1,6 @@
 package com.javarush.island.ostapenko.view;
 
-import com.javarush.island.ostapenko.dto.Result;
+import com.javarush.island.ostapenko.dto.ModelResponse;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
@@ -99,7 +99,7 @@ public class GUIView implements View{
     }
 
     @Override
-    public void printResult(Result result) {
+    public void printResult(ModelResponse modelResponse) {
     //TODO возврашение результата работы программы в интерефейс
     }
 }
