@@ -30,6 +30,7 @@ public class IslandTest {
         for (Animal animal : cell.getAnimals()) {
             service.executeMove(animal, island);
             service.executeEat(animal, cell);
+            service.executeReproduce(animal, cell);
         }
 
 
