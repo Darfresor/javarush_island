@@ -1,14 +1,9 @@
 package com.javarush.island.ostapenko.model.behavor;
 
-import com.javarush.island.ostapenko.model.behavor.implementaions.nerbivore.RabbitEatStrategy;
-import com.javarush.island.ostapenko.model.behavor.implementaions.nerbivore.RabbitMoveStrategy;
-import com.javarush.island.ostapenko.model.behavor.implementaions.nerbivore.RabbitReprocudeStrategy;
-import com.javarush.island.ostapenko.model.behavor.implementaions.predator.WolfEatStrategy;
-import com.javarush.island.ostapenko.model.behavor.implementaions.predator.WolfMoveStrategy;
-import com.javarush.island.ostapenko.model.behavor.implementaions.predator.WolfReproduceStrategy;
-import com.javarush.island.ostapenko.model.behavor.interfaces.Breedable;
-import com.javarush.island.ostapenko.model.behavor.interfaces.Eatable;
-import com.javarush.island.ostapenko.model.behavor.interfaces.Moveable;
+import com.javarush.island.ostapenko.model.behavor.implementaions.NoOpEdibleStrategy;
+import com.javarush.island.ostapenko.model.behavor.implementaions.nerbivore.*;
+import com.javarush.island.ostapenko.model.behavor.implementaions.predator.*;
+import com.javarush.island.ostapenko.model.behavor.interfaces.*;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.Rabbit;
 import com.javarush.island.ostapenko.model.entity.animal.predator.Wolf;
@@ -35,6 +30,30 @@ public class BehavorFactory {
         return switch(animal){
             case Wolf w -> new WolfReproduceStrategy();
             case Rabbit r -> new RabbitReprocudeStrategy();
+            case null -> throw new RuntimeException("Animal cannot be null");
+            default -> throw new RuntimeException("Unknown animal: " + animal.getClass());
+        };
+    }
+    public static Edible createBeingEatenStrategy(Animal animal){
+        return switch(animal){
+            case Wolf w -> new NoOpEdibleStrategy();
+            case Rabbit r -> new RabbitBeingEatenStrategy();
+            case null -> throw new RuntimeException("Animal cannot be null");
+            default -> throw new RuntimeException("Unknown animal: " + animal.getClass());
+        };
+    }
+    public static Starvable createStarvableStrategy(Animal animal){
+        return switch(animal){
+            case Wolf w -> new WolfStarvableStrategy();
+            case Rabbit r -> new RabbitStarvableStrategy();
+            case null -> throw new RuntimeException("Animal cannot be null");
+            default -> throw new RuntimeException("Unknown animal: " + animal.getClass());
+        };
+    }
+    public static Aging createAgingStrategy(Animal animal){
+        return switch(animal){
+            case Wolf w -> new WolfAgingStrategy();
+            case Rabbit r -> new RabbitAgingStrategy();
             case null -> throw new RuntimeException("Animal cannot be null");
             default -> throw new RuntimeException("Unknown animal: " + animal.getClass());
         };
