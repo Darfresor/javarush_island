@@ -9,6 +9,8 @@ import com.javarush.island.ostapenko.model.island.Island;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.javarush.island.ostapenko.constants.Gender.MALE;
+
 public class AnimalPopulationService {
     private final Island island;
 
@@ -16,10 +18,12 @@ public class AnimalPopulationService {
         this.island = island;
     }
 
+
+
     public void generate() {
         Cell cell = new Cell(0, 0);
-        Wolf wolf = new Wolf();
-        Rabbit rabbit = new Rabbit();
+        Wolf wolf = new Wolf("Волк",3,10,MALE,50f,50f,3,8,0.5f);
+        Rabbit rabbit = new Rabbit("Кролик",3,10,MALE,2f,2f,2,0.45f, 0.5f);
         cell.addAnimal(wolf);
         cell.addAnimal(rabbit);
         island.setCell(cell);

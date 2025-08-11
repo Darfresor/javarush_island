@@ -29,8 +29,8 @@ public class SimulationExecutionService {
             for (Cell cell1 : cell) {
                 if (cell1 != null) {
                     for (Animal animal : cell1.getAnimals()) {
-                        movementService.executeMove(animal, island);
                         feedingService.executeEat(animal, cell1);
+                        movementService.executeMove(animal, island);
                         reproductionService.executeReproduce(animal, cell1);
                         deathService.executeDeathByEating(animal, cell1);
                         deathService.executeDeathFromStarvation(animal, cell1);

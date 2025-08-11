@@ -1,12 +1,55 @@
 package com.javarush.island.ostapenko.model.behavor.implementaions.animal.predator;
 
+import com.javarush.island.ostapenko.model.behavor.EatingRules;
 import com.javarush.island.ostapenko.model.behavor.interfaces.Eatable;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
 import com.javarush.island.ostapenko.model.island.Cell;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class WolfEatStrategy implements Eatable {
     @Override
-    public void eat(Animal animal, Cell cell) {
-        System.out.println("Волк ест");
+    public void eat(Animal eater, Cell cell) {
+        reduceSatiety(eater);
+        System.out.println("Голод волка = " + eater.getSatiety());
+        for (Animal target : cell.getAnimals()) {
+            if (EatingRules.canEat(eater.getClass(), target.getClass())) {
+                double probability = EatingRules.getEatProbability(eater.getClass(), target.getClass());
+                System.out.println(String.format("вероятность съесть существо %s составляет - %f процентов"
+                        , target.getClass().getSimpleName(), probability));
+
+                if(ThreadLocalRandom.current().nextDouble()<probability){
+                    System.out.println("Волк съел " + target.getSpeciesName());
+                    eater.setSatiety(calculateSatiety(eater, target));
+                    System.out.println("Голод волка = " + eater.getSatiety());
+                    break;
+                }else{
+                    System.out.println("Волк не смог съесть "+target.getSpeciesName());
+                    System.out.println("Голод волка = " + eater.getSatiety());
+                }
+
+            }
+        }
+    }
+
+    private float calculateNutrition(Animal eater, Animal target) {
+        return target.getWeightInKg()/eater.getFoodToBeFullySatiatedInKg();
+    }
+    private float calculateSatiety(Animal eater, Animal target) {
+        float nutrition = calculateNutrition(eater, target);
+        float satiety = eater.getSatiety() + calculateNutrition(eater, target);
+        if(satiety>1.0f){
+            return 1.0f;
+        }else{
+            return satiety;
+        }
+    }
+    private void reduceSatiety(Animal eater) {
+        float satiety = eater.getSatiety() -0.3f;
+        if(satiety>0.0f){
+            eater.setSatiety(satiety);
+        }else{
+            eater.setSatiety(0.0f);
+        }
     }
 }
