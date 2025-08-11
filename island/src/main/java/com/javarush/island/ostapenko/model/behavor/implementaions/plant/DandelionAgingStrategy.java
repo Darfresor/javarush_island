@@ -9,6 +9,6 @@ public class DandelionAgingStrategy implements Aging<Dandelion> {
     @Override
     public void deathDueToOldAge(Dandelion dandelion, Cell cell) {
 
-        System.out.println("Растение завяло от старости");
+        System.out.println("Одуванчик завял от старости");
     }
 }

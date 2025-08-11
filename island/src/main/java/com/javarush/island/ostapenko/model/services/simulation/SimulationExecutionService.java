@@ -37,6 +37,7 @@ public class SimulationExecutionService {
                         deathService.executeDeathDueToOldAge(animal, cell1);
                     }
                     for (Plant plant : cell1.getPlants()) {
+                        reproductionService.executeReproduce(plant, cell1);
                         deathService.executeDeathDueToOldAge(plant, cell1);
                     }
                 }

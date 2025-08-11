@@ -1,4 +1,4 @@
-package com.javarush.island.ostapenko.model.behavor.implementaions.predator;
+package com.javarush.island.ostapenko.model.behavor.implementaions.animal.predator;
 
 import com.javarush.island.ostapenko.model.behavor.interfaces.Eatable;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;

@@ -1,7 +1,6 @@
-package com.javarush.island.ostapenko.model.behavor.implementaions.predator;
+package com.javarush.island.ostapenko.model.behavor.implementaions.animal.predator;
 
 import com.javarush.island.ostapenko.model.behavor.interfaces.Aging;
-import com.javarush.island.ostapenko.model.entity.animal.Animal;
 import com.javarush.island.ostapenko.model.entity.animal.predator.Wolf;
 import com.javarush.island.ostapenko.model.island.Cell;
 
