@@ -1,8 +1,9 @@
 package com.javarush.island.ostapenko.model.behavor.interfaces;
 
-import com.javarush.island.ostapenko.model.entity.animal.Animal;
+import com.javarush.island.ostapenko.model.entity.animal.Creature;
 import com.javarush.island.ostapenko.model.island.Cell;
 
-public interface Aging {
-    void deathDueToOldAge(Animal animal, Cell cell);
+public interface Aging<T extends Creature>{
+
+void deathDueToOldAge(T creature, Cell cell);
 }

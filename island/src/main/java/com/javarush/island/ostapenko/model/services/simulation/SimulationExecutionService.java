@@ -2,6 +2,7 @@ package com.javarush.island.ostapenko.model.services.simulation;
 
 
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
+import com.javarush.island.ostapenko.model.entity.plant.Plant;
 import com.javarush.island.ostapenko.model.island.Cell;
 import com.javarush.island.ostapenko.model.island.Island;
 import com.javarush.island.ostapenko.model.services.behavor.DeathService;
@@ -34,6 +35,9 @@ public class SimulationExecutionService {
                         deathService.executeDeathByEating(animal, cell1);
                         deathService.executeDeathFromStarvation(animal, cell1);
                         deathService.executeDeathDueToOldAge(animal, cell1);
+                    }
+                    for (Plant plant : cell1.getPlants()) {
+                        deathService.executeDeathDueToOldAge(plant, cell1);
                     }
                 }
             }

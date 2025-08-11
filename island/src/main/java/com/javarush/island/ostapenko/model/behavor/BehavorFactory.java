@@ -2,11 +2,15 @@ package com.javarush.island.ostapenko.model.behavor;
 
 import com.javarush.island.ostapenko.model.behavor.implementaions.NoOpEdibleStrategy;
 import com.javarush.island.ostapenko.model.behavor.implementaions.nerbivore.*;
+import com.javarush.island.ostapenko.model.behavor.implementaions.plant.DandelionAgingStrategy;
 import com.javarush.island.ostapenko.model.behavor.implementaions.predator.*;
 import com.javarush.island.ostapenko.model.behavor.interfaces.*;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
+import com.javarush.island.ostapenko.model.entity.animal.Creature;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.Rabbit;
 import com.javarush.island.ostapenko.model.entity.animal.predator.Wolf;
+import com.javarush.island.ostapenko.model.entity.plant.Dandelion;
+import com.javarush.island.ostapenko.model.entity.plant.Plant;
 
 public class BehavorFactory {
     public static Moveable createMoveStrategy(Animal animal){
@@ -50,12 +54,15 @@ public class BehavorFactory {
             default -> throw new RuntimeException("Unknown animal: " + animal.getClass());
         };
     }
-    public static Aging createAgingStrategy(Animal animal){
-        return switch(animal){
+
+    public static Aging<? extends Creature> createAgingStrategy(Creature creature){
+        return  switch(creature){
             case Wolf w -> new WolfAgingStrategy();
             case Rabbit r -> new RabbitAgingStrategy();
-            case null -> throw new RuntimeException("Animal cannot be null");
-            default -> throw new RuntimeException("Unknown animal: " + animal.getClass());
+            case Dandelion d -> new DandelionAgingStrategy();
+            case null -> throw new RuntimeException("creature cannot be null");
+            default -> throw new RuntimeException("Unknown creature: " + creature.getClass());
         };
     }
+
 }

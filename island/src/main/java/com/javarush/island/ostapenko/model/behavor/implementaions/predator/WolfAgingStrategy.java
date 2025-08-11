@@ -2,12 +2,12 @@ package com.javarush.island.ostapenko.model.behavor.implementaions.predator;
 
 import com.javarush.island.ostapenko.model.behavor.interfaces.Aging;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
+import com.javarush.island.ostapenko.model.entity.animal.predator.Wolf;
 import com.javarush.island.ostapenko.model.island.Cell;
 
-public class WolfAgingStrategy implements Aging {
-
+public class WolfAgingStrategy implements Aging<Wolf> {
     @Override
-    public void deathDueToOldAge(Animal animal, Cell cell) {
+    public void deathDueToOldAge(Wolf Wolf, Cell cell) {
         System.out.println("Волк умер от старости");
     }
 }
