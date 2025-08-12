@@ -12,6 +12,7 @@ import com.javarush.island.ostapenko.model.entity.animal.herbivore.Rabbit;
 import com.javarush.island.ostapenko.model.entity.animal.predator.Wolf;
 import com.javarush.island.ostapenko.model.entity.plant.Dandelion;
 import com.javarush.island.ostapenko.model.entity.plant.Plant;
+import com.javarush.island.ostapenko.model.services.mediator.IMediator;
 
 public class BehavorFactory {
     private BehavorFactory() {
@@ -26,9 +27,9 @@ public class BehavorFactory {
      };
     }
 
-    public static Eatable createEatStrategy(Animal animal){
+    public static Eatable createEatStrategy(Animal animal, IMediator mediator){
         return switch(animal){
-            case Wolf w -> new WolfEatStrategy();
+            case Wolf w -> new WolfEatStrategy(mediator);
             case Rabbit r -> new RabbitEatStrategy();
             case null -> throw new RuntimeException("Animal cannot be null");
             default -> throw new RuntimeException("Unknown animal: " + animal.getClass());

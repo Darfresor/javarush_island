@@ -4,10 +4,17 @@ import com.javarush.island.ostapenko.model.behavor.EatingRules;
 import com.javarush.island.ostapenko.model.behavor.interfaces.Eatable;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
 import com.javarush.island.ostapenko.model.island.Cell;
+import com.javarush.island.ostapenko.model.services.mediator.IMediator;
+import com.javarush.island.ostapenko.model.services.mediator.event.AnimalEatenEvent;
 
 import java.util.concurrent.ThreadLocalRandom;
 
 public class WolfEatStrategy implements Eatable {
+    private final IMediator mediator;
+    public WolfEatStrategy(IMediator mediator) {
+        this.mediator = mediator;
+    }
+
     @Override
     public void eat(Animal eater, Cell cell) {
         reduceSatiety(eater);
@@ -20,6 +27,7 @@ public class WolfEatStrategy implements Eatable {
 
                 if(ThreadLocalRandom.current().nextDouble()<probability){
                     System.out.println("Волк съел " + target.getSpeciesName());
+                    mediator.notify(new AnimalEatenEvent(target,cell));
                     eater.setSatiety(calculateSatiety(eater, target));
                     System.out.println("Голод волка = " + eater.getSatiety());
                     break;

@@ -6,10 +6,12 @@ import com.javarush.island.ostapenko.model.behavor.interfaces.Edible;
 import com.javarush.island.ostapenko.model.behavor.interfaces.Starvable;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
 import com.javarush.island.ostapenko.model.entity.animal.Creature;
-import com.javarush.island.ostapenko.model.entity.plant.Plant;
 import com.javarush.island.ostapenko.model.island.Cell;
+import com.javarush.island.ostapenko.model.services.mediator.event.AnimalEatenEvent;
+import com.javarush.island.ostapenko.model.services.mediator.event.Event;
+import com.javarush.island.ostapenko.model.services.mediator.IEventHandler;
 
-public class DeathService {
+public class DeathService implements IEventHandler {
     public void executeDeathByEating(Animal animal, Cell cell) {
             Edible strategy = BehavorFactory.createBeingEatenStrategy(animal);
             strategy.deathByEating(animal, cell);
@@ -25,4 +27,12 @@ public class DeathService {
             strategy.deathDueToOldAge(creature, cell);
     }
 
+    @Override
+    public void handle(Event event) {
+        switch(event){
+            case AnimalEatenEvent e-> executeDeathByEating(e.getVictim(), e.getCell());
+            case null -> throw new RuntimeException("Event cannot be null");
+            default -> throw new RuntimeException("Unknown event: " + event.getClass());
+        }
+    }
 }
