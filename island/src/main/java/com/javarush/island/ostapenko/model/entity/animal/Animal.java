@@ -1,10 +1,11 @@
 package com.javarush.island.ostapenko.model.entity.animal;
 
 import com.javarush.island.ostapenko.constants.Gender;
+import com.javarush.island.ostapenko.model.entity.Creature;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-public abstract class Animal extends Creature{
+public abstract class Animal extends Creature {
     private static AtomicLong uniqueObjectId= new AtomicLong(0);;
     protected String speciesName;
     protected int age;
@@ -14,6 +15,7 @@ public abstract class Animal extends Creature{
     protected float maxWeightInKg;
     protected int maxNumberOfAnimalInCell;
     protected int cellsPerTurnSpeed;
+    protected int cellsLeftInCurrentTurn;
     protected float satiety;
     protected float foodToBeFullySatiatedInKg;
 
@@ -28,6 +30,7 @@ public abstract class Animal extends Creature{
         this.cellsPerTurnSpeed = cellsPerTurnSpeed;
         this.foodToBeFullySatiatedInKg = foodToBeFullySatiatedInKg;
         this.satiety = satiety;
+        this.cellsLeftInCurrentTurn = cellsPerTurnSpeed;
     }
 
     public String getSpeciesName() {
@@ -72,6 +75,14 @@ public abstract class Animal extends Creature{
 
     public void setSatiety(float satiety) {
         this.satiety = satiety;
+    }
+
+    public int getCellsLeftInCurrentTurn() {
+        return cellsLeftInCurrentTurn;
+    }
+
+    public void setCellsLeftInCurrentTurn(int cellsLeftInCurrentTurn) {
+        this.cellsLeftInCurrentTurn = cellsLeftInCurrentTurn;
     }
 
     @Override

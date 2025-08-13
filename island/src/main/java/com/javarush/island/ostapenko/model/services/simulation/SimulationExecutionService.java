@@ -13,6 +13,8 @@ import com.javarush.island.ostapenko.model.services.behavor.ReproductionService;
 import com.javarush.island.ostapenko.model.services.mediator.EventMediator;
 import com.javarush.island.ostapenko.model.services.mediator.IMediator;
 
+import java.util.List;
+
 public class SimulationExecutionService {
     private final Island island;
     private final IMediator mediator = new EventMediator();
@@ -50,6 +52,20 @@ public class SimulationExecutionService {
 
                     }
                 }
+            }
+        }
+
+        for (int i = 0; i < island.getCells().length; i++) {
+            for (int j = 0; j < island.getCells()[0].length; j++) {
+                if(island.getCells()[i][j]!=null){
+                    List<Animal> listAnimal = island.getCells()[i][j].getAnimals();
+                    System.out.println(String.format("Клетка [%d:%d] содержит животных: %s",i, j
+                            ,listAnimal
+                    ));
+                }else{
+                    System.out.println(String.format("Клетка [%d:%d] без животных",i, j));
+                }
+
             }
         }
 

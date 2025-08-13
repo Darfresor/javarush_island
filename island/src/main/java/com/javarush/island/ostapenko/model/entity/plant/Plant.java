@@ -1,7 +1,7 @@
 package com.javarush.island.ostapenko.model.entity.plant;
 
 
-import com.javarush.island.ostapenko.model.entity.animal.Creature;
+import com.javarush.island.ostapenko.model.entity.Creature;
 
 import java.util.concurrent.atomic.AtomicLong;
 public abstract class Plant extends Creature {

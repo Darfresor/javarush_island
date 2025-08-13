@@ -1,6 +1,6 @@
 package com.javarush.island.ostapenko.model.behavor;
 
-import com.javarush.island.ostapenko.model.entity.animal.Creature;
+import com.javarush.island.ostapenko.model.entity.Creature;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.Mouse;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.Rabbit;
 import com.javarush.island.ostapenko.model.entity.animal.predator.Wolf;

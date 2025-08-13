@@ -5,7 +5,7 @@ import com.javarush.island.ostapenko.model.behavor.interfaces.Aging;
 import com.javarush.island.ostapenko.model.behavor.interfaces.Edible;
 import com.javarush.island.ostapenko.model.behavor.interfaces.Starvable;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
-import com.javarush.island.ostapenko.model.entity.animal.Creature;
+import com.javarush.island.ostapenko.model.entity.Creature;
 import com.javarush.island.ostapenko.model.island.Cell;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalEatenEvent;
 import com.javarush.island.ostapenko.model.services.mediator.event.Event;

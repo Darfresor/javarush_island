@@ -7,7 +7,7 @@ import com.javarush.island.ostapenko.model.behavor.implementaions.plant.Dandelio
 import com.javarush.island.ostapenko.model.behavor.implementaions.plant.DandelionReproduceStrategy;
 import com.javarush.island.ostapenko.model.behavor.interfaces.*;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
-import com.javarush.island.ostapenko.model.entity.animal.Creature;
+import com.javarush.island.ostapenko.model.entity.Creature;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.Rabbit;
 import com.javarush.island.ostapenko.model.entity.animal.predator.Wolf;
 import com.javarush.island.ostapenko.model.entity.plant.Dandelion;
