@@ -27,7 +27,7 @@ public class WolfEatStrategy implements Eatable {
 
                 if(ThreadLocalRandom.current().nextDouble()<probability){
                     System.out.println("Волк съел " + target.getSpeciesName());
-                    mediator.notify(new AnimalEatenEvent(target,cell));
+                    mediator.notify(new AnimalEatenEvent(eater, target,cell));
                     eater.setSatiety(calculateSatiety(eater, target));
                     System.out.println("Голод волка = " + eater.getSatiety());
                     break;

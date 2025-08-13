@@ -6,7 +6,7 @@ import com.javarush.island.ostapenko.model.island.Cell;
 
 public class NoOpEdibleStrategy implements Edible {
     @Override
-    public void deathByEating(Animal animal, Cell cell) {
+    public void deathByEating(Animal predator, Animal victim, Cell cell) {
 
     }
 }

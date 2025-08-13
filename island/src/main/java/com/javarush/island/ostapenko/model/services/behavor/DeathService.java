@@ -12,9 +12,9 @@ import com.javarush.island.ostapenko.model.services.mediator.event.Event;
 import com.javarush.island.ostapenko.model.services.mediator.IEventHandler;
 
 public class DeathService implements IEventHandler {
-    public void executeDeathByEating(Animal animal, Cell cell) {
-            Edible strategy = BehavorFactory.createBeingEatenStrategy(animal);
-            strategy.deathByEating(animal, cell);
+    public void executeDeathByEating(Animal predator, Animal victim, Cell cell) {
+            Edible strategy = BehavorFactory.createBeingEatenStrategy(victim);
+            strategy.deathByEating(predator, victim, cell);
     }
 
     public void executeDeathFromStarvation(Animal animal, Cell cell) {
@@ -30,7 +30,7 @@ public class DeathService implements IEventHandler {
     @Override
     public void handle(Event event) {
         switch(event){
-            case AnimalEatenEvent e-> executeDeathByEating(e.getVictim(), e.getCell());
+            case AnimalEatenEvent e-> executeDeathByEating(e.getPredator(), e.getVictim(), e.getCell());
             case null -> throw new RuntimeException("Event cannot be null");
             default -> throw new RuntimeException("Unknown event: " + event.getClass());
         }

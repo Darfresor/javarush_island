@@ -10,7 +10,5 @@ public class IslandTest {
         ModelRequest request = new ModelRequest("тест");
         IModelFacade model = new ModelFacade();
         model.processSimulation(request);
-
-
     }
 }
