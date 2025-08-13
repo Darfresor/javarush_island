@@ -3,39 +3,40 @@ package com.javarush.island.ostapenko.model.island;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
 import com.javarush.island.ostapenko.model.entity.plant.Plant;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Cell {
-    private int x;
-    private int y;
-    private List<Animal> animals = new ArrayList<>();
-    private List<Plant> plants = new ArrayList<>();
+    private final int x;
+    private final int y;
+    private List<Animal> animals = new CopyOnWriteArrayList<>();;
+    private List<Plant> plants = new CopyOnWriteArrayList<>();;
 
     public Cell(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public void addAnimal(Animal animal){
-        animals.add(animal);
+    public boolean  addAnimal(Animal animal){
+        return animals.add(animal);
     }
-    public void removeAnimal(Animal animal){
-        animals.remove(animal);
+    public boolean removeAnimal(Animal animal){
+        return animals.remove(animal);
     }
 
     public List<Animal> getAnimals(){
-        return animals;
+        return  Collections.unmodifiableList(animals);
     }
-    public void addPlant(Plant plant){
-        plants.add(plant);
+    public boolean addPlant(Plant plant){
+        return plants.add(plant);
     }
-    public void removePlant(Plant plant){
-        plants.remove(plant);
+    public boolean removePlant(Plant plant){
+        return plants.remove(plant);
     }
 
     public List<Plant> getPlants(){
-        return plants;
+        return Collections.unmodifiableList(plants);
     }
 
     public int getX() {

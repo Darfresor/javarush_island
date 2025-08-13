@@ -28,13 +28,15 @@ public class AnimalPopulationService {
         cell.addAnimal(wolf);
         //cell.addAnimal(rabbit);
         cell2.addAnimal(rabbit);
-        island.setCell(cell);
-        island.setCell(cell2);
+        island.setCell(cell); //0.0
+        island.setCell(cell2);//0.1
+        island.setCell(new Cell(1,0));//1.0
+        island.setCell(new Cell(1,1));//1.1
 
-        for (int i = 0; i < island.getCells().length; i++) {
-            for (int j = 0; j < island.getCells()[0].length; j++) {
-                if(island.getCells()[i][j]!=null){
-                    List<Animal> listAnimal = island.getCells()[i][j].getAnimals();
+        for (int i = 0; i < island.getGridCopy().length; i++) {
+            for (int j = 0; j < island.getGridCopy()[0].length; j++) {
+                if(island.getGridCopy()[i][j]!=null){
+                    List<Animal> listAnimal = island.getGridCopy()[i][j].getAnimals();
                     System.out.println(String.format("Клетка [%d:%d] содержит животных: %s",i, j
                     ,listAnimal
                     ));

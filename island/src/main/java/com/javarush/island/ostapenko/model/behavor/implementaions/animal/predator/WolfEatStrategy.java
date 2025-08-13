@@ -37,6 +37,7 @@ public class WolfEatStrategy implements Eatable {
                 } else {
                     System.out.println("Волк не смог съесть " + target.getSpeciesName());
                     System.out.println("Голод волка = " + eater.getSatiety());
+                    break;
                 }
 
             }

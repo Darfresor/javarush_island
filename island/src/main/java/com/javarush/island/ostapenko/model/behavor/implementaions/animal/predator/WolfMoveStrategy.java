@@ -20,11 +20,15 @@ public class WolfMoveStrategy implements Moveable {
         if (animal.getCellsLeftInCurrentTurn() == 0) {
             System.out.println("Волк устал и больше не может двигаться");
         } else {
-            System.out.println("У волка осталось ходов " + animal.getCellsPerTurnSpeed());
-            animal.setCellsLeftInCurrentTurn(animal.getCellsPerTurnSpeed() - 1);
+            System.out.println("У волка осталось ходов " + animal.getCellsLeftInCurrentTurn());
+            animal.setCellsLeftInCurrentTurn(animal.getCellsLeftInCurrentTurn() - 1);
             Cell futureCell = chooseCellForMove(currentCell, island);
-            //currentCell.removeAnimal(animal);
-            //futureCell.addAnimal(animal);
+
+            Cell originalCurrentCell = island.getCell(currentCell.getX(), currentCell.getY());
+            originalCurrentCell.removeAnimal(animal);
+
+            Cell originalFutureCell = island.getCell(futureCell.getX(), futureCell.getY());
+            originalFutureCell.addAnimal(animal);
             System.out.println("Волк передвинулся в соседнюю клетку");
             System.out.println("У волка осталось ходов " + animal.getCellsLeftInCurrentTurn());
         }
@@ -46,15 +50,15 @@ public class WolfMoveStrategy implements Moveable {
             System.out.println(list.get(directionOfMovement).getValue());
            int x = point.x();
            int y = point.y();
-           return island.getCells()[x][y];
+           return island.getGridCopy()[x][y];
         }
     }
 
 
 
     private Map<String, Point> determineСellsForMovement(Cell currentCell, Island island) {
-        int maxX = island.getCells().length;
-        int maxY = island.getCells()[0].length;
+        int maxX = island.getGridCopy().length;
+        int maxY = island.getGridCopy()[0].length;
         System.out.println(String.format("Высота острова = %d клеток, а длина =%d ", maxX, maxY));
         Map<String, Point> map = new HashMap<>();
         if (currentCell.getY() - 1 >= 0) {

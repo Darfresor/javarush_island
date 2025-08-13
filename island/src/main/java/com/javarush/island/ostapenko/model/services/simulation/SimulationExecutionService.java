@@ -33,7 +33,7 @@ public class SimulationExecutionService {
         mediator.subsribe(EventType.ANIMAL_EATEN, deathService);
         mediator.subsribe(EventType.ANIMAL_MOVE, movementService);
 
-        for (Cell[] cell : island.getCells()) {
+        for (Cell[] cell : island.getGridCopy()) {
             for (Cell cell1 : cell) {
                 if (cell1 != null) {
                     for (Animal animal : cell1.getAnimals()) {
@@ -55,10 +55,10 @@ public class SimulationExecutionService {
             }
         }
 
-        for (int i = 0; i < island.getCells().length; i++) {
-            for (int j = 0; j < island.getCells()[0].length; j++) {
-                if(island.getCells()[i][j]!=null){
-                    List<Animal> listAnimal = island.getCells()[i][j].getAnimals();
+        for (int i = 0; i < island.getGridCopy().length; i++) {
+            for (int j = 0; j < island.getGridCopy()[0].length; j++) {
+                if(island.getGridCopy()[i][j]!=null){
+                    List<Animal> listAnimal = island.getGridCopy()[i][j].getAnimals();
                     System.out.println(String.format("Клетка [%d:%d] содержит животных: %s",i, j
                             ,listAnimal
                     ));

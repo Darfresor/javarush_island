@@ -18,15 +18,15 @@ public class PlantPopulationService {
     }
     public void generate(){
 
-        Cell cell = island.getCells()[0][0];
+        Cell cell = island.getGridCopy()[0][0];
         Plant dandelion = new Dandelion();
         cell.addPlant(dandelion);
         island.setCell(cell);
 
-        for (int i = 0; i < island.getCells().length; i++) {
-            for (int j = 0; j < island.getCells()[0].length; j++) {
-                if(island.getCells()[i][j]!=null){
-                    List<Plant> listPlant = island.getCells()[i][j].getPlants();
+        for (int i = 0; i < island.getGridCopy().length; i++) {
+            for (int j = 0; j < island.getGridCopy()[0].length; j++) {
+                if(island.getGridCopy()[i][j]!=null){
+                    List<Plant> listPlant = island.getGridCopy()[i][j].getPlants();
                     System.out.println(String.format("Клетка [%d:%d] содержит растения: %s",i, j
                             ,listPlant
                     ));
