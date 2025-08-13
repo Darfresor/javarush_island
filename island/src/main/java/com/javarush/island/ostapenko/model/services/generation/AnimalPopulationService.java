@@ -22,11 +22,14 @@ public class AnimalPopulationService {
 
     public void generate() {
         Cell cell = new Cell(0, 0);
+        Cell cell2 = new Cell(0, 1);
         Wolf wolf = new Wolf("Волк",3,10,MALE,50f,50f,3,8,0.5f);
         Rabbit rabbit = new Rabbit("Кролик",3,10,MALE,2f,2f,2,0.45f, 0.5f);
         cell.addAnimal(wolf);
-        cell.addAnimal(rabbit);
+        //cell.addAnimal(rabbit);
+        cell2.addAnimal(rabbit);
         island.setCell(cell);
+        island.setCell(cell2);
 
         for (int i = 0; i < island.getCells().length; i++) {
             for (int j = 0; j < island.getCells()[0].length; j++) {

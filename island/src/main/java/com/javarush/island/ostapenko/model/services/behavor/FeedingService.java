@@ -4,6 +4,7 @@ import com.javarush.island.ostapenko.model.behavor.BehavorFactory;
 import com.javarush.island.ostapenko.model.behavor.interfaces.Eatable;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
 import com.javarush.island.ostapenko.model.island.Cell;
+import com.javarush.island.ostapenko.model.island.Island;
 import com.javarush.island.ostapenko.model.services.mediator.IMediator;
 
 public class FeedingService {
@@ -13,8 +14,8 @@ public class FeedingService {
         this.mediator = mediator;
     }
 
-    public void executeEat(Animal animal, Cell cell) {
+    public void executeEat(Animal animal, Cell cell, Island island) {
             Eatable strategy = BehavorFactory.createEatStrategy(animal, mediator);
-            strategy.eat(animal, cell);
+            strategy.eat(animal, cell, island);
     }
 }

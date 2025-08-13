@@ -29,13 +29,14 @@ public class SimulationExecutionService {
 
     public void start() {
         mediator.subsribe(EventType.ANIMAL_EATEN, deathService);
+        mediator.subsribe(EventType.ANIMAL_MOVE, movementService);
 
         for (Cell[] cell : island.getCells()) {
             for (Cell cell1 : cell) {
                 if (cell1 != null) {
                     for (Animal animal : cell1.getAnimals()) {
                         //deathService.executeDeathDueToOldAge(animal, cell1);
-                        feedingService.executeEat(animal, cell1);
+                        feedingService.executeEat(animal, cell1, island);
                        // deathService.executeDeathByEating(animal, cell1);
                       //  deathService.executeDeathFromStarvation(animal, cell1);
                       //  movementService.executeMove(animal, island);
