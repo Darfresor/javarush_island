@@ -18,6 +18,7 @@ public abstract class Animal extends Creature {
     protected int cellsLeftInCurrentTurn;
     protected float satiety;
     protected float foodToBeFullySatiatedInKg;
+    protected boolean reprocudedInCurrentTurn;
 
     public Animal(String speciesName, int age, int maxAge, Gender gender, float weightInKg,
                   float maxWeightInKg, int cellsPerTurnSpeed, float foodToBeFullySatiatedInKg, float satiety){
@@ -30,7 +31,9 @@ public abstract class Animal extends Creature {
         this.cellsPerTurnSpeed = cellsPerTurnSpeed;
         this.foodToBeFullySatiatedInKg = foodToBeFullySatiatedInKg;
         this.satiety = satiety;
+
         this.cellsLeftInCurrentTurn = cellsPerTurnSpeed;
+        this.reprocudedInCurrentTurn = false;
     }
 
     public String getSpeciesName() {
@@ -87,6 +90,14 @@ public abstract class Animal extends Creature {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public boolean getReprocudedInCurrentTurn() {
+        return reprocudedInCurrentTurn;
+    }
+
+    public void setReprocudedInCurrentTurn(boolean reprocudedInCurrentTurn) {
+        this.reprocudedInCurrentTurn = reprocudedInCurrentTurn;
     }
 
     @Override

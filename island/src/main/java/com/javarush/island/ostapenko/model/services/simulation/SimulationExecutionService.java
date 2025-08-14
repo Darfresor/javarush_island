@@ -37,20 +37,17 @@ public class SimulationExecutionService {
             for (Cell cell1 : cell) {
                 if (cell1 != null) {
                     for (Animal animal : cell1.getAnimals()) {
-                        deathService.executeDeathDueToOldAge(animal, cell1, island);
+                        // deathService.executeDeathDueToOldAge(animal, cell1, island);
                         //feedingService.executeEat(animal, cell1, island);
-                       // deathService.executeDeathByEating(animal, cell1);
-                      //  deathService.executeDeathFromStarvation(animal, cell1);
-                      //  movementService.executeMove(animal, island);
-                     //   reproductionService.executeReproduce(animal, cell1);
+                       reproductionService.executeReproduce(animal, cell1, island);
 
 
                     }
-                     for (Plant plant : cell1.getPlants()) {
-                        deathService.executeDeathDueToOldAge(plant, cell1, island);
+                 //    for (Plant plant : cell1.getPlants()) {
+                 //       deathService.executeDeathDueToOldAge(plant, cell1, island);
                    //     reproductionService.executeReproduce(plant, cell1);
 
-                    }
+                  //  }
                 }
             }
         }
@@ -64,6 +61,19 @@ public class SimulationExecutionService {
                     ));
                 }else{
                     System.out.println(String.format("Клетка [%d:%d] без животных",i, j));
+                }
+
+            }
+        }
+        for (int i = 0; i < island.getGridCopy().length; i++) {
+            for (int j = 0; j < island.getGridCopy()[0].length; j++) {
+                if(island.getGridCopy()[i][j]!=null){
+                    List<Plant> listPlant = island.getGridCopy()[i][j].getPlants();
+                    System.out.println(String.format("Клетка [%d:%d] содержит растения: %s",i, j
+                            ,listPlant
+                    ));
+                }else{
+                    System.out.println(String.format("Клетка [%d:%d] без растений",i, j));
                 }
 
             }
