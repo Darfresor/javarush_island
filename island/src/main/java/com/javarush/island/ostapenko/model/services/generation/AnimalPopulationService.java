@@ -23,7 +23,7 @@ public class AnimalPopulationService {
     public void generate() {
         Cell cell = new Cell(0, 0);
         Cell cell2 = new Cell(0, 1);
-        Wolf wolf = new Wolf("Волк",3,10,MALE,50f,50f,3,8,0.5f);
+        Wolf wolf = new Wolf("Волк",9,10,MALE,50f,50f,3,8,0.5f);
         Rabbit rabbit = new Rabbit("Кролик",3,10,MALE,2f,2f,2,0.45f, 0.5f);
         cell.addAnimal(wolf);
         //cell.addAnimal(rabbit);

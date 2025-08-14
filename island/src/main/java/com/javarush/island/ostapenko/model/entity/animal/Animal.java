@@ -85,6 +85,10 @@ public abstract class Animal extends Creature {
         this.cellsLeftInCurrentTurn = cellsLeftInCurrentTurn;
     }
 
+    public void setAge(int age) {
+        this.age = age;
+    }
+
     @Override
     public String toString() {
         return "Animal{" +
