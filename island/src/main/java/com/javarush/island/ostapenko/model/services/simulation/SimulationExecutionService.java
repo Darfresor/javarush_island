@@ -20,7 +20,7 @@ public class SimulationExecutionService {
     private final IMediator mediator = new EventMediator();
     private final FeedingService feedingService = new FeedingService(mediator);
     private final MovementService movementService = new MovementService();
-    private final ReproductionService reproductionService = new ReproductionService();
+    private final ReproductionService reproductionService = new ReproductionService(mediator);
     private final DeathService deathService = new DeathService();
 
 
@@ -32,6 +32,7 @@ public class SimulationExecutionService {
     public void start() {
         mediator.subsribe(EventType.ANIMAL_EATEN, deathService);
         mediator.subsribe(EventType.ANIMAL_MOVE, movementService);
+        mediator.subsribe(EventType.ANIMAL_MOVE_REPRODUCE, movementService);
 
         for (Cell[] cell : island.getGridCopy()) {
             for (Cell cell1 : cell) {

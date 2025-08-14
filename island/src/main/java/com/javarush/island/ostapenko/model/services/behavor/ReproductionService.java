@@ -8,16 +8,23 @@ import com.javarush.island.ostapenko.model.entity.Creature;
 import com.javarush.island.ostapenko.model.entity.plant.Plant;
 import com.javarush.island.ostapenko.model.island.Cell;
 import com.javarush.island.ostapenko.model.island.Island;
+import com.javarush.island.ostapenko.model.services.mediator.IMediator;
 
 public class ReproductionService {
-    public  void executeReproduce(Creature creature, Cell cell, Island island) {
-        switch(creature){
+    private final IMediator mediator;
+
+    public ReproductionService(IMediator mediator) {
+        this.mediator = mediator;
+    }
+
+    public void executeReproduce(Creature creature, Cell cell, Island island) {
+        switch (creature) {
             case Animal a -> {
-                AnimalReproducible strategy = BehavorFactory.createReproduceStrategy(a);
+                AnimalReproducible strategy = BehavorFactory.createReproduceStrategy(a, mediator);
                 strategy.reproduce(a, cell, island);
             }
             case Plant p -> {
-                PlantReproducible strategy = BehavorFactory.createReproduceStrategy(p);
+                PlantReproducible strategy = BehavorFactory.createReproduceStrategy(p, mediator);
                 strategy.reproduce(p, cell, island);
             }
             case null -> throw new RuntimeException("Creature cannot be null");

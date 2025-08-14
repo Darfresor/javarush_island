@@ -35,15 +35,15 @@ public class BehavorFactory {
             default -> throw new RuntimeException("Unknown animal: " + animal.getClass());
         };
     }
-    public static AnimalReproducible createReproduceStrategy(Animal animal){
+    public static AnimalReproducible createReproduceStrategy(Animal animal,IMediator mediator){
         return switch(animal){
-            case Wolf w -> new WolfReproduceStrategy();
+            case Wolf w -> new WolfReproduceStrategy(mediator);
             case Rabbit r -> new RabbitReprocudeStrategy();
             case null -> throw new RuntimeException("Animal cannot be null");
             default -> throw new RuntimeException("Unknown animal: " + animal.getClass());
         };
     }
-    public static PlantReproducible createReproduceStrategy(Plant plant){
+    public static PlantReproducible createReproduceStrategy(Plant plant, IMediator mediator){
         return switch(plant){
             case Dandelion d -> new DandelionReproduceStrategy();
             case null -> throw new RuntimeException("Plant cannot be null");

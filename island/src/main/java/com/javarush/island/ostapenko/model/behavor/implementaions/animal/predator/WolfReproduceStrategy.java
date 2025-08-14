@@ -4,8 +4,17 @@ import com.javarush.island.ostapenko.model.behavor.interfaces.AnimalReproducible
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
 import com.javarush.island.ostapenko.model.island.Cell;
 import com.javarush.island.ostapenko.model.island.Island;
+import com.javarush.island.ostapenko.model.services.mediator.IMediator;
+import com.javarush.island.ostapenko.model.services.mediator.event.AnimalEatenEvent;
+import com.javarush.island.ostapenko.model.services.mediator.event.AnimalMoveForReproduceEvent;
 
 public class WolfReproduceStrategy implements AnimalReproducible {
+    private final IMediator mediator;
+
+    public WolfReproduceStrategy(IMediator mediator) {
+        this.mediator = mediator;
+    }
+
     @Override
     public void reproduce(Animal animal, Cell cell, Island island) {
         if(animal.getReprocudedInCurrentTurn()){
@@ -29,6 +38,7 @@ public class WolfReproduceStrategy implements AnimalReproducible {
             }
         }
         System.out.println(String.format("Волк %s не нашел пары для размножения", animal.hashCode()));
+        mediator.notify(new AnimalMoveForReproduceEvent(animal, cell, island));
 
     }
 }

@@ -7,6 +7,7 @@ import com.javarush.island.ostapenko.model.island.Cell;
 import com.javarush.island.ostapenko.model.island.Island;
 import com.javarush.island.ostapenko.model.services.mediator.IEventHandler;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalMoveEvent;
+import com.javarush.island.ostapenko.model.services.mediator.event.AnimalMoveForReproduceEvent;
 import com.javarush.island.ostapenko.model.services.mediator.event.Event;
 
 public class MovementService implements IEventHandler {
@@ -20,6 +21,7 @@ public class MovementService implements IEventHandler {
     public void handle(Event event) {
         switch(event){
             case AnimalMoveEvent e-> executeMove(e.getAnimal(), e.getCurrentCell(), e.getIsland());
+            case AnimalMoveForReproduceEvent e-> executeMove(e.getAnimal(), e.getCurrentCell(), e.getIsland());
             case null -> throw new RuntimeException("Event cannot be null");
             default -> throw new RuntimeException("Unknown event: " + event.getClass());
         }

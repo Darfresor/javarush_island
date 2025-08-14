@@ -103,7 +103,7 @@ public abstract class Animal extends Creature {
     @Override
     public String toString() {
         return "Animal{" +
-                "Animal classs='" + this.getClass().getSimpleName() + '\'' +
+                "Animal classs='" + this.getClass().getSimpleName() +":"  + this.hashCode() + '\'' +
                 '}';
     }
 }
