@@ -38,7 +38,7 @@ public class BehavorFactory {
     public static AnimalReproducible createReproduceStrategy(Animal animal,IMediator mediator){
         return switch(animal){
             case Wolf w -> new WolfReproduceStrategy(mediator);
-            case Rabbit r -> new RabbitReprocudeStrategy();
+            case Rabbit r -> new RabbitReprocudeStrategy(mediator);
             case null -> throw new RuntimeException("Animal cannot be null");
             default -> throw new RuntimeException("Unknown animal: " + animal.getClass());
         };
