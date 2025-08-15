@@ -8,6 +8,7 @@ import com.javarush.island.ostapenko.model.island.Island;
 import com.javarush.island.ostapenko.model.services.mediator.IMediator;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalEatenEvent;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalMoveEvent;
+import com.javarush.island.ostapenko.model.services.mediator.event.AnimalStarvationEvent;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -20,8 +21,6 @@ public class WolfEatStrategy implements Eatable {
 
     @Override
     public void eat(Animal eater, Cell cell, Island island) {
-        reduceSatiety(eater);
-        System.out.println("Голод волка = " + eater.getSatiety());
         for (Animal target : cell.getAnimals()) {
             if (EatingRules.canEat(eater.getClass(), target.getClass())) {
                 double probability = EatingRules.getEatProbability(eater.getClass(), target.getClass());
@@ -33,17 +32,29 @@ public class WolfEatStrategy implements Eatable {
                     mediator.notify(new AnimalEatenEvent(eater, target, cell));
                     eater.setSatiety(calculateSatiety(eater, target));
                     System.out.println("Голод волка = " + eater.getSatiety());
-                    break;
+                    return;
                 } else {
                     System.out.println("Волк не смог съесть " + target.getSpeciesName());
                     System.out.println("Голод волка = " + eater.getSatiety());
-                    break;
+                    if (checkDeathByStarvation(eater, cell, island)) return;
+                    return;
                 }
 
             }
         }
         System.out.println("Волк не нашел еды в этой клетке");
+        if (checkDeathByStarvation(eater, cell, island)) return;
         mediator.notify(new AnimalMoveEvent(eater, cell, island));
+    }
+
+    private boolean checkDeathByStarvation(Animal eater, Cell cell, Island island) {
+        reduceSatiety(eater);
+        System.out.println("Голод волка = " + eater.getSatiety());
+        if (eater.getSatiety() == 0) {
+            mediator.notify(new AnimalStarvationEvent(eater, cell, island));
+            return true;
+        }
+        return false;
     }
 
     private float calculateNutrition(Animal eater, Animal target) {
@@ -51,7 +62,6 @@ public class WolfEatStrategy implements Eatable {
     }
 
     private float calculateSatiety(Animal eater, Animal target) {
-        float nutrition = calculateNutrition(eater, target);
         float satiety = eater.getSatiety() + calculateNutrition(eater, target);
         if (satiety > 1.0f) {
             return 1.0f;

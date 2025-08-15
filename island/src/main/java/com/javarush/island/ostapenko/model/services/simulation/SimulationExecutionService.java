@@ -31,6 +31,7 @@ public class SimulationExecutionService {
 
     public void start() {
         mediator.subsribe(EventType.ANIMAL_EATEN, deathService);
+        mediator.subsribe(EventType.ANIMAL_STARVATION, deathService);
         mediator.subsribe(EventType.ANIMAL_MOVE_EAT, movementService);
         mediator.subsribe(EventType.ANIMAL_MOVE_REPRODUCE, movementService);
 
@@ -39,8 +40,8 @@ public class SimulationExecutionService {
                 if (cell1 != null) {
                     for (Animal animal : cell1.getAnimals()) {
                         // deathService.executeDeathDueToOldAge(animal, cell1, island);
-                        //feedingService.executeEat(animal, cell1, island);
-                       reproductionService.executeReproduce(animal, cell1, island);
+                        feedingService.executeEat(animal, cell1, island);
+                        //reproductionService.executeReproduce(animal, cell1, island);
 
 
                     }
