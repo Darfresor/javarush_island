@@ -10,6 +10,7 @@ import com.javarush.island.ostapenko.model.services.mediator.IMediator;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalEatenEvent;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalMoveEvent;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalStarvationEvent;
+import com.javarush.island.ostapenko.model.services.mediator.event.PlantEatenEvent;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -30,7 +31,7 @@ public class RabbitEatStrategy implements Eatable {
 
                 if (ThreadLocalRandom.current().nextDouble() < probability) {
                     System.out.println("Кролик съел " + target.getSpeciesName());
-                    //mediator.notify(new AnimalEatenEvent(eater, target, cell));
+                    mediator.notify(new PlantEatenEvent(eater, target, cell));
                     eater.setSatiety(calculateSatiety(eater, target));
                     System.out.println("Голод кролика = " + eater.getSatiety());
                     return;

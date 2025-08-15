@@ -8,6 +8,7 @@ import com.javarush.island.ostapenko.model.island.Cell;
 public class DandelionBeingEatenStrategy implements Edible<Animal, Plant> {
     @Override
     public void deathByEating(Animal predator, Plant victim, Cell cell) {
-        System.out.println("одуванчик был съеден");
+        cell.removePlant(victim);
+        System.out.println(String.format("Одуванчик был съеден %s и умер",predator.getSpeciesName()));
     }
 }
