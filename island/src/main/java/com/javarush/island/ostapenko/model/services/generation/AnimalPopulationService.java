@@ -29,7 +29,7 @@ public class AnimalPopulationService {
         Wolf wolf3 = new Wolf("Волк",3,10,FEMALE,50f,50f,3,8,0.5f);
         Rabbit rabbit1 = new Rabbit("Кролик",3,10,MALE,2f,2f,2,0.45f, 0.5f);
         Rabbit rabbit2 = new Rabbit("Кролик",3,10,FEMALE,2f,2f,2,0.45f, 0.5f);
-        cell.addAnimal(wolf1);
+        //cell.addAnimal(wolf1);
         //cell.addAnimal(wolf2);
         //cell.addAnimal(wolf3);
         cell2.addAnimal(rabbit1);

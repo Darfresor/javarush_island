@@ -15,6 +15,7 @@ public class AnimalEatenEvent implements Event{
         this.cell = cell;
     }
 
+
     @Override
     public EventType getType() {
         return EventType.ANIMAL_EATEN;

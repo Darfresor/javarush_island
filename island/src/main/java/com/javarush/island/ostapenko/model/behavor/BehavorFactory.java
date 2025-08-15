@@ -4,6 +4,7 @@ import com.javarush.island.ostapenko.model.behavor.implementaions.NoOpEdibleStra
 import com.javarush.island.ostapenko.model.behavor.implementaions.animal.nerbivore.*;
 import com.javarush.island.ostapenko.model.behavor.implementaions.animal.predator.*;
 import com.javarush.island.ostapenko.model.behavor.implementaions.plant.DandelionAgingStrategy;
+import com.javarush.island.ostapenko.model.behavor.implementaions.plant.DandelionBeingEatenStrategy;
 import com.javarush.island.ostapenko.model.behavor.implementaions.plant.DandelionReproduceStrategy;
 import com.javarush.island.ostapenko.model.behavor.interfaces.*;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
@@ -30,7 +31,7 @@ public class BehavorFactory {
     public static Eatable createEatStrategy(Animal animal, IMediator mediator){
         return switch(animal){
             case Wolf w -> new WolfEatStrategy(mediator);
-            case Rabbit r -> new RabbitEatStrategy();
+            case Rabbit r -> new RabbitEatStrategy(mediator);
             case null -> throw new RuntimeException("Animal cannot be null");
             default -> throw new RuntimeException("Unknown animal: " + animal.getClass());
         };
@@ -50,12 +51,13 @@ public class BehavorFactory {
             default -> throw new RuntimeException("Unknown plant: " + plant.getClass());
         };
     }
-    public static Edible createBeingEatenStrategy(Animal animal){
-        return switch(animal){
+    public static Edible<? extends Creature, ? extends Creature> createBeingEatenStrategy(Creature creature){
+        return switch(creature){
             case Wolf w -> new NoOpEdibleStrategy();
             case Rabbit r -> new RabbitBeingEatenStrategy();
-            case null -> throw new RuntimeException("Animal cannot be null");
-            default -> throw new RuntimeException("Unknown animal: " + animal.getClass());
+            case Dandelion d-> new DandelionBeingEatenStrategy();
+            case null -> throw new RuntimeException("Creature cannot be null");
+            default -> throw new RuntimeException("Unknown creature: " + creature.getClass());
         };
     }
     public static Starvable createStarvableStrategy(Animal animal){

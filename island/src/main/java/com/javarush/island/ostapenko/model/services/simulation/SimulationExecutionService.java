@@ -32,6 +32,7 @@ public class SimulationExecutionService {
     public void start() {
         mediator.subsribe(EventType.ANIMAL_EATEN, deathService);
         mediator.subsribe(EventType.ANIMAL_STARVATION, deathService);
+        mediator.subsribe(EventType.PLANT_EATEN, deathService);
         mediator.subsribe(EventType.ANIMAL_MOVE_EAT, movementService);
         mediator.subsribe(EventType.ANIMAL_MOVE_REPRODUCE, movementService);
 

@@ -18,8 +18,8 @@ public class PlantPopulationService {
     }
     public void generate(){
 
-        Cell cell = island.getGridCopy()[0][0];
-        Plant dandelion = new Dandelion();
+        Cell cell = island.getGridCopy()[0][1];
+        Plant dandelion = new Dandelion("Одуванчик",1,3,1f,1f,200);
         cell.addPlant(dandelion);
         island.setCell(cell);
 
