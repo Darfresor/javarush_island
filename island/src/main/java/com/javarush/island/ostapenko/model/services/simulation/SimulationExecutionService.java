@@ -31,7 +31,7 @@ public class SimulationExecutionService {
 
     public void start() {
         mediator.subsribe(EventType.ANIMAL_EATEN, deathService);
-        mediator.subsribe(EventType.ANIMAL_MOVE, movementService);
+        mediator.subsribe(EventType.ANIMAL_MOVE_EAT, movementService);
         mediator.subsribe(EventType.ANIMAL_MOVE_REPRODUCE, movementService);
 
         for (Cell[] cell : island.getGridCopy()) {

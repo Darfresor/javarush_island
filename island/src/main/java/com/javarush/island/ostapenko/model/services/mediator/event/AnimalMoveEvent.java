@@ -5,7 +5,7 @@ import com.javarush.island.ostapenko.model.entity.animal.Animal;
 import com.javarush.island.ostapenko.model.island.Cell;
 import com.javarush.island.ostapenko.model.island.Island;
 
-import static com.javarush.island.ostapenko.constants.EventType.ANIMAL_MOVE;
+import static com.javarush.island.ostapenko.constants.EventType.ANIMAL_MOVE_EAT;
 
 
 public class AnimalMoveEvent implements Event{
@@ -21,7 +21,7 @@ public class AnimalMoveEvent implements Event{
 
     @Override
     public EventType getType() {
-        return ANIMAL_MOVE;
+        return ANIMAL_MOVE_EAT;
     }
 
     public Animal getAnimal() {
