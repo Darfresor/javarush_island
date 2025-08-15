@@ -19,8 +19,10 @@ public class PlantPopulationService {
     public void generate(){
 
         Cell cell = island.getGridCopy()[0][1];
-        Plant dandelion = new Dandelion("Одуванчик",1,3,1f,1f,200);
-        cell.addPlant(dandelion);
+        Plant dandelion1 = new Dandelion("Одуванчик",2,3,1f,1f,200);
+        Plant dandelion2 = new Dandelion("Одуванчик",1,3,1f,1f,200);
+        cell.addPlant(dandelion1);
+        cell.addPlant(dandelion2);
         island.setCell(cell);
 
         for (int i = 0; i < island.getGridCopy().length; i++) {

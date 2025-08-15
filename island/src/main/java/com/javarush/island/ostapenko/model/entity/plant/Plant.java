@@ -25,7 +25,7 @@ public abstract class Plant extends Creature {
     @Override
     public String toString() {
         return "Plant{" +
-                "Plant classs='" + this.getClass().getSimpleName() + '\'' +
+                "Plant classs='" + this.getClass().getSimpleName() +":"  + this.hashCode() + '\'' +
                 '}';
     }
 
@@ -53,7 +53,7 @@ public abstract class Plant extends Creature {
         return maxNumberOfPlantInCell;
     }
 
-    public void setMaxAge(int maxAge) {
-        this.maxAge = maxAge;
+    public void setAge(int age) {
+        this.age = age;
     }
 }
