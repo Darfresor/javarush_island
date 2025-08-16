@@ -8,8 +8,8 @@ import java.util.concurrent.atomic.AtomicLong;
 public abstract class Animal extends Creature {
     private static AtomicLong uniqueObjectId= new AtomicLong(0);;
     protected String speciesName;
-    protected int age;
-    protected int maxAge;
+    protected int ageInDay;
+    protected int maxAgeInDay;
     protected Gender gender;
     protected float weightInKg;
     protected float maxWeightInKg;
@@ -20,11 +20,11 @@ public abstract class Animal extends Creature {
     protected float foodToBeFullySatiatedInKg;
     protected boolean reprocudedInCurrentTurn;
 
-    public Animal(String speciesName, int age, int maxAge, Gender gender, float weightInKg,
+    public Animal(String speciesName, int ageInDay, int maxAgeInDay, Gender gender, float weightInKg,
                   float maxWeightInKg, int cellsPerTurnSpeed, float foodToBeFullySatiatedInKg, float satiety){
         this.speciesName = speciesName;
-        this.age =age;
-        this.maxAge= maxAge;
+        this.ageInDay = ageInDay;
+        this.maxAgeInDay = maxAgeInDay;
         this.gender = gender;
         this.weightInKg = weightInKg;
         this.maxWeightInKg = maxWeightInKg;
@@ -40,12 +40,12 @@ public abstract class Animal extends Creature {
         return speciesName;
     }
 
-    public int getAge() {
-        return age;
+    public int getAgeInDay() {
+        return ageInDay;
     }
 
-    public int getMaxAge() {
-        return maxAge;
+    public int getMaxAgeInDay() {
+        return maxAgeInDay;
     }
 
     public Gender getGender() {
@@ -88,8 +88,8 @@ public abstract class Animal extends Creature {
         this.cellsLeftInCurrentTurn = cellsLeftInCurrentTurn;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setAgeInDay(int ageInDay) {
+        this.ageInDay = ageInDay;
     }
 
     public boolean getReprocudedInCurrentTurn() {

@@ -27,7 +27,7 @@ public class Logger {
         }
     }
 
-    public static void logMovement(Creature creature, Cell cell, String message){
+    public static void logService(Creature creature, Cell cell, String message){
         log(String.format("Thread-%s, ячейка-[%d %d]: [%s %d]  %s",
                 Thread.currentThread().getName(),
                 cell.getX(),

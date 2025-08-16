@@ -13,6 +13,7 @@ import com.javarush.island.ostapenko.model.services.mediator.event.AnimalStarvat
 import com.javarush.island.ostapenko.model.services.mediator.event.Event;
 import com.javarush.island.ostapenko.model.services.mediator.IEventHandler;
 import com.javarush.island.ostapenko.model.services.mediator.event.PlantEatenEvent;
+import com.javarush.island.ostapenko.util.Logger;
 
 public class DeathService implements IEventHandler {
     public <E extends Creature,T extends Creature> void executeDeathByEating(E predator, T victim, Cell cell) {
@@ -26,8 +27,12 @@ public class DeathService implements IEventHandler {
     }
 
     public <T extends Creature> void  executeDeathDueToOldAge(T creature, Cell cell, Island island) {
-            Aging<? super T> strategy = (Aging<? super T>)BehavorFactory.createAgingStrategy(creature);
+        try {
+            Aging<? super T> strategy = (Aging<? super T>) BehavorFactory.createAgingStrategy(creature);
             strategy.deathDueToOldAge(creature, cell, island);
+        }finally {
+            Logger.flush();
+        }
     }
 
     @Override

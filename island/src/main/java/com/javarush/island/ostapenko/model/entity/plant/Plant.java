@@ -7,16 +7,16 @@ import java.util.concurrent.atomic.AtomicLong;
 public abstract class Plant extends Creature {
     private static AtomicLong uniqueObjectId= new AtomicLong(0);;
     protected String speciesName;
-    protected int age;
-    protected int maxAge;
+    protected int ageInDay;
+    protected int maxAgeInDay;
     protected float weightInKg;
     protected float maxWeightInKg;
     protected int maxNumberOfPlantInCell;
 
-    public Plant(String speciesName, int age, int maxAge, float weightInKg, float maxWeightInKg, int maxNumberOfPlantInCell) {
+    public Plant(String speciesName, int ageInDay, int maxAgeInDay, float weightInKg, float maxWeightInKg, int maxNumberOfPlantInCell) {
         this.speciesName = speciesName;
-        this.age = age;
-        this.maxAge = maxAge;
+        this.ageInDay = ageInDay;
+        this.maxAgeInDay = maxAgeInDay;
         this.weightInKg = weightInKg;
         this.maxWeightInKg = maxWeightInKg;
         this.maxNumberOfPlantInCell = maxNumberOfPlantInCell;
@@ -33,12 +33,12 @@ public abstract class Plant extends Creature {
         return speciesName;
     }
 
-    public int getAge() {
-        return age;
+    public int getAgeInDay() {
+        return ageInDay;
     }
 
-    public int getMaxAge() {
-        return maxAge;
+    public int getMaxAgeInDay() {
+        return maxAgeInDay;
     }
 
     public float getWeightInKg() {
@@ -53,7 +53,7 @@ public abstract class Plant extends Creature {
         return maxNumberOfPlantInCell;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setAgeInDay(int ageInDay) {
+        this.ageInDay = ageInDay;
     }
 }
