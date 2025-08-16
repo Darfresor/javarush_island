@@ -9,11 +9,16 @@ import com.javarush.island.ostapenko.model.services.mediator.IEventHandler;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalMoveEvent;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalMoveForReproduceEvent;
 import com.javarush.island.ostapenko.model.services.mediator.event.Event;
+import com.javarush.island.ostapenko.util.Logger;
 
 public class MovementService implements IEventHandler {
     public void executeMove(Animal animal, Cell currentCell, Island island) {
+        try {
             Moveable strategy = BehavorFactory.createMoveStrategy(animal);
             strategy.move(animal, currentCell, island);
+        }finally{
+            Logger.flush();
+        }
 
     }
 
