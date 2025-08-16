@@ -7,6 +7,7 @@ import com.javarush.island.ostapenko.model.island.Island;
 import com.javarush.island.ostapenko.model.services.mediator.IMediator;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalEatenEvent;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalMoveForReproduceEvent;
+import com.javarush.island.ostapenko.util.Logger;
 
 public class WolfReproduceStrategy implements AnimalReproducible {
     private final IMediator mediator;
@@ -18,7 +19,8 @@ public class WolfReproduceStrategy implements AnimalReproducible {
     @Override
     public void reproduce(Animal animal, Cell cell, Island island) {
         if(animal.getReprocudedInCurrentTurn()){
-            System.out.println(String.format("Волк %s уже участвовал в размножении ранее", animal.hashCode()));
+            Logger.logService(animal, cell, String.format("%s уже участвовал в размножении ранее",
+                    animal.getSpeciesName()));
             return;
         }
         for (Animal cellAnimal : cell.getAnimals()) {
@@ -26,7 +28,8 @@ public class WolfReproduceStrategy implements AnimalReproducible {
                     && cellAnimal.getGender() != animal.getGender()
                     && !cellAnimal.getReprocudedInCurrentTurn()
             ) {
-                System.out.println(String.format("Волк %s размножается", animal.hashCode()));
+                Logger.logService(animal, cell, String.format("%s размножается",
+                        animal.getSpeciesName()));
                 animal.setReprocudedInCurrentTurn(true);
                 cellAnimal.setReprocudedInCurrentTurn(true);
                 Cell originalCell = island.getCell(cell.getX(),cell.getY());
@@ -37,7 +40,8 @@ public class WolfReproduceStrategy implements AnimalReproducible {
                 return;
             }
         }
-        System.out.println(String.format("Волк %s не нашел пары для размножения", animal.hashCode()));
+        Logger.logService(animal, cell, String.format("%s не нашел пары для размножения",
+                animal.getSpeciesName()));
         mediator.notify(new AnimalMoveForReproduceEvent(animal, cell, island));
 
     }
