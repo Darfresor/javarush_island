@@ -12,13 +12,13 @@ public class WolfAgingStrategy implements Aging<Wolf> {
         int currentAge = wolf.getAgeInDay() + 1;
         int maxAge = wolf.getMaxAgeInDay();
         if (currentAge != maxAge) {
-            Logger.logService(wolf, cell, String.format("%s исполнилось %d дней из %d возможных",
+            Logger.logDeathService(wolf, cell, String.format("%s исполнилось %d дней из %d возможных",
                     wolf.getSpeciesName(), currentAge, maxAge));
         } else {
             wolf.setAgeInDay(currentAge);
             Cell originalCell = island.getCell(cell.getX(), cell.getY());
             originalCell.removeAnimal(wolf);
-            Logger.logService(wolf, cell, String.format("%s исполнилось %d дней из %d возможных и он умер от старости.",
+            Logger.logDeathService(wolf, cell, String.format("%s исполнилось %d дней из %d возможных и он умер от старости.",
                     wolf.getSpeciesName(), currentAge, maxAge));
         }
 

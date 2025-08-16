@@ -12,13 +12,13 @@ public class RabbitAgingStrategy implements Aging<Rabbit> {
         int currentAge = rabbit.getAgeInDay() + 1;
         int maxAge = rabbit.getMaxAgeInDay();
         if (currentAge != maxAge) {
-            Logger.logService(rabbit, cell, String.format("%s исполнилось %d дней из %d возможных",
+            Logger.logDeathService(rabbit, cell, String.format("%s исполнилось %d дней из %d возможных",
                     rabbit.getSpeciesName(), currentAge, maxAge));
         } else {
             rabbit.setAgeInDay(currentAge);
             Cell originalCell = island.getCell(cell.getX(), cell.getY());
             originalCell.removeAnimal(rabbit);
-            Logger.logService(rabbit, cell, String.format("%s исполнилось %d дней из %d возможных и он умер от старости.",
+            Logger.logDeathService(rabbit, cell, String.format("%s исполнилось %d дней из %d возможных и он умер от старости.",
                     rabbit.getSpeciesName(), currentAge, maxAge));
         }
     }

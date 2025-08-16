@@ -49,6 +49,9 @@ public class Logger {
     public static void logMovementService(Creature creature, Cell cell, String message){
         logService(creature,cell, message, "MovementService");
     }
+    public static void logDeathService(Creature creature, Cell cell, String message){
+        logService(creature,cell, message, "DeathService");
+    }
 
     public static void flush() {
         synchronized (logBuffer){
