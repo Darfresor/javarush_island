@@ -36,6 +36,19 @@ public class Logger {
                 System.identityHashCode(creature),
                 message));
     }
+    public static void logService(Creature creature, Cell cell, String message, String serviceName){
+        log(String.format("(%s) || Thread-%s, ячейка-[%d %d]: [%s %d]  %s",
+                serviceName,
+                Thread.currentThread().getName(),
+                cell.getX(),
+                cell.getY(),
+                creature.getClass().getSimpleName(),
+                System.identityHashCode(creature),
+                message));
+    }
+    public static void logMovementService(Creature creature, Cell cell, String message){
+        logService(creature,cell, message, "MovementService");
+    }
 
     public static void flush() {
         synchronized (logBuffer){

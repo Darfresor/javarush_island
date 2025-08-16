@@ -22,9 +22,9 @@ public class WolfMoveStrategy implements Moveable {
     @Override
     public void move(Animal animal, Cell currentCell, Island island) {
         if (animal.getCellsLeftInCurrentTurn() == 0) {
-            Logger.logService(animal, currentCell, String.format("%s устал и больше не может двигаться", animal.getSpeciesName()));
+            Logger.logMovementService(animal, currentCell, String.format("%s устал и больше не может двигаться", animal.getSpeciesName()));
         } else {
-            Logger.logService(animal, currentCell, String.format("У %s осталось ходов %d", animal.getSpeciesName(), animal.getCellsLeftInCurrentTurn()));
+            Logger.logMovementService(animal, currentCell, String.format("У %s осталось ходов %d", animal.getSpeciesName(), animal.getCellsLeftInCurrentTurn()));
             animal.setCellsLeftInCurrentTurn(animal.getCellsLeftInCurrentTurn() - 1);
             Cell futureCell = chooseCellForMove(currentCell, island, animal);
 
@@ -33,7 +33,7 @@ public class WolfMoveStrategy implements Moveable {
 
             Cell originalFutureCell = island.getCell(futureCell.getX(), futureCell.getY());
             originalFutureCell.addAnimal(animal);
-            Logger.logService(animal, currentCell, String.format("%s передвинулся в соседнюю клетку, у него осталось ходов %d",
+            Logger.logMovementService(animal, currentCell, String.format("%s передвинулся в соседнюю клетку, у него осталось ходов %d",
                     animal.getSpeciesName(), animal.getCellsLeftInCurrentTurn()));
         }
 
@@ -44,14 +44,14 @@ public class WolfMoveStrategy implements Moveable {
         Map<String, Point> map = determineСellsForMovement(currentCell, island, animal);
         List<Map.Entry<String, Point>> list = new ArrayList<>(map.entrySet());
         if (list.isEmpty()) {
-            Logger.logService(animal, currentCell, String.format("%s некуда двигаться",
+            Logger.logMovementService(animal, currentCell, String.format("%s некуда двигаться",
                     animal.getSpeciesName()));
             return null;
         } else {
             int directionOfMovement = ThreadLocalRandom.current().nextInt(0, list.size());
             String directionName = list.get(directionOfMovement).getKey();
             Point point = list.get(directionOfMovement).getValue();
-            Logger.logService(animal, currentCell, String.format("%s выбрал направление движения = %s, координаты движения = %s",
+            Logger.logMovementService(animal, currentCell, String.format("%s выбрал направление движения = %s, координаты движения = %s",
                     animal.getSpeciesName(), directionName, list.get(directionOfMovement).getValue()));
             int x = point.x();
             int y = point.y();
@@ -63,7 +63,7 @@ public class WolfMoveStrategy implements Moveable {
     private Map<String, Point> determineСellsForMovement(Cell currentCell, Island island, Animal animal) {
         int maxX = island.getGridCopy().length;
         int maxY = island.getGridCopy()[0].length;
-        Logger.logService(animal, currentCell, String.format("Определяем направление движения для %s,Высота острова = %d клеток, а длина =%d ",
+        Logger.logMovementService(animal, currentCell, String.format("Определяем направление движения для %s,Высота острова = %d клеток, а длина =%d ",
                 animal.getSpeciesName(), maxX, maxY));
         Map<String, Point> map = new HashMap<>();
         if (currentCell.getY() - 1 >= 0) {
