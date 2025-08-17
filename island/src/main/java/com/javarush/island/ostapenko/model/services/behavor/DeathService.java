@@ -16,31 +16,39 @@ import com.javarush.island.ostapenko.model.services.mediator.event.PlantEatenEve
 import com.javarush.island.ostapenko.util.Logger;
 
 public class DeathService implements IEventHandler {
-    public <E extends Creature,T extends Creature> void executeDeathByEating(E predator, T victim, Cell cell) {
-            Edible<? super E,? super T> strategy = (Edible<? super E,? super T>)BehavorFactory.createBeingEatenStrategy(victim);
+    public <E extends Creature, T extends Creature> void executeDeathByEating(E predator, T victim, Cell cell) {
+        try {
+            Edible<? super E, ? super T> strategy = (Edible<? super E, ? super T>) BehavorFactory.createBeingEatenStrategy(victim);
             strategy.deathByEating(predator, victim, cell);
+        } finally {
+            Logger.flush();
+        }
     }
 
     public void executeDeathFromStarvation(Animal animal, Cell cell, Island island) {
-            Starvable strategy = BehavorFactory.createStarvableStrategy(animal);
-            strategy.deathFromStarvation(animal, cell, island);
+        try {
+        Starvable strategy = BehavorFactory.createStarvableStrategy(animal);
+        strategy.deathFromStarvation(animal, cell, island);
+        } finally {
+            Logger.flush();
+        }
     }
 
-    public <T extends Creature> void  executeDeathDueToOldAge(T creature, Cell cell, Island island) {
+    public <T extends Creature> void executeDeathDueToOldAge(T creature, Cell cell, Island island) {
         try {
             Aging<? super T> strategy = (Aging<? super T>) BehavorFactory.createAgingStrategy(creature);
             strategy.deathDueToOldAge(creature, cell, island);
-        }finally {
+        } finally {
             Logger.flush();
         }
     }
 
     @Override
     public void handle(Event event) {
-        switch(event){
-            case AnimalEatenEvent e-> executeDeathByEating(e.getPredator(), e.getVictim(), e.getCell());
-            case AnimalStarvationEvent e->executeDeathFromStarvation(e.getAnimal(), e.getCell(), e.getIsland());
-            case PlantEatenEvent e-> executeDeathByEating(e.getAnimal(), e.getPlant(), e.getCell());
+        switch (event) {
+            case AnimalEatenEvent e -> executeDeathByEating(e.getPredator(), e.getVictim(), e.getCell());
+            case AnimalStarvationEvent e -> executeDeathFromStarvation(e.getAnimal(), e.getCell(), e.getIsland());
+            case PlantEatenEvent e -> executeDeathByEating(e.getAnimal(), e.getPlant(), e.getCell());
             case null -> throw new RuntimeException("Event cannot be null");
             default -> throw new RuntimeException("Unknown event: " + event.getClass());
         }
