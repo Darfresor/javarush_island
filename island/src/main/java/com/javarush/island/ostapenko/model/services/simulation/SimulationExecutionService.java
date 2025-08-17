@@ -40,16 +40,16 @@ public class SimulationExecutionService {
             for (Cell cell1 : cell) {
                 if (cell1 != null) {
                     for (Animal animal : cell1.getAnimals()) {
-                         deathService.executeDeathDueToOldAge(animal, cell1, island);
+                        // deathService.executeDeathDueToOldAge(animal, cell1, island);
                         //feedingService.executeEat(animal, cell1, island);
                         //reproductionService.executeReproduce(animal, cell1, island);
-
+                        movementService.executeMove(animal, cell1, island);
 
 
                     }
                      for (Plant plant : cell1.getPlants()) {
-                        deathService.executeDeathDueToOldAge(plant, cell1, island);
-                         // reproductionService.executeReproduce(plant, cell1, island);
+                        //deathService.executeDeathDueToOldAge(plant, cell1, island);
+                          reproductionService.executeReproduce(plant, cell1, island);
 
                     }
                 }

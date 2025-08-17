@@ -1,4 +1,4 @@
-package com.javarush.island.ostapenko.model.behavor.implementaions.animal.predator;
+package com.javarush.island.ostapenko.model.behavor.implementaions.animal;
 
 import com.javarush.island.ostapenko.model.behavor.interfaces.Moveable;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
@@ -6,18 +6,15 @@ import com.javarush.island.ostapenko.model.island.Cell;
 import com.javarush.island.ostapenko.model.island.Island;
 import com.javarush.island.ostapenko.util.Logger;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class WolfMoveStrategy implements Moveable {
+public class GenericAnimalMoveStrategy implements Moveable {
     private record Point(int x, int y) {
     }
-
-    ;
 
     @Override
     public void move(Animal animal, Cell currentCell, Island island) {

@@ -2,6 +2,7 @@ package com.javarush.island.ostapenko.model.behavor;
 
 import com.javarush.island.ostapenko.model.behavor.implementaions.NoOpEdibleStrategy;
 import com.javarush.island.ostapenko.model.behavor.implementaions.animal.GenericAnimalAgingStrategy;
+import com.javarush.island.ostapenko.model.behavor.implementaions.animal.GenericAnimalMoveStrategy;
 import com.javarush.island.ostapenko.model.behavor.implementaions.animal.nerbivore.*;
 import com.javarush.island.ostapenko.model.behavor.implementaions.animal.predator.*;
 import com.javarush.island.ostapenko.model.behavor.implementaions.plant.DandelionBeingEatenStrategy;
@@ -20,12 +21,11 @@ public class BehavorFactory {
     private BehavorFactory() {
     }
 
-    public static Moveable createMoveStrategy(Animal animal){
-     return switch(animal){
-       case Wolf w -> new WolfMoveStrategy();
-       case Rabbit r -> new RabbitMoveStrategy();
+    public static Moveable createMoveStrategy(Creature creature){
+     return switch(creature){
+       case Animal a -> new GenericAnimalMoveStrategy();
        case null -> throw new RuntimeException("Animal cannot be null");
-       default -> throw new RuntimeException("Unknown animal: " + animal.getClass());
+       default -> throw new RuntimeException("Unknown animal: " + creature.getClass());
      };
     }
 
