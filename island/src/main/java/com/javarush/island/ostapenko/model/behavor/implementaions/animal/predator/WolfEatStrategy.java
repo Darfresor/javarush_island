@@ -9,6 +9,7 @@ import com.javarush.island.ostapenko.model.services.mediator.IMediator;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalEatenEvent;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalMoveEvent;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalStarvationEvent;
+import com.javarush.island.ostapenko.util.Logger;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -24,32 +25,36 @@ public class WolfEatStrategy implements Eatable {
         for (Animal target : cell.getAnimals()) {
             if (EatingRules.canEat(eater.getClass(), target.getClass())) {
                 double probability = EatingRules.getEatProbability(eater.getClass(), target.getClass());
-                System.out.println(String.format("вероятность съесть существо %s составляет - %f процентов"
-                        , target.getClass().getSimpleName(), probability));
+                Logger.logFeedingService(eater, cell, String.format("%s нашел существо %s, вероятность съесть его = %f процентов",
+                        eater.getSpeciesName(), target.getSpeciesName(), probability));
 
                 if (ThreadLocalRandom.current().nextDouble() < probability) {
-                    System.out.println("Волк съел " + target.getSpeciesName());
+                    Logger.logFeedingService(eater, cell, String.format("%s съел %s",
+                            eater.getSpeciesName(), target.getSpeciesName()));
                     mediator.notify(new AnimalEatenEvent(eater, target, cell));
                     eater.setSatiety(calculateSatiety(eater, target));
-                    System.out.println("Голод волка = " + eater.getSatiety());
+                    Logger.logFeedingService(eater, cell, String.format("Голод %s = %f",
+                            eater.getSpeciesName(), eater.getSatiety()));
                     return;
                 } else {
-                    System.out.println("Волк не смог съесть " + target.getSpeciesName());
-                    System.out.println("Голод волка = " + eater.getSatiety());
+                    Logger.logFeedingService(eater, cell, String.format("%s не смог съесть %s",
+                            eater.getSpeciesName(), target.getSpeciesName()));
                     if (checkDeathByStarvation(eater, cell, island)) return;
                     return;
                 }
 
             }
         }
-        System.out.println("Волк не нашел еды в этой клетке");
+        Logger.logFeedingService(eater, cell, String.format("%s не нашел еды в этой клетке",
+                eater.getSpeciesName()));
         if (checkDeathByStarvation(eater, cell, island)) return;
         mediator.notify(new AnimalMoveEvent(eater, cell, island));
     }
 
     private boolean checkDeathByStarvation(Animal eater, Cell cell, Island island) {
         reduceSatiety(eater);
-        System.out.println("Голод волка = " + eater.getSatiety());
+        Logger.logFeedingService(eater, cell, String.format("Голод %s = %f",
+                eater.getSpeciesName(), eater.getSatiety()));
         if (eater.getSatiety() == 0) {
             mediator.notify(new AnimalStarvationEvent(eater, cell, island));
             return true;

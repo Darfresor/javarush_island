@@ -55,6 +55,9 @@ public class Logger {
     public static void logReproductionService(Creature creature, Cell cell, String message){
         logService(creature,cell, message, "ReproductionService");
     }
+    public static void logFeedingService(Creature creature, Cell cell, String message){
+        logService(creature,cell, message, "FeedingService");
+    }
 
     public static void flush() {
         synchronized (logBuffer){
