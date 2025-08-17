@@ -1,4 +1,4 @@
-package com.javarush.island.ostapenko.model.behavor.implementaions.animal.nerbivore;
+package com.javarush.island.ostapenko.model.behavor.implementaions.animal;
 
 import com.javarush.island.ostapenko.model.behavor.interfaces.AnimalReproducible;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
@@ -8,10 +8,10 @@ import com.javarush.island.ostapenko.model.services.mediator.IMediator;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalMoveForReproduceEvent;
 import com.javarush.island.ostapenko.util.Logger;
 
-public class RabbitReprocudeStrategy implements AnimalReproducible {
+public class GenericAnimalReproduceStrategy implements AnimalReproducible {
     private final IMediator mediator;
 
-    public RabbitReprocudeStrategy(IMediator mediator) {
+    public GenericAnimalReproduceStrategy(IMediator mediator) {
         this.mediator = mediator;
     }
 

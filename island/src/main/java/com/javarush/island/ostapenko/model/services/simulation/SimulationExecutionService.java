@@ -42,8 +42,8 @@ public class SimulationExecutionService {
                     for (Animal animal : cell1.getAnimals()) {
                         // deathService.executeDeathDueToOldAge(animal, cell1, island);
                         //feedingService.executeEat(animal, cell1, island);
-                        //reproductionService.executeReproduce(animal, cell1, island);
-                        movementService.executeMove(animal, cell1, island);
+                        reproductionService.executeReproduce(animal, cell1, island);
+
 
 
                     }

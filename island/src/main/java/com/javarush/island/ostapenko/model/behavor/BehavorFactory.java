@@ -3,11 +3,12 @@ package com.javarush.island.ostapenko.model.behavor;
 import com.javarush.island.ostapenko.model.behavor.implementaions.NoOpEdibleStrategy;
 import com.javarush.island.ostapenko.model.behavor.implementaions.animal.GenericAnimalAgingStrategy;
 import com.javarush.island.ostapenko.model.behavor.implementaions.animal.GenericAnimalMoveStrategy;
+import com.javarush.island.ostapenko.model.behavor.implementaions.animal.GenericAnimalReproduceStrategy;
 import com.javarush.island.ostapenko.model.behavor.implementaions.animal.nerbivore.*;
 import com.javarush.island.ostapenko.model.behavor.implementaions.animal.predator.*;
 import com.javarush.island.ostapenko.model.behavor.implementaions.plant.DandelionBeingEatenStrategy;
-import com.javarush.island.ostapenko.model.behavor.implementaions.plant.DandelionReproduceStrategy;
 import com.javarush.island.ostapenko.model.behavor.implementaions.plant.GenericPlantAgingStrategy;
+import com.javarush.island.ostapenko.model.behavor.implementaions.plant.GenericPlantReproduceStrategy;
 import com.javarush.island.ostapenko.model.behavor.interfaces.*;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
 import com.javarush.island.ostapenko.model.entity.Creature;
@@ -39,17 +40,14 @@ public class BehavorFactory {
     }
     public static AnimalReproducible createReproduceStrategy(Animal animal,IMediator mediator){
         return switch(animal){
-            case Wolf w -> new WolfReproduceStrategy(mediator);
-            case Rabbit r -> new RabbitReprocudeStrategy(mediator);
-            case null -> throw new RuntimeException("Animal cannot be null");
-            default -> throw new RuntimeException("Unknown animal: " + animal.getClass());
+            case null -> throw new RuntimeException("Creature cannot be null");
+            default -> new GenericAnimalReproduceStrategy(mediator);
         };
     }
     public static PlantReproducible createReproduceStrategy(Plant plant, IMediator mediator){
         return switch(plant){
-            case Dandelion d -> new DandelionReproduceStrategy();
             case null -> throw new RuntimeException("Plant cannot be null");
-            default -> throw new RuntimeException("Unknown plant: " + plant.getClass());
+            default -> new GenericPlantReproduceStrategy();
         };
     }
     public static Edible<? extends Creature, ? extends Creature> createBeingEatenStrategy(Creature creature){

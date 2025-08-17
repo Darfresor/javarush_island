@@ -5,10 +5,9 @@ import com.javarush.island.ostapenko.model.entity.plant.Plant;
 import com.javarush.island.ostapenko.model.island.Cell;
 import com.javarush.island.ostapenko.model.island.Island;
 
-public class DandelionReproduceStrategy implements PlantReproducible {
-
+public class GenericPlantReproduceStrategy implements PlantReproducible {
     @Override
     public void reproduce(Plant plant, Cell cell, Island island) {
-        System.out.println("Одуванчик размножается");
+        System.out.println("Растение размножается");
     }
 }
