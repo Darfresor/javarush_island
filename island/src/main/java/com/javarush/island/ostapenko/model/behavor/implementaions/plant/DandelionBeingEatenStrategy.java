@@ -11,6 +11,6 @@ public class DandelionBeingEatenStrategy implements Edible<Animal, Plant> {
     public void deathByEating(Animal predator, Plant victim, Cell cell) {
         cell.removePlant(victim);
         Logger.logDeathService(predator, cell, String.format("%s был съеден %s и умер",
-                predator.getSpeciesName(),victim.getSpeciesName()));
+                victim.getSpeciesName(), predator.getSpeciesName()));
     }
 }

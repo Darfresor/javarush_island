@@ -4,6 +4,7 @@ import com.javarush.island.ostapenko.model.behavor.implementaions.NoOpEdibleStra
 import com.javarush.island.ostapenko.model.behavor.implementaions.animal.GenericAnimalAgingStrategy;
 import com.javarush.island.ostapenko.model.behavor.implementaions.animal.GenericAnimalMoveStrategy;
 import com.javarush.island.ostapenko.model.behavor.implementaions.animal.GenericAnimalReproduceStrategy;
+import com.javarush.island.ostapenko.model.behavor.implementaions.animal.GenericAnimalStarvableStrategy;
 import com.javarush.island.ostapenko.model.behavor.implementaions.animal.nerbivore.*;
 import com.javarush.island.ostapenko.model.behavor.implementaions.animal.predator.*;
 import com.javarush.island.ostapenko.model.behavor.implementaions.plant.DandelionBeingEatenStrategy;
@@ -59,12 +60,11 @@ public class BehavorFactory {
             default -> throw new RuntimeException("Unknown creature: " + creature.getClass());
         };
     }
-    public static Starvable createStarvableStrategy(Animal animal){
-        return switch(animal){
-            case Wolf w -> new WolfStarvableStrategy();
-            case Rabbit r -> new RabbitStarvableStrategy();
+    public static Starvable createStarvableStrategy(Creature creature){
+        return switch(creature){
+            case Animal w -> new GenericAnimalStarvableStrategy();
             case null -> throw new RuntimeException("Animal cannot be null");
-            default -> throw new RuntimeException("Unknown animal: " + animal.getClass());
+            default -> throw new RuntimeException("Unknown animal: " + creature.getClass());
         };
     }
 
