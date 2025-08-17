@@ -6,7 +6,6 @@ import com.javarush.island.ostapenko.model.entity.animal.predator.Wolf;
 import com.javarush.island.ostapenko.model.island.Cell;
 import com.javarush.island.ostapenko.model.island.Island;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.javarush.island.ostapenko.constants.Gender.FEMALE;
@@ -32,7 +31,7 @@ public class AnimalPopulationService {
         cell.addAnimal(wolf1);
         //cell.addAnimal(wolf2);
         //cell.addAnimal(wolf3);
-        cell2.addAnimal(rabbit1);
+        //cell2.addAnimal(rabbit1);
         //cell2.addAnimal(rabbit2);
         island.setCell(cell); //0.0
         island.setCell(cell2);//0.1
