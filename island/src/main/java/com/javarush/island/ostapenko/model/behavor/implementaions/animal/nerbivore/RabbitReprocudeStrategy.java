@@ -18,7 +18,7 @@ public class RabbitReprocudeStrategy implements AnimalReproducible {
     @Override
     public void reproduce(Animal animal, Cell cell, Island island) {
         if(animal.getReprocudedInCurrentTurn()){
-            Logger.logService(animal, cell, String.format("%s уже участвовал в размножении ранее",
+            Logger.logReproductionService(animal, cell, String.format("%s уже участвовал в размножении ранее",
                     animal.getSpeciesName()));
             return;
         }
@@ -27,7 +27,7 @@ public class RabbitReprocudeStrategy implements AnimalReproducible {
                     && cellAnimal.getGender() != animal.getGender()
                     && !cellAnimal.getReprocudedInCurrentTurn()
             ) {
-                Logger.logService(animal, cell, String.format("%s размножается",
+                Logger.logReproductionService(animal, cell, String.format("%s размножается",
                         animal.getSpeciesName()));
                 animal.setReprocudedInCurrentTurn(true);
                 cellAnimal.setReprocudedInCurrentTurn(true);
@@ -39,7 +39,7 @@ public class RabbitReprocudeStrategy implements AnimalReproducible {
                 return;
             }
         }
-        Logger.logService(animal, cell, String.format("%s не нашел пары для размножения",
+        Logger.logReproductionService(animal, cell, String.format("%s не нашел пары для размножения",
                 animal.getSpeciesName()));
         mediator.notify(new AnimalMoveForReproduceEvent(animal, cell, island));
     }

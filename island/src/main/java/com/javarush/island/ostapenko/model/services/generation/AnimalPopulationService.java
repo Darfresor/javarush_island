@@ -31,7 +31,7 @@ public class AnimalPopulationService {
         Rabbit rabbit2 = new Rabbit("Кролик",3*365,10*365,FEMALE,2f,2f,2,0.45f, 0.5f);
         cell.addAnimal(wolf1);
         //cell.addAnimal(wolf2);
-        //cell.addAnimal(wolf3);
+        cell.addAnimal(wolf3);
         //cell2.addAnimal(rabbit1);
         //cell2.addAnimal(rabbit2);
         island.setCell(cell); //0.0
