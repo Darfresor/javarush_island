@@ -6,6 +6,8 @@ import com.javarush.island.ostapenko.model.entity.plant.Plant;
 import com.javarush.island.ostapenko.model.island.Cell;
 import com.javarush.island.ostapenko.model.island.Island;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +15,8 @@ public class Logger {
     private final static boolean DEBUG = true;
     private static final List<String> logBuffer = new ArrayList<>();
     private static final int BUFFER_LIMIT = 1_000;
+    private static final DateTimeFormatter TIME_FORMATTER =
+            DateTimeFormatter.ofPattern("HH:mm:ss");
 
     private Logger() {
     }
@@ -32,7 +36,8 @@ public class Logger {
 
 
     public static void logService(Creature creature, Cell cell, String message, String serviceName){
-        log(String.format("(%s) || Thread-%s, ячейка-[%d %d]: [%s %d]  %s",
+        log(String.format(" %s :(%s) || Thread-%s, ячейка-[%d %d]: [%s %d]  %s",
+                LocalTime.now().format(TIME_FORMATTER),
                 serviceName,
                 Thread.currentThread().getName(),
                 cell.getX(),

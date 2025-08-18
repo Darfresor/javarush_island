@@ -11,6 +11,7 @@ import com.javarush.island.ostapenko.model.services.mediator.event.AnimalMoveEve
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalStarvationEvent;
 import com.javarush.island.ostapenko.util.Logger;
 
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class GenericCarnivoreEatStrategy implements Eatable {
@@ -21,7 +22,7 @@ public class GenericCarnivoreEatStrategy implements Eatable {
     }
 
     @Override
-    public void eat(Animal eater, Cell cell, Island island) {
+    public void eat(Animal eater, Cell cell, Island island, ExecutorService movementServiceThread) {
         for (Animal target : cell.getAnimals()) {
             if (EatingRules.canEat(eater.getClass(), target.getClass())) {
                 double probability = EatingRules.getEatProbability(eater.getClass(), target.getClass());
@@ -32,6 +33,7 @@ public class GenericCarnivoreEatStrategy implements Eatable {
                     Logger.logFeedingService(eater, cell, String.format("%s съел %s",
                             eater.getSpeciesName(), target.getSpeciesName()));
                     mediator.notify(new AnimalEatenEvent(eater, target, cell));
+
                     eater.setSatiety(calculateSatiety(eater, target));
                     Logger.logFeedingService(eater, cell, String.format("Сытость %s = %f",
                             eater.getSpeciesName(), eater.getSatiety()));
@@ -48,7 +50,8 @@ public class GenericCarnivoreEatStrategy implements Eatable {
         Logger.logFeedingService(eater, cell, String.format("%s не нашел еды в этой клетке",
                 eater.getSpeciesName()));
         if (checkDeathByStarvation(eater, cell, island)) return;
-        mediator.notify(new AnimalMoveEvent(eater, cell, island));
+        movementServiceThread.submit(()->mediator.notify(new AnimalMoveEvent(eater, cell, island)));
+
     }
 
     private boolean checkDeathByStarvation(Animal eater, Cell cell, Island island) {

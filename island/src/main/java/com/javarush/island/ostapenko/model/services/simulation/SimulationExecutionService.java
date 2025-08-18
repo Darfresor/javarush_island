@@ -14,12 +14,16 @@ import com.javarush.island.ostapenko.model.services.mediator.EventMediator;
 import com.javarush.island.ostapenko.model.services.mediator.IMediator;
 import com.javarush.island.ostapenko.util.Logger;
 
-import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class SimulationExecutionService {
+    private final ExecutorService feedingServiceThread = Executors.newSingleThreadExecutor();
+    private final ExecutorService movementServiceThread = Executors.newSingleThreadExecutor();
     private final Island island;
     private final IMediator mediator = new EventMediator();
-    private final FeedingService feedingService = new FeedingService(mediator);
+    private final FeedingService feedingService = new FeedingService(mediator, movementServiceThread);
     private final MovementService movementService = new MovementService();
     private final ReproductionService reproductionService = new ReproductionService(mediator);
     private final DeathService deathService = new DeathService();
@@ -40,8 +44,16 @@ public class SimulationExecutionService {
         Logger.logIslandComposition(island);
         Logger.flush();
 
+
+        feedingServiceThread.submit(()->feedingService.executeEat(island));
         //deathService.executeDeathDueToOldAge(island);
-        feedingService.executeEat(island);
+        try {
+            System.out.println("Пауза на 5 секунд");
+            TimeUnit.SECONDS.sleep(5);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
 
 
         Logger.logIslandComposition(island);
