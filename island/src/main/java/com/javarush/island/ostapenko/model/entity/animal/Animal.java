@@ -1,5 +1,6 @@
 package com.javarush.island.ostapenko.model.entity.animal;
 
+import com.javarush.island.ostapenko.constants.DietType;
 import com.javarush.island.ostapenko.constants.Gender;
 import com.javarush.island.ostapenko.model.entity.Creature;
 
@@ -19,9 +20,10 @@ public abstract class Animal extends Creature {
     protected float satiety;
     protected float foodToBeFullySatiatedInKg;
     protected boolean reprocudedInCurrentTurn;
+    protected DietType dietType;
 
     public Animal(String speciesName, int ageInDay, int maxAgeInDay, Gender gender, float weightInKg,
-                  float maxWeightInKg, int cellsPerTurnSpeed, float foodToBeFullySatiatedInKg, float satiety){
+                  float maxWeightInKg, int cellsPerTurnSpeed, float foodToBeFullySatiatedInKg, float satiety, DietType dietType){
         this.speciesName = speciesName;
         this.ageInDay = ageInDay;
         this.maxAgeInDay = maxAgeInDay;
@@ -31,6 +33,7 @@ public abstract class Animal extends Creature {
         this.cellsPerTurnSpeed = cellsPerTurnSpeed;
         this.foodToBeFullySatiatedInKg = foodToBeFullySatiatedInKg;
         this.satiety = satiety;
+        this.dietType = dietType;
 
         this.cellsLeftInCurrentTurn = cellsPerTurnSpeed;
         this.reprocudedInCurrentTurn = false;
@@ -98,6 +101,10 @@ public abstract class Animal extends Creature {
 
     public void setReprocudedInCurrentTurn(boolean reprocudedInCurrentTurn) {
         this.reprocudedInCurrentTurn = reprocudedInCurrentTurn;
+    }
+
+    public DietType getDietType() {
+        return dietType;
     }
 
     @Override

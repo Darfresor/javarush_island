@@ -1,4 +1,4 @@
-package com.javarush.island.ostapenko.model.behavor.implementaions.animal.predator;
+package com.javarush.island.ostapenko.model.behavor.implementaions.animal;
 
 import com.javarush.island.ostapenko.model.behavor.EatingRules;
 import com.javarush.island.ostapenko.model.behavor.interfaces.Eatable;
@@ -13,10 +13,10 @@ import com.javarush.island.ostapenko.util.Logger;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class WolfEatStrategy implements Eatable {
+public class GenericCarnivoreEatStrategy implements Eatable {
     private final IMediator mediator;
 
-    public WolfEatStrategy(IMediator mediator) {
+    public GenericCarnivoreEatStrategy(IMediator mediator) {
         this.mediator = mediator;
     }
 
@@ -33,7 +33,7 @@ public class WolfEatStrategy implements Eatable {
                             eater.getSpeciesName(), target.getSpeciesName()));
                     mediator.notify(new AnimalEatenEvent(eater, target, cell));
                     eater.setSatiety(calculateSatiety(eater, target));
-                    Logger.logFeedingService(eater, cell, String.format("Голод %s = %f",
+                    Logger.logFeedingService(eater, cell, String.format("Сытость %s = %f",
                             eater.getSpeciesName(), eater.getSatiety()));
                     return;
                 } else {
@@ -53,7 +53,7 @@ public class WolfEatStrategy implements Eatable {
 
     private boolean checkDeathByStarvation(Animal eater, Cell cell, Island island) {
         reduceSatiety(eater);
-        Logger.logFeedingService(eater, cell, String.format("Голод %s = %f",
+        Logger.logFeedingService(eater, cell, String.format("Сытость %s = %f",
                 eater.getSpeciesName(), eater.getSatiety()));
         if (eater.getSatiety() == 0) {
             mediator.notify(new AnimalStarvationEvent(eater, cell, island));

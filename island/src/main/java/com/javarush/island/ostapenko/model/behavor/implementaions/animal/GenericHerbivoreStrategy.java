@@ -1,4 +1,4 @@
-package com.javarush.island.ostapenko.model.behavor.implementaions.animal.nerbivore;
+package com.javarush.island.ostapenko.model.behavor.implementaions.animal;
 
 import com.javarush.island.ostapenko.model.behavor.EatingRules;
 import com.javarush.island.ostapenko.model.behavor.interfaces.Eatable;
@@ -7,18 +7,16 @@ import com.javarush.island.ostapenko.model.entity.plant.Plant;
 import com.javarush.island.ostapenko.model.island.Cell;
 import com.javarush.island.ostapenko.model.island.Island;
 import com.javarush.island.ostapenko.model.services.mediator.IMediator;
-import com.javarush.island.ostapenko.model.services.mediator.event.AnimalEatenEvent;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalMoveEvent;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalStarvationEvent;
 import com.javarush.island.ostapenko.model.services.mediator.event.PlantEatenEvent;
 import com.javarush.island.ostapenko.util.Logger;
-
 import java.util.concurrent.ThreadLocalRandom;
 
-public class RabbitEatStrategy implements Eatable {
+public class GenericHerbivoreStrategy implements Eatable {
     private final IMediator mediator;
 
-    public RabbitEatStrategy(IMediator mediator) {
+    public GenericHerbivoreStrategy(IMediator mediator) {
         this.mediator = mediator;
     }
 
@@ -35,7 +33,7 @@ public class RabbitEatStrategy implements Eatable {
                             eater.getSpeciesName(), target.getSpeciesName()));
                     mediator.notify(new PlantEatenEvent(eater, target, cell));
                     eater.setSatiety(calculateSatiety(eater, target));
-                    Logger.logFeedingService(eater, cell, String.format("Голод %s = %f",
+                    Logger.logFeedingService(eater, cell, String.format("Сытость %s = %f",
                             eater.getSpeciesName(), eater.getSatiety()));
                     return;
                 } else {
@@ -47,14 +45,15 @@ public class RabbitEatStrategy implements Eatable {
 
             }
         }
-        System.out.println("Кролик не нашел еды в этой клетке");
+        Logger.logFeedingService(eater, cell, String.format("%s не нашел еды в этой клетке",
+                eater.getSpeciesName()));
         if (checkDeathByStarvation(eater, cell, island)) return;
         mediator.notify(new AnimalMoveEvent(eater, cell, island));
     }
 
     private boolean checkDeathByStarvation(Animal eater, Cell cell, Island island) {
         reduceSatiety(eater);
-        Logger.logFeedingService(eater, cell, String.format("Голод %s = %f",
+        Logger.logFeedingService(eater, cell, String.format("Сытость %s = %f",
                 eater.getSpeciesName(), eater.getSatiety()));
         if (eater.getSatiety() == 0) {
             mediator.notify(new AnimalStarvationEvent(eater, cell, island));
@@ -85,3 +84,4 @@ public class RabbitEatStrategy implements Eatable {
         }
     }
 }
+
