@@ -5,17 +5,29 @@ import com.javarush.island.ostapenko.model.behavor.interfaces.Moveable;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
 import com.javarush.island.ostapenko.model.island.Cell;
 import com.javarush.island.ostapenko.model.island.Island;
+import com.javarush.island.ostapenko.model.services.executors.ModelThreadPoolManager;
 import com.javarush.island.ostapenko.model.services.mediator.IEventHandler;
-import com.javarush.island.ostapenko.model.services.mediator.event.AnimalMoveEvent;
+import com.javarush.island.ostapenko.model.services.mediator.IMediator;
+import com.javarush.island.ostapenko.model.services.mediator.event.AnimalMoveForEatEvent;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalMoveForReproduceEvent;
 import com.javarush.island.ostapenko.model.services.mediator.event.Event;
 import com.javarush.island.ostapenko.util.Logger;
 
+import java.util.concurrent.TimeUnit;
+
 public class MovementService implements IEventHandler {
-    public void executeMove(Animal animal, Cell currentCell, Island island) {
+    private final IMediator mediator;
+    private final ModelThreadPoolManager modelThreadPoolManager;
+
+    public MovementService(IMediator mediator, ModelThreadPoolManager modelThreadPoolManager) {
+        this.mediator = mediator;
+        this.modelThreadPoolManager = modelThreadPoolManager;
+    }
+
+    public void executeMove(Animal animal, Cell currentCell, Island island, Event event) {
         try {
-            Moveable strategy = BehavorFactory.createMoveStrategy(animal);
-            strategy.move(animal, currentCell, island);
+            Moveable strategy = BehavorFactory.createMoveStrategy(animal, mediator);
+            strategy.move(animal, currentCell, island, event, modelThreadPoolManager);
         }finally{
             Logger.flush();
         }
@@ -25,8 +37,8 @@ public class MovementService implements IEventHandler {
     @Override
     public void handle(Event event) {
         switch(event){
-            case AnimalMoveEvent e-> executeMove(e.getAnimal(), e.getCurrentCell(), e.getIsland());
-            case AnimalMoveForReproduceEvent e-> executeMove(e.getAnimal(), e.getCurrentCell(), e.getIsland());
+            case AnimalMoveForEatEvent e-> executeMove(e.getAnimal(), e.getCurrentCell(), e.getIsland(), e);
+            case AnimalMoveForReproduceEvent e-> executeMove(e.getAnimal(), e.getCurrentCell(), e.getIsland(), e);
             case null -> throw new RuntimeException("Event cannot be null");
             default -> throw new RuntimeException("Unknown event: " + event.getClass());
         }

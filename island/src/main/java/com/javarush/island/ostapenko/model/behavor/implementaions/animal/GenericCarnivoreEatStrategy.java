@@ -8,11 +8,10 @@ import com.javarush.island.ostapenko.model.island.Island;
 import com.javarush.island.ostapenko.model.services.executors.ModelThreadPoolManager;
 import com.javarush.island.ostapenko.model.services.mediator.IMediator;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalEatenEvent;
-import com.javarush.island.ostapenko.model.services.mediator.event.AnimalMoveEvent;
+import com.javarush.island.ostapenko.model.services.mediator.event.AnimalMoveForEatEvent;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalStarvationEvent;
 import com.javarush.island.ostapenko.util.Logger;
 
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class GenericCarnivoreEatStrategy implements Eatable {
@@ -51,7 +50,7 @@ public class GenericCarnivoreEatStrategy implements Eatable {
         Logger.logFeedingService(eater, cell, String.format("%s не нашел еды в этой клетке",
                 eater.getSpeciesName()));
         if (checkDeathByStarvation(eater, cell, island)) return;
-        modelThreadPoolManager.executeMoveTask((()->mediator.notify(new AnimalMoveEvent(eater, cell, island))));
+        modelThreadPoolManager.executeMoveTask((()->mediator.notify(new AnimalMoveForEatEvent(eater, cell, island))));
 
     }
 

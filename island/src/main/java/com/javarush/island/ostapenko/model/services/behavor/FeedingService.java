@@ -6,16 +6,17 @@ import com.javarush.island.ostapenko.model.entity.animal.Animal;
 import com.javarush.island.ostapenko.model.island.Cell;
 import com.javarush.island.ostapenko.model.island.Island;
 import com.javarush.island.ostapenko.model.services.executors.ModelThreadPoolManager;
+import com.javarush.island.ostapenko.model.services.mediator.IEventHandler;
 import com.javarush.island.ostapenko.model.services.mediator.IMediator;
+import com.javarush.island.ostapenko.model.services.mediator.event.AnimalEatEvent;
+import com.javarush.island.ostapenko.model.services.mediator.event.Event;
 import com.javarush.island.ostapenko.util.Logger;
 
-import java.util.concurrent.ExecutorService;
-
-public class FeedingService {
+public class FeedingService implements IEventHandler {
     private final IMediator mediator;
     private final ModelThreadPoolManager modelThreadPoolManager;
 
-    public FeedingService(IMediator mediator,  ModelThreadPoolManager modelThreadPoolManager) {
+    public FeedingService(IMediator mediator, ModelThreadPoolManager modelThreadPoolManager) {
         this.mediator = mediator;
         this.modelThreadPoolManager = modelThreadPoolManager;
     }
@@ -34,6 +35,25 @@ public class FeedingService {
             }
         } finally {
             Logger.flush();
+        }
+    }
+
+    public void executeEat(Animal animal, Cell cell, Island island) {
+        try {
+            Eatable strategy = BehavorFactory.createEatStrategy(animal, mediator);
+            strategy.eat(animal, cell, island, modelThreadPoolManager);
+
+        } finally {
+            Logger.flush();
+        }
+    }
+
+    @Override
+    public void handle(Event event) {
+        switch (event) {
+            case AnimalEatEvent e -> executeEat(e.getEater(), e.getCell(), e.getIsland());
+            case null -> throw new RuntimeException("Event cannot be null");
+            default -> throw new RuntimeException("Unknown event: " + event.getClass());
         }
     }
 }

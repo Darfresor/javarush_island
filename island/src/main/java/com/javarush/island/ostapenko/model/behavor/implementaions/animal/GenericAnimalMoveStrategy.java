@@ -4,6 +4,9 @@ import com.javarush.island.ostapenko.model.behavor.interfaces.Moveable;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
 import com.javarush.island.ostapenko.model.island.Cell;
 import com.javarush.island.ostapenko.model.island.Island;
+import com.javarush.island.ostapenko.model.services.executors.ModelThreadPoolManager;
+import com.javarush.island.ostapenko.model.services.mediator.IMediator;
+import com.javarush.island.ostapenko.model.services.mediator.event.*;
 import com.javarush.island.ostapenko.util.Logger;
 
 import java.util.ArrayList;
@@ -15,9 +18,16 @@ import java.util.concurrent.ThreadLocalRandom;
 public class GenericAnimalMoveStrategy implements Moveable {
     private record Point(int x, int y) {
     }
+    private final IMediator mediator;
+
+    public GenericAnimalMoveStrategy(IMediator mediator) {
+        this.mediator = mediator;
+    }
+
+
 
     @Override
-    public void move(Animal animal, Cell currentCell, Island island) {
+    public void move(Animal animal, Cell currentCell, Island island, Event event, ModelThreadPoolManager modelThreadPoolManager) {
         if (animal.getCellsLeftInCurrentTurn() == 0) {
             Logger.logMovementService(animal, currentCell, String.format("%s устал и больше не может двигаться", animal.getSpeciesName()));
         } else {
@@ -32,6 +42,11 @@ public class GenericAnimalMoveStrategy implements Moveable {
             originalFutureCell.addAnimal(animal);
             Logger.logMovementService(animal, currentCell, String.format("%s передвинулся в соседнюю клетку, у него осталось ходов %d",
                     animal.getSpeciesName(), animal.getCellsLeftInCurrentTurn()));
+            switch (event) {
+                case AnimalMoveForEatEvent e -> modelThreadPoolManager.executeFeedTask(()->mediator.notify(new AnimalEatEvent(animal, futureCell, island)));
+                case null -> throw new RuntimeException("Event cannot be null");
+                default -> throw new RuntimeException("Unknown event: " + event.getClass());
+            };
         }
 
     }

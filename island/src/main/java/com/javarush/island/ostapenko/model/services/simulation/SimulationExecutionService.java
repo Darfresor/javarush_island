@@ -24,7 +24,7 @@ public class SimulationExecutionService {
     private final Island island;
     private final IMediator mediator = new EventMediator();
     private final FeedingService feedingService = new FeedingService(mediator, modelThreadPoolManager);
-    private final MovementService movementService = new MovementService();
+    private final MovementService movementService = new MovementService(mediator, modelThreadPoolManager);
     private final ReproductionService reproductionService = new ReproductionService(mediator);
     private final DeathService deathService = new DeathService();
 
@@ -40,6 +40,7 @@ public class SimulationExecutionService {
         mediator.subsribe(EventType.PLANT_EATEN, deathService);
         mediator.subsribe(EventType.ANIMAL_MOVE_EAT, movementService);
         mediator.subsribe(EventType.ANIMAL_MOVE_REPRODUCE, movementService);
+        mediator.subsribe(EventType.ANIMAL_EAT, feedingService);
 
         Logger.logIslandComposition(island);
         Logger.flush();

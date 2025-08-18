@@ -25,7 +25,7 @@ public class AnimalPopulationService {
     public void generate() {
         Cell cell = new Cell(0, 0);
         Cell cell2 = new Cell(0, 1);
-        Wolf wolf1 = new Wolf("Волк",9*365+364,10*365,MALE,50f,50f,3,8,0.5f, DietType.CARNIVORE);
+        Wolf wolf1 = new Wolf("Волк",9*365+364,10*365,MALE,50f,50f,3,8,1.0f, DietType.CARNIVORE);
         Wolf wolf2 = new Wolf("Волк",3*365,10*365,MALE,50f,50f,3,8,0.5f, DietType.CARNIVORE);
         Wolf wolf3 = new Wolf("Волк",3*365,10*365,FEMALE,50f,50f,3,8,0.5f, DietType.CARNIVORE);
         Rabbit rabbit1 = new Rabbit("Кролик",8*365+364,10*365,MALE,2f,2f,2,0.45f, 0.5f, DietType.HERBIVORE);

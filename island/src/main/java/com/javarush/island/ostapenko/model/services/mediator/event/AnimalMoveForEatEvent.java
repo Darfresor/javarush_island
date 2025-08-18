@@ -8,12 +8,12 @@ import com.javarush.island.ostapenko.model.island.Island;
 import static com.javarush.island.ostapenko.constants.EventType.ANIMAL_MOVE_EAT;
 
 
-public class AnimalMoveEvent implements Event{
+public class AnimalMoveForEatEvent implements Event{
     private final Animal animal;
     private final Cell currentCell;
     private final Island island;
 
-    public AnimalMoveEvent(Animal animal, Cell currentCell, Island island) {
+    public AnimalMoveForEatEvent(Animal animal, Cell currentCell, Island island) {
         this.animal = animal;
         this.currentCell = currentCell;
         this.island = island;

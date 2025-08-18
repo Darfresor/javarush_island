@@ -8,7 +8,7 @@ import com.javarush.island.ostapenko.model.island.Cell;
 import com.javarush.island.ostapenko.model.island.Island;
 import com.javarush.island.ostapenko.model.services.executors.ModelThreadPoolManager;
 import com.javarush.island.ostapenko.model.services.mediator.IMediator;
-import com.javarush.island.ostapenko.model.services.mediator.event.AnimalMoveEvent;
+import com.javarush.island.ostapenko.model.services.mediator.event.AnimalMoveForEatEvent;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalStarvationEvent;
 import com.javarush.island.ostapenko.model.services.mediator.event.PlantEatenEvent;
 import com.javarush.island.ostapenko.util.Logger;
@@ -50,7 +50,7 @@ public class GenericHerbivoreStrategy implements Eatable {
         Logger.logFeedingService(eater, cell, String.format("%s не нашел еды в этой клетке",
                 eater.getSpeciesName()));
         if (checkDeathByStarvation(eater, cell, island)) return;
-        mediator.notify(new AnimalMoveEvent(eater, cell, island));
+        mediator.notify(new AnimalMoveForEatEvent(eater, cell, island));
     }
 
     private boolean checkDeathByStarvation(Animal eater, Cell cell, Island island) {

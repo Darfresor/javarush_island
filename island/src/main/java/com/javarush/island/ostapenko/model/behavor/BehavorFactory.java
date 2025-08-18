@@ -14,9 +14,9 @@ public class BehavorFactory {
     private BehavorFactory() {
     }
 
-    public static Moveable createMoveStrategy(Creature creature){
+    public static Moveable createMoveStrategy(Creature creature, IMediator mediator){
      return switch(creature){
-       case Animal a -> new GenericAnimalMoveStrategy();
+       case Animal a -> new GenericAnimalMoveStrategy(mediator);
        case null -> throw new RuntimeException("Animal cannot be null");
        default -> throw new RuntimeException("Unknown animal: " + creature.getClass());
      };
