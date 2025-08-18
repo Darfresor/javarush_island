@@ -1,17 +1,12 @@
 package com.javarush.island.ostapenko.model.behavor;
 
-import com.javarush.island.ostapenko.model.behavor.implementaions.NoOpEdibleStrategy;
+import com.javarush.island.ostapenko.model.behavor.implementaions.GenericBeingEatenStrategy;
 import com.javarush.island.ostapenko.model.behavor.implementaions.animal.*;
-import com.javarush.island.ostapenko.model.behavor.implementaions.animal.nerbivore.*;
-import com.javarush.island.ostapenko.model.behavor.implementaions.plant.DandelionBeingEatenStrategy;
 import com.javarush.island.ostapenko.model.behavor.implementaions.plant.GenericPlantAgingStrategy;
 import com.javarush.island.ostapenko.model.behavor.implementaions.plant.GenericPlantReproduceStrategy;
 import com.javarush.island.ostapenko.model.behavor.interfaces.*;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
 import com.javarush.island.ostapenko.model.entity.Creature;
-import com.javarush.island.ostapenko.model.entity.animal.herbivore.Rabbit;
-import com.javarush.island.ostapenko.model.entity.animal.predator.Wolf;
-import com.javarush.island.ostapenko.model.entity.plant.Dandelion;
 import com.javarush.island.ostapenko.model.entity.plant.Plant;
 import com.javarush.island.ostapenko.model.services.mediator.IMediator;
 
@@ -55,13 +50,11 @@ public class BehavorFactory {
     }
     public static Edible<? extends Creature, ? extends Creature> createBeingEatenStrategy(Creature creature){
         return switch(creature){
-            case Wolf w -> new NoOpEdibleStrategy();
-            case Rabbit r -> new RabbitBeingEatenStrategy();
-            case Dandelion d-> new DandelionBeingEatenStrategy();
             case null -> throw new RuntimeException("Creature cannot be null");
-            default -> throw new RuntimeException("Unknown creature: " + creature.getClass());
+            default -> new GenericBeingEatenStrategy();
         };
     }
+
     public static Starvable createStarvableStrategy(Creature creature){
         return switch(creature){
             case Animal w -> new GenericAnimalStarvableStrategy();
