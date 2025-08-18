@@ -6,13 +6,13 @@ import com.javarush.island.ostapenko.model.entity.animal.Animal;
 import com.javarush.island.ostapenko.model.entity.plant.Plant;
 import com.javarush.island.ostapenko.model.island.Cell;
 import com.javarush.island.ostapenko.model.island.Island;
+import com.javarush.island.ostapenko.model.services.executors.ModelThreadPoolManager;
 import com.javarush.island.ostapenko.model.services.mediator.IMediator;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalMoveEvent;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalStarvationEvent;
 import com.javarush.island.ostapenko.model.services.mediator.event.PlantEatenEvent;
 import com.javarush.island.ostapenko.util.Logger;
 
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class GenericHerbivoreStrategy implements Eatable {
@@ -23,7 +23,7 @@ public class GenericHerbivoreStrategy implements Eatable {
     }
 
     @Override
-    public void eat(Animal eater, Cell cell, Island island, ExecutorService movementServiceThread) {
+    public void eat(Animal eater, Cell cell, Island island, ModelThreadPoolManager modelThreadPoolManager) {
         for (Plant target : cell.getPlants()) {
             if (EatingRules.canEat(eater.getClass(), target.getClass())) {
                 double probability = EatingRules.getEatProbability(eater.getClass(), target.getClass());

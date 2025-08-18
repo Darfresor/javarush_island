@@ -10,6 +10,7 @@ import com.javarush.island.ostapenko.model.services.behavor.DeathService;
 import com.javarush.island.ostapenko.model.services.behavor.FeedingService;
 import com.javarush.island.ostapenko.model.services.behavor.MovementService;
 import com.javarush.island.ostapenko.model.services.behavor.ReproductionService;
+import com.javarush.island.ostapenko.model.services.executors.ModelThreadPoolManager;
 import com.javarush.island.ostapenko.model.services.mediator.EventMediator;
 import com.javarush.island.ostapenko.model.services.mediator.IMediator;
 import com.javarush.island.ostapenko.util.Logger;
@@ -19,11 +20,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class SimulationExecutionService {
-    private final ExecutorService feedingServiceThread = Executors.newSingleThreadExecutor();
-    private final ExecutorService movementServiceThread = Executors.newSingleThreadExecutor();
+    private final ModelThreadPoolManager modelThreadPoolManager = new ModelThreadPoolManager();
     private final Island island;
     private final IMediator mediator = new EventMediator();
-    private final FeedingService feedingService = new FeedingService(mediator, movementServiceThread);
+    private final FeedingService feedingService = new FeedingService(mediator, modelThreadPoolManager);
     private final MovementService movementService = new MovementService();
     private final ReproductionService reproductionService = new ReproductionService(mediator);
     private final DeathService deathService = new DeathService();
@@ -45,7 +45,7 @@ public class SimulationExecutionService {
         Logger.flush();
 
 
-        feedingServiceThread.submit(()->feedingService.executeEat(island));
+        modelThreadPoolManager.executeFeedTask(()->feedingService.executeEat(island));
         //deathService.executeDeathDueToOldAge(island);
         try {
             System.out.println("Пауза на 5 секунд");

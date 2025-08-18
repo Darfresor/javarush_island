@@ -5,6 +5,7 @@ import com.javarush.island.ostapenko.model.behavor.interfaces.Eatable;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
 import com.javarush.island.ostapenko.model.island.Cell;
 import com.javarush.island.ostapenko.model.island.Island;
+import com.javarush.island.ostapenko.model.services.executors.ModelThreadPoolManager;
 import com.javarush.island.ostapenko.model.services.mediator.IMediator;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalEatenEvent;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalMoveEvent;
@@ -22,7 +23,7 @@ public class GenericCarnivoreEatStrategy implements Eatable {
     }
 
     @Override
-    public void eat(Animal eater, Cell cell, Island island, ExecutorService movementServiceThread) {
+    public void eat(Animal eater, Cell cell, Island island, ModelThreadPoolManager modelThreadPoolManager) {
         for (Animal target : cell.getAnimals()) {
             if (EatingRules.canEat(eater.getClass(), target.getClass())) {
                 double probability = EatingRules.getEatProbability(eater.getClass(), target.getClass());
@@ -50,7 +51,7 @@ public class GenericCarnivoreEatStrategy implements Eatable {
         Logger.logFeedingService(eater, cell, String.format("%s не нашел еды в этой клетке",
                 eater.getSpeciesName()));
         if (checkDeathByStarvation(eater, cell, island)) return;
-        movementServiceThread.submit(()->mediator.notify(new AnimalMoveEvent(eater, cell, island)));
+        modelThreadPoolManager.executeMoveTask((()->mediator.notify(new AnimalMoveEvent(eater, cell, island))));
 
     }
 

@@ -5,6 +5,7 @@ import com.javarush.island.ostapenko.model.behavor.interfaces.Eatable;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
 import com.javarush.island.ostapenko.model.island.Cell;
 import com.javarush.island.ostapenko.model.island.Island;
+import com.javarush.island.ostapenko.model.services.executors.ModelThreadPoolManager;
 import com.javarush.island.ostapenko.model.services.mediator.IMediator;
 import com.javarush.island.ostapenko.util.Logger;
 
@@ -12,11 +13,11 @@ import java.util.concurrent.ExecutorService;
 
 public class FeedingService {
     private final IMediator mediator;
-    private final ExecutorService movementServiceThread;
+    private final ModelThreadPoolManager modelThreadPoolManager;
 
-    public FeedingService(IMediator mediator, ExecutorService movementServiceThread) {
+    public FeedingService(IMediator mediator,  ModelThreadPoolManager modelThreadPoolManager) {
         this.mediator = mediator;
-        this.movementServiceThread = movementServiceThread;
+        this.modelThreadPoolManager = modelThreadPoolManager;
     }
 
     public void executeEat(Island island) {
@@ -26,7 +27,7 @@ public class FeedingService {
                     if (cellHorizontal != null) {
                         for (Animal animal : cellHorizontal.getAnimals()) {
                             Eatable strategy = BehavorFactory.createEatStrategy(animal, mediator);
-                            strategy.eat(animal, cellHorizontal, island, movementServiceThread);
+                            strategy.eat(animal, cellHorizontal, island, modelThreadPoolManager);
                         }
                     }
                 }
