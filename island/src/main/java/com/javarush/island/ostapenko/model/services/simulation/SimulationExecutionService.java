@@ -40,8 +40,8 @@ public class SimulationExecutionService {
         Logger.logIslandComposition(island);
         Logger.flush();
 
-        deathService.executeDeathDueToOldAge(island);
-
+        //deathService.executeDeathDueToOldAge(island);
+        feedingService.executeEat(island);
 
 
         Logger.logIslandComposition(island);
