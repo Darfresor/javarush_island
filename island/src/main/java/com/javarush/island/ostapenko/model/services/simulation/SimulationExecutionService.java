@@ -40,6 +40,9 @@ public class SimulationExecutionService {
         Logger.logIslandComposition(island);
         Logger.flush();
 
+        deathService.executeDeathDueToOldAge(island);
+
+        /*
         for (Cell[] cell : island.getGridCopy()) {
             for (Cell cell1 : cell) {
                 if (cell1 != null) {
@@ -59,6 +62,7 @@ public class SimulationExecutionService {
                 }
             }
         }
+        */
 
         Logger.logIslandComposition(island);
         Logger.flush();

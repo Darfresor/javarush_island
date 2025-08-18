@@ -27,17 +27,25 @@ public class DeathService implements IEventHandler {
 
     public void executeDeathFromStarvation(Animal animal, Cell cell, Island island) {
         try {
-        Starvable strategy = BehavorFactory.createStarvableStrategy(animal);
-        strategy.deathFromStarvation(animal, cell, island);
+            Starvable strategy = BehavorFactory.createStarvableStrategy(animal);
+            strategy.deathFromStarvation(animal, cell, island);
         } finally {
             Logger.flush();
         }
     }
 
-    public <T extends Creature> void executeDeathDueToOldAge(T creature, Cell cell, Island island) {
+    public  void executeDeathDueToOldAge(Island island) {
         try {
-            Aging<? super T> strategy = (Aging<? super T>) BehavorFactory.createAgingStrategy(creature);
-            strategy.deathDueToOldAge(creature, cell, island);
+            for (Cell[] cellVertical : island.getGridCopy()) {
+                for (Cell cellHorizontal : cellVertical) {
+                    if (cellHorizontal != null) {
+                        for (Animal animal : cellHorizontal.getAnimals()) {
+                            Aging<Animal> strategy = (Aging<Animal>) BehavorFactory.createAgingStrategy(animal);
+                            strategy.deathDueToOldAge(animal, cellHorizontal, island);
+                        }
+                    }
+                }
+            }
         } finally {
             Logger.flush();
         }
