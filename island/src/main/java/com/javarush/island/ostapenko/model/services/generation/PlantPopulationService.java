@@ -7,6 +7,7 @@ import com.javarush.island.ostapenko.model.entity.plant.Dandelion;
 import com.javarush.island.ostapenko.model.entity.plant.Plant;
 import com.javarush.island.ostapenko.model.island.Cell;
 import com.javarush.island.ostapenko.model.island.Island;
+import com.javarush.island.ostapenko.util.Logger;
 
 import java.util.List;
 
@@ -24,19 +25,6 @@ public class PlantPopulationService {
         cell.addPlant(dandelion1);
         cell.addPlant(dandelion2);
         island.setCell(cell);
-
-        for (int i = 0; i < island.getGridCopy().length; i++) {
-            for (int j = 0; j < island.getGridCopy()[0].length; j++) {
-                if(island.getGridCopy()[i][j]!=null){
-                    List<Plant> listPlant = island.getGridCopy()[i][j].getPlants();
-                    System.out.println(String.format("Клетка [%d:%d] содержит растения: %s",i, j
-                            ,listPlant
-                    ));
-                }else{
-                    System.out.println(String.format("Клетка [%d:%d] без растений",i, j));
-                }
-
-            }
-        }
+        Logger.log("Генерация растений завершена");
     }
 }

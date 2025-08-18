@@ -1,7 +1,10 @@
 package com.javarush.island.ostapenko.util;
 
 import com.javarush.island.ostapenko.model.entity.Creature;
+import com.javarush.island.ostapenko.model.entity.animal.Animal;
+import com.javarush.island.ostapenko.model.entity.plant.Plant;
 import com.javarush.island.ostapenko.model.island.Cell;
+import com.javarush.island.ostapenko.model.island.Island;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,15 +30,7 @@ public class Logger {
         }
     }
 
-    public static void logService(Creature creature, Cell cell, String message){
-        log(String.format("Thread-%s, ячейка-[%d %d]: [%s %d]  %s",
-                Thread.currentThread().getName(),
-                cell.getX(),
-                cell.getY(),
-                creature.getClass().getSimpleName(),
-                System.identityHashCode(creature),
-                message));
-    }
+
     public static void logService(Creature creature, Cell cell, String message, String serviceName){
         log(String.format("(%s) || Thread-%s, ячейка-[%d %d]: [%s %d]  %s",
                 serviceName,
@@ -57,6 +52,34 @@ public class Logger {
     }
     public static void logFeedingService(Creature creature, Cell cell, String message){
         logService(creature,cell, message, "FeedingService");
+    }
+    public static void logIslandComposition(Island island){
+        for (int i = 0; i < island.getGridCopy().length; i++) {
+            for (int j = 0; j < island.getGridCopy()[0].length; j++) {
+                if(island.getGridCopy()[i][j]!=null){
+                    List<Animal> listAnimal = island.getGridCopy()[i][j].getAnimals();
+                    log(String.format("Клетка [%d:%d] содержит животных: %s",i, j
+                            ,listAnimal
+                    ));
+                }else{
+                    log(String.format("Клетка [%d:%d] без животных",i, j));
+                }
+
+            }
+        }
+        for (int i = 0; i < island.getGridCopy().length; i++) {
+            for (int j = 0; j < island.getGridCopy()[0].length; j++) {
+                if(island.getGridCopy()[i][j]!=null){
+                    List<Plant> listPlant = island.getGridCopy()[i][j].getPlants();
+                    log(String.format("Клетка [%d:%d] содержит растения: %s",i, j
+                            ,listPlant));
+                }else{
+                    log(String.format("Клетка [%d:%d] без растений",i, j));
+                }
+
+            }
+        }
+
     }
 
     public static void flush() {

@@ -12,6 +12,7 @@ import com.javarush.island.ostapenko.model.services.behavor.MovementService;
 import com.javarush.island.ostapenko.model.services.behavor.ReproductionService;
 import com.javarush.island.ostapenko.model.services.mediator.EventMediator;
 import com.javarush.island.ostapenko.model.services.mediator.IMediator;
+import com.javarush.island.ostapenko.util.Logger;
 
 import java.util.List;
 
@@ -36,6 +37,9 @@ public class SimulationExecutionService {
         mediator.subsribe(EventType.ANIMAL_MOVE_EAT, movementService);
         mediator.subsribe(EventType.ANIMAL_MOVE_REPRODUCE, movementService);
 
+        Logger.logIslandComposition(island);
+        Logger.flush();
+
         for (Cell[] cell : island.getGridCopy()) {
             for (Cell cell1 : cell) {
                 if (cell1 != null) {
@@ -56,32 +60,8 @@ public class SimulationExecutionService {
             }
         }
 
-        for (int i = 0; i < island.getGridCopy().length; i++) {
-            for (int j = 0; j < island.getGridCopy()[0].length; j++) {
-                if(island.getGridCopy()[i][j]!=null){
-                    List<Animal> listAnimal = island.getGridCopy()[i][j].getAnimals();
-                    System.out.println(String.format("Клетка [%d:%d] содержит животных: %s",i, j
-                            ,listAnimal
-                    ));
-                }else{
-                    System.out.println(String.format("Клетка [%d:%d] без животных",i, j));
-                }
-
-            }
-        }
-        for (int i = 0; i < island.getGridCopy().length; i++) {
-            for (int j = 0; j < island.getGridCopy()[0].length; j++) {
-                if(island.getGridCopy()[i][j]!=null){
-                    List<Plant> listPlant = island.getGridCopy()[i][j].getPlants();
-                    System.out.println(String.format("Клетка [%d:%d] содержит растения: %s",i, j
-                            ,listPlant
-                    ));
-                }else{
-                    System.out.println(String.format("Клетка [%d:%d] без растений",i, j));
-                }
-
-            }
-        }
+        Logger.logIslandComposition(island);
+        Logger.flush();
 
 
     }

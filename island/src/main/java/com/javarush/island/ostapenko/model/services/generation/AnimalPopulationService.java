@@ -6,6 +6,7 @@ import com.javarush.island.ostapenko.model.entity.animal.herbivore.Rabbit;
 import com.javarush.island.ostapenko.model.entity.animal.predator.Wolf;
 import com.javarush.island.ostapenko.model.island.Cell;
 import com.javarush.island.ostapenko.model.island.Island;
+import com.javarush.island.ostapenko.util.Logger;
 
 import java.util.List;
 
@@ -38,19 +39,6 @@ public class AnimalPopulationService {
         island.setCell(cell2);//0.1
         island.setCell(new Cell(1,0));//1.0
         island.setCell(new Cell(1,1));//1.1
-
-        for (int i = 0; i < island.getGridCopy().length; i++) {
-            for (int j = 0; j < island.getGridCopy()[0].length; j++) {
-                if(island.getGridCopy()[i][j]!=null){
-                    List<Animal> listAnimal = island.getGridCopy()[i][j].getAnimals();
-                    System.out.println(String.format("Клетка [%d:%d] содержит животных: %s",i, j
-                    ,listAnimal
-                    ));
-                }else{
-                    System.out.println(String.format("Клетка [%d:%d] без животных",i, j));
-                }
-
-            }
-        }
+        Logger.log("Генерация животных завершена");
     }
 }
