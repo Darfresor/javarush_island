@@ -6,6 +6,7 @@ import com.javarush.island.ostapenko.model.behavor.interfaces.Edible;
 import com.javarush.island.ostapenko.model.behavor.interfaces.Starvable;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
 import com.javarush.island.ostapenko.model.entity.Creature;
+import com.javarush.island.ostapenko.model.entity.plant.Plant;
 import com.javarush.island.ostapenko.model.island.Cell;
 import com.javarush.island.ostapenko.model.island.Island;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalEatenEvent;
@@ -42,6 +43,10 @@ public class DeathService implements IEventHandler {
                         for (Animal animal : cellHorizontal.getAnimals()) {
                             Aging<Animal> strategy = (Aging<Animal>) BehavorFactory.createAgingStrategy(animal);
                             strategy.deathDueToOldAge(animal, cellHorizontal, island);
+                        }
+                        for (Plant plant : cellHorizontal.getPlants()) {
+                            Aging<Plant> strategy = (Aging<Plant>) BehavorFactory.createAgingStrategy(plant);
+                            strategy.deathDueToOldAge(plant, cellHorizontal, island);
                         }
                     }
                 }
