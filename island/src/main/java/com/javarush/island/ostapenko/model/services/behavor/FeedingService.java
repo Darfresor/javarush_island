@@ -12,6 +12,8 @@ import com.javarush.island.ostapenko.model.services.mediator.event.AnimalEatEven
 import com.javarush.island.ostapenko.model.services.mediator.event.Event;
 import com.javarush.island.ostapenko.util.Logger;
 
+import java.util.UUID;
+
 public class FeedingService implements IEventHandler {
     private final IMediator mediator;
     private final ModelThreadPoolManager modelThreadPoolManager;
@@ -26,9 +28,12 @@ public class FeedingService implements IEventHandler {
             for (Cell[] cellVertical : island.getGridCopy()) {
                 for (Cell cellHorizontal : cellVertical) {
                     if (cellHorizontal != null) {
-                        for (Animal animal : cellHorizontal.getAnimals()) {
-                            Eatable strategy = BehavorFactory.createEatStrategy(animal, mediator);
-                            strategy.eat(animal, cellHorizontal, island, modelThreadPoolManager);
+                        for (UUID animalId : cellHorizontal.getAnimalIds()) {
+                            Animal animal = cellHorizontal.getAnimalById(animalId);
+                            if (animal != null && !animal.isBeingEaten()) {
+                                Eatable strategy = BehavorFactory.createEatStrategy(animal, mediator);
+                                strategy.eat(animal, cellHorizontal, island, modelThreadPoolManager);
+                            }
                         }
                     }
                 }

@@ -12,6 +12,7 @@ import com.javarush.island.ostapenko.model.services.mediator.event.AnimalMoveFor
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalStarvationEvent;
 import com.javarush.island.ostapenko.util.Logger;
 
+import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class GenericCarnivoreEatStrategy implements Eatable {
@@ -23,20 +24,25 @@ public class GenericCarnivoreEatStrategy implements Eatable {
 
     @Override
     public void eat(Animal eater, Cell cell, Island island, ModelThreadPoolManager modelThreadPoolManager) {
-        for (Animal target : cell.getAnimals()) {
+        for (UUID animalId : cell.getAnimalIds()) {
+            Animal target = cell.getAnimalById(animalId);
+            if (target == null || target.isBeingEaten()) continue;
             if (EatingRules.canEat(eater.getClass(), target.getClass())) {
                 double probability = EatingRules.getEatProbability(eater.getClass(), target.getClass());
                 Logger.logFeedingService(eater, cell, String.format("%s нашел существо %s, вероятность съесть его = %f процентов",
                         eater.getSpeciesName(), target.getSpeciesName(), probability));
 
                 if (ThreadLocalRandom.current().nextDouble() < probability) {
-                    Logger.logFeedingService(eater, cell, String.format("%s съел %s",
-                            eater.getSpeciesName(), target.getSpeciesName()));
-                    modelThreadPoolManager.executeDeathTask(()->mediator.notify(new AnimalEatenEvent(eater, target, cell)));
-                    eater.setSatiety(calculateSatiety(eater, target));
-                    Logger.logFeedingService(eater, cell, String.format("Сытость %s = %f",
-                            eater.getSpeciesName(), eater.getSatiety()));
-                    return;
+                    if (target.markAsEaten()) {
+                        Logger.logFeedingService(eater, cell, String.format("%s съел %s",
+                                eater.getSpeciesName(), target.getSpeciesName()));
+                        modelThreadPoolManager.executeDeathTask(() -> mediator.notify(new AnimalEatenEvent(eater, target, cell)));
+                        eater.setSatiety(calculateSatiety(eater, target));
+                        Logger.logFeedingService(eater, cell, String.format("Сытость %s = %f",
+                                eater.getSpeciesName(), eater.getSatiety()));
+                        return;
+                    }
+
                 } else {
                     Logger.logFeedingService(eater, cell, String.format("%s не смог съесть %s",
                             eater.getSpeciesName(), target.getSpeciesName()));
@@ -49,7 +55,7 @@ public class GenericCarnivoreEatStrategy implements Eatable {
         Logger.logFeedingService(eater, cell, String.format("%s не нашел еды в этой клетке",
                 eater.getSpeciesName()));
         if (checkDeathByStarvation(eater, cell, island, modelThreadPoolManager)) return;
-        modelThreadPoolManager.executeMoveTask((()->mediator.notify(new AnimalMoveForEatEvent(eater, cell, island))));
+        modelThreadPoolManager.executeMoveTask((() -> mediator.notify(new AnimalMoveForEatEvent(eater, cell, island))));
 
     }
 
@@ -58,7 +64,7 @@ public class GenericCarnivoreEatStrategy implements Eatable {
         Logger.logFeedingService(eater, cell, String.format("Сытость %s = %f",
                 eater.getSpeciesName(), eater.getSatiety()));
         if (eater.getSatiety() == 0) {
-            modelThreadPoolManager.executeDeathTask(()->mediator.notify(new AnimalStarvationEvent(eater, cell, island)));
+            modelThreadPoolManager.executeDeathTask(() -> mediator.notify(new AnimalStarvationEvent(eater, cell, island)));
             return true;
         }
         return false;

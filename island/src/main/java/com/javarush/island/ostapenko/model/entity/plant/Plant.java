@@ -3,15 +3,19 @@ package com.javarush.island.ostapenko.model.entity.plant;
 
 import com.javarush.island.ostapenko.model.entity.Creature;
 
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 public abstract class Plant extends Creature {
-    private static AtomicLong uniqueObjectId= new AtomicLong(0);;
+    private final UUID id;
+    private final AtomicBoolean isBeingEaten = new AtomicBoolean(false);
     protected String speciesName;
     protected int ageInDay;
     protected int maxAgeInDay;
     protected float weightInKg;
     protected float maxWeightInKg;
     protected int maxNumberOfPlantInCell;
+
 
     public Plant(String speciesName, int ageInDay, int maxAgeInDay, float weightInKg, float maxWeightInKg, int maxNumberOfPlantInCell) {
         this.speciesName = speciesName;
@@ -20,6 +24,8 @@ public abstract class Plant extends Creature {
         this.weightInKg = weightInKg;
         this.maxWeightInKg = maxWeightInKg;
         this.maxNumberOfPlantInCell = maxNumberOfPlantInCell;
+
+        this.id = UUID.randomUUID();
     }
 
     @Override
@@ -51,6 +57,17 @@ public abstract class Plant extends Creature {
 
     public int getMaxNumberOfPlantInCell() {
         return maxNumberOfPlantInCell;
+    }
+    public boolean markAsEaten() {
+        return isBeingEaten.compareAndSet(false, true);
+    }
+
+    public boolean isBeingEaten() {
+        return isBeingEaten.get();
+    }
+
+    public UUID getId() {
+        return id;
     }
 
     public void setAgeInDay(int ageInDay) {

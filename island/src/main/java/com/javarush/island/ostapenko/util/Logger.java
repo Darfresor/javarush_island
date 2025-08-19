@@ -9,6 +9,7 @@ import com.javarush.island.ostapenko.model.island.Island;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class Logger {
@@ -62,7 +63,7 @@ public class Logger {
         for (int i = 0; i < island.getGridCopy().length; i++) {
             for (int j = 0; j < island.getGridCopy()[0].length; j++) {
                 if(island.getGridCopy()[i][j]!=null){
-                    List<Animal> listAnimal = island.getGridCopy()[i][j].getAnimals();
+                    Collection<Animal> listAnimal = island.getGridCopy()[i][j].getAnimals();
                     log(String.format("Клетка [%d:%d] содержит животных: %s",i, j
                             ,listAnimal
                     ));
@@ -75,7 +76,7 @@ public class Logger {
         for (int i = 0; i < island.getGridCopy().length; i++) {
             for (int j = 0; j < island.getGridCopy()[0].length; j++) {
                 if(island.getGridCopy()[i][j]!=null){
-                    List<Plant> listPlant = island.getGridCopy()[i][j].getPlants();
+                    Collection<Plant> listPlant = island.getGridCopy()[i][j].getPlants();
                     log(String.format("Клетка [%d:%d] содержит растения: %s",i, j
                             ,listPlant));
                 }else{

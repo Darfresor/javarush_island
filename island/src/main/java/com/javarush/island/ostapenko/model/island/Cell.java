@@ -3,15 +3,16 @@ package com.javarush.island.ostapenko.model.island;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
 import com.javarush.island.ostapenko.model.entity.plant.Plant;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Collection;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Cell {
     private final int x;
     private final int y;
-    private List<Animal> animals = new CopyOnWriteArrayList<>();;
-    private List<Plant> plants = new CopyOnWriteArrayList<>();;
+    private final ConcurrentHashMap<UUID, Animal> animals = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<UUID,Plant> plants = new ConcurrentHashMap<>();
+
 
     public Cell(int x, int y) {
         this.x = x;
@@ -19,24 +20,40 @@ public class Cell {
     }
 
     public boolean  addAnimal(Animal animal){
-        return animals.add(animal);
+        return animals.putIfAbsent(animal.getId(), animal) == null;
     }
     public boolean removeAnimal(Animal animal){
-        return animals.remove(animal);
+        return animals.remove(animal.getId(), animal);
     }
 
-    public List<Animal> getAnimals(){
-        return  Collections.unmodifiableList(animals);
+    public Collection<Animal> getAnimals(){
+        return animals.values();
     }
     public boolean addPlant(Plant plant){
-        return plants.add(plant);
+        return plants.putIfAbsent(plant.getId(), plant) == null;
     }
     public boolean removePlant(Plant plant){
-        return plants.remove(plant);
+
+        return plants.remove(plant.getId(), plant);
     }
 
-    public List<Plant> getPlants(){
-        return Collections.unmodifiableList(plants);
+    public Collection<Plant> getPlants(){
+        return plants.values();
+    }
+
+    public UUID[] getAnimalIds() {
+        return animals.keySet().toArray(new UUID[0]);
+    }
+
+    public Animal getAnimalById(UUID id) {
+        return animals.get(id);
+    }
+    public UUID[] getPlantIds() {
+        return plants.keySet().toArray(new UUID[0]);
+    }
+
+    public Plant getPlantById(UUID id) {
+        return plants.get(id);
     }
 
     public int getX() {

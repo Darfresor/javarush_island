@@ -4,10 +4,14 @@ import com.javarush.island.ostapenko.constants.DietType;
 import com.javarush.island.ostapenko.constants.Gender;
 import com.javarush.island.ostapenko.model.entity.Creature;
 
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 
 public abstract class Animal extends Creature {
-    private static AtomicLong uniqueObjectId= new AtomicLong(0);;
+    private final UUID id;
+
+    private final AtomicBoolean isBeingEaten = new AtomicBoolean(false);
     protected String speciesName;
     protected int ageInDay;
     protected int maxAgeInDay;
@@ -35,6 +39,7 @@ public abstract class Animal extends Creature {
         this.satiety = satiety;
         this.dietType = dietType;
 
+        this.id = UUID.randomUUID();
         this.cellsLeftInCurrentTurn = cellsPerTurnSpeed;
         this.reprocudedInCurrentTurn = false;
     }
@@ -105,6 +110,17 @@ public abstract class Animal extends Creature {
 
     public DietType getDietType() {
         return dietType;
+    }
+
+    public boolean markAsEaten() {
+        return isBeingEaten.compareAndSet(false, true);
+    }
+
+    public boolean isBeingEaten() {
+        return isBeingEaten.get();
+    }
+    public UUID getId() {
+        return id;
     }
 
     @Override
