@@ -13,7 +13,6 @@ import com.javarush.island.ostapenko.model.services.mediator.event.AnimalMoveFor
 import com.javarush.island.ostapenko.model.services.mediator.event.Event;
 import com.javarush.island.ostapenko.util.Logger;
 
-import java.util.concurrent.TimeUnit;
 
 public class MovementService implements IEventHandler {
     private final IMediator mediator;
@@ -27,7 +26,7 @@ public class MovementService implements IEventHandler {
     public void executeMove(Animal animal, Cell currentCell, Island island, Event event) {
         try {
             Animal currentaAnimal =currentCell.getAnimalById(animal.getId());
-            if (animal != null && !animal.isBeingEaten()) {
+            if (currentaAnimal != null && !currentaAnimal.isBeingEaten()) {
                 Moveable strategy = BehavorFactory.createMoveStrategy(animal, mediator);
                 strategy.move(animal, currentCell, island, event, modelThreadPoolManager);
             }
