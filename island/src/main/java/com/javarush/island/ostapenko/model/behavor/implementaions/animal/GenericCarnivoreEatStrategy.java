@@ -32,8 +32,7 @@ public class GenericCarnivoreEatStrategy implements Eatable {
                 if (ThreadLocalRandom.current().nextDouble() < probability) {
                     Logger.logFeedingService(eater, cell, String.format("%s съел %s",
                             eater.getSpeciesName(), target.getSpeciesName()));
-                    mediator.notify(new AnimalEatenEvent(eater, target, cell));
-
+                    modelThreadPoolManager.executeDeathTask(()->mediator.notify(new AnimalEatenEvent(eater, target, cell)));
                     eater.setSatiety(calculateSatiety(eater, target));
                     Logger.logFeedingService(eater, cell, String.format("Сытость %s = %f",
                             eater.getSpeciesName(), eater.getSatiety()));
@@ -41,7 +40,7 @@ public class GenericCarnivoreEatStrategy implements Eatable {
                 } else {
                     Logger.logFeedingService(eater, cell, String.format("%s не смог съесть %s",
                             eater.getSpeciesName(), target.getSpeciesName()));
-                    if (checkDeathByStarvation(eater, cell, island)) return;
+                    if (checkDeathByStarvation(eater, cell, island, modelThreadPoolManager)) return;
                     return;
                 }
 
@@ -49,17 +48,17 @@ public class GenericCarnivoreEatStrategy implements Eatable {
         }
         Logger.logFeedingService(eater, cell, String.format("%s не нашел еды в этой клетке",
                 eater.getSpeciesName()));
-        if (checkDeathByStarvation(eater, cell, island)) return;
+        if (checkDeathByStarvation(eater, cell, island, modelThreadPoolManager)) return;
         modelThreadPoolManager.executeMoveTask((()->mediator.notify(new AnimalMoveForEatEvent(eater, cell, island))));
 
     }
 
-    private boolean checkDeathByStarvation(Animal eater, Cell cell, Island island) {
+    private boolean checkDeathByStarvation(Animal eater, Cell cell, Island island, ModelThreadPoolManager modelThreadPoolManager) {
         reduceSatiety(eater);
         Logger.logFeedingService(eater, cell, String.format("Сытость %s = %f",
                 eater.getSpeciesName(), eater.getSatiety()));
         if (eater.getSatiety() == 0) {
-            mediator.notify(new AnimalStarvationEvent(eater, cell, island));
+            modelThreadPoolManager.executeDeathTask(()->mediator.notify(new AnimalStarvationEvent(eater, cell, island)));
             return true;
         }
         return false;
