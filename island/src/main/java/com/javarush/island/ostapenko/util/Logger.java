@@ -17,7 +17,7 @@ public class Logger {
     private static final List<String> logBuffer = new ArrayList<>();
     private static final int BUFFER_LIMIT = 1_000;
     private static final DateTimeFormatter TIME_FORMATTER =
-            DateTimeFormatter.ofPattern("HH:mm:ss");
+            DateTimeFormatter.ofPattern("HH:mm:ss.SSS");
 
     private Logger() {
     }
