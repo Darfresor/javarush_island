@@ -12,6 +12,7 @@ public abstract class Animal extends Creature {
     private final UUID id;
 
     private final AtomicBoolean isBeingEaten = new AtomicBoolean(false);
+    private final AtomicBoolean isDeathByOld = new AtomicBoolean(false);
     protected String speciesName;
     protected int ageInDay;
     protected int maxAgeInDay;
@@ -23,7 +24,7 @@ public abstract class Animal extends Creature {
     protected int cellsLeftInCurrentTurn;
     protected float satiety;
     protected float foodToBeFullySatiatedInKg;
-    protected boolean reprocudedInCurrentTurn;
+    protected AtomicBoolean reprocudedInCurrentTurn = new AtomicBoolean(false);
     protected DietType dietType;
 
     public Animal(String speciesName, int ageInDay, int maxAgeInDay, Gender gender, float weightInKg,
@@ -41,7 +42,6 @@ public abstract class Animal extends Creature {
 
         this.id = UUID.randomUUID();
         this.cellsLeftInCurrentTurn = cellsPerTurnSpeed;
-        this.reprocudedInCurrentTurn = false;
     }
 
     public String getSpeciesName() {
@@ -101,11 +101,19 @@ public abstract class Animal extends Creature {
     }
 
     public boolean getReprocudedInCurrentTurn() {
-        return reprocudedInCurrentTurn;
+        return reprocudedInCurrentTurn.get();
     }
 
-    public void setReprocudedInCurrentTurn(boolean reprocudedInCurrentTurn) {
-        this.reprocudedInCurrentTurn = reprocudedInCurrentTurn;
+    public void setReprocudedInCurrentTurn(boolean b) {
+        reprocudedInCurrentTurn.set(b);
+    }
+
+    public boolean getIsDeathByOld() {
+        return isDeathByOld.get();
+    }
+
+    public void setIsDeathByOld(boolean b) {
+        isDeathByOld.set(b);
     }
 
     public DietType getDietType() {
