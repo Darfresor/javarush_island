@@ -12,7 +12,6 @@ public abstract class Animal extends Creature {
     private final UUID id;
 
     private final AtomicBoolean isBeingEaten = new AtomicBoolean(false);
-    private final AtomicBoolean isDeathByOld = new AtomicBoolean(false);
     protected String speciesName;
     protected int ageInDay;
     protected int maxAgeInDay;
@@ -108,13 +107,6 @@ public abstract class Animal extends Creature {
         reprocudedInCurrentTurn.set(b);
     }
 
-    public boolean getIsDeathByOld() {
-        return isDeathByOld.get();
-    }
-
-    public void setIsDeathByOld(boolean b) {
-        isDeathByOld.set(b);
-    }
 
     public DietType getDietType() {
         return dietType;
