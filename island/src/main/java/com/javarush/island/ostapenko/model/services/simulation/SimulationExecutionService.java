@@ -45,9 +45,8 @@ public class SimulationExecutionService {
         Logger.logIslandComposition(island);
         Logger.flush();
 
-
-        modelThreadPoolManager.executeFeedTask(()->feedingService.executeEat(island));
-        //deathService.executeDeathDueToOldAge(island);
+        modelThreadPoolManager.executeCoreTask(()->deathService.executeDeathDueToOldAge(island));
+        modelThreadPoolManager.executeCoreTask(()->feedingService.executeEat(island));
         try {
             System.out.println("Пауза на 5 секунд");
             TimeUnit.SECONDS.sleep(5);

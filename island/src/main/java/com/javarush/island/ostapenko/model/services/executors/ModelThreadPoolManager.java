@@ -4,6 +4,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class ModelThreadPoolManager {
+    private final ExecutorService simulationCoreThread = Executors.newSingleThreadExecutor();
     private final ExecutorService feedingServiceThread = Executors.newSingleThreadExecutor();
     private final ExecutorService movementServiceThread = Executors.newSingleThreadExecutor();
     private final ExecutorService deathServiceThread = Executors.newSingleThreadExecutor();
@@ -20,5 +21,8 @@ public class ModelThreadPoolManager {
     }
     public void executeReproduceTask(Runnable task){
         reproduceServiceThread.submit(task);
+    }
+    public void executeCoreTask(Runnable task){
+        simulationCoreThread.submit(task);
     }
 }
