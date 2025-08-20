@@ -4,9 +4,12 @@ import com.javarush.island.ostapenko.model.behavor.interfaces.AnimalReproducible
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
 import com.javarush.island.ostapenko.model.island.Cell;
 import com.javarush.island.ostapenko.model.island.Island;
+import com.javarush.island.ostapenko.model.services.executors.ModelThreadPoolManager;
 import com.javarush.island.ostapenko.model.services.mediator.IMediator;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalMoveForReproduceEvent;
 import com.javarush.island.ostapenko.util.Logger;
+
+import java.util.UUID;
 
 public class GenericAnimalReproduceStrategy implements AnimalReproducible {
     private final IMediator mediator;
@@ -16,13 +19,14 @@ public class GenericAnimalReproduceStrategy implements AnimalReproducible {
     }
 
     @Override
-    public void reproduce(Animal animal, Cell cell, Island island) {
+    public void reproduce(Animal animal, Cell cell, Island island, ModelThreadPoolManager modelThreadPoolManager) {
         if(animal.getReprocudedInCurrentTurn()){
             Logger.logReproductionService(animal, cell, String.format("%s уже участвовал в размножении ранее",
                     animal.getSpeciesName()));
             return;
         }
-        for (Animal cellAnimal : cell.getAnimals()) {
+        for (UUID animalId : cell.getAnimalIds()) {
+            Animal cellAnimal = cell.getAnimalById(animalId);
             if (cellAnimal.getClass() == animal.getClass()
                     && cellAnimal.getGender() != animal.getGender()
                     && !cellAnimal.getReprocudedInCurrentTurn()
@@ -41,6 +45,6 @@ public class GenericAnimalReproduceStrategy implements AnimalReproducible {
         }
         Logger.logReproductionService(animal, cell, String.format("%s не нашел пары для размножения",
                 animal.getSpeciesName()));
-        mediator.notify(new AnimalMoveForReproduceEvent(animal, cell, island));
+        modelThreadPoolManager.executeMoveTask(()->mediator.notify(new AnimalMoveForReproduceEvent(animal, cell, island)));
     }
 }

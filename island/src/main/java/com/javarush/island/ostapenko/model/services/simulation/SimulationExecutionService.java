@@ -25,7 +25,7 @@ public class SimulationExecutionService {
     private final IMediator mediator = new EventMediator();
     private final FeedingService feedingService = new FeedingService(mediator, modelThreadPoolManager);
     private final MovementService movementService = new MovementService(mediator, modelThreadPoolManager);
-    private final ReproductionService reproductionService = new ReproductionService(mediator);
+    private final ReproductionService reproductionService = new ReproductionService(mediator, modelThreadPoolManager);
     private final DeathService deathService = new DeathService();
 
 
@@ -45,8 +45,9 @@ public class SimulationExecutionService {
         Logger.logIslandComposition(island);
         Logger.flush();
 
-        modelThreadPoolManager.executeCoreTask(()->deathService.executeDeathDueToOldAge(island));
-        modelThreadPoolManager.executeCoreTask(()->feedingService.executeEat(island));
+        //modelThreadPoolManager.executeCoreTask(()->deathService.executeDeathDueToOldAge(island));
+        //modelThreadPoolManager.executeCoreTask(()->feedingService.executeEat(island));
+        modelThreadPoolManager.executeCoreTask(()->reproductionService.executeReproduce(island));
         try {
             System.out.println("Пауза на 5 секунд");
             TimeUnit.SECONDS.sleep(5);

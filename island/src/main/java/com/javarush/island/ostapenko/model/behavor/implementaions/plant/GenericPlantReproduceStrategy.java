@@ -4,10 +4,11 @@ import com.javarush.island.ostapenko.model.behavor.interfaces.PlantReproducible;
 import com.javarush.island.ostapenko.model.entity.plant.Plant;
 import com.javarush.island.ostapenko.model.island.Cell;
 import com.javarush.island.ostapenko.model.island.Island;
+import com.javarush.island.ostapenko.model.services.executors.ModelThreadPoolManager;
 
 public class GenericPlantReproduceStrategy implements PlantReproducible {
     @Override
-    public void reproduce(Plant plant, Cell cell, Island island) {
+    public void reproduce(Plant plant, Cell cell, Island island, ModelThreadPoolManager modelThreadPoolManager) {
         System.out.println("Растение размножается");
     }
 }
