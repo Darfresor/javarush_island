@@ -8,6 +8,8 @@ import com.javarush.island.ostapenko.model.services.generation.IslandGenerationS
 import com.javarush.island.ostapenko.model.services.generation.PlantPopulationService;
 import com.javarush.island.ostapenko.model.services.simulation.SimulationExecutionService;
 
+import java.util.concurrent.TimeUnit;
+
 public class ModelFacade implements IModelFacade{
 
     @Override
@@ -17,8 +19,7 @@ public class ModelFacade implements IModelFacade{
         new PlantPopulationService(island).generate();
 
         SimulationExecutionService simulationExecutionService = new SimulationExecutionService(island);
-        simulationExecutionService.start();
-
+        simulationExecutionService.start(0,2, TimeUnit.SECONDS);
 
         return null;
     }

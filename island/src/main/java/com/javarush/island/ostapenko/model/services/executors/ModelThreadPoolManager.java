@@ -3,6 +3,7 @@ package com.javarush.island.ostapenko.model.services.executors;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Phaser;
+import java.util.concurrent.TimeUnit;
 
 public class ModelThreadPoolManager {
     private final ExecutorService simulationCoreThread;
