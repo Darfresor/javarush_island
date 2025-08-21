@@ -20,25 +20,16 @@ import java.util.UUID;
 
 public class DeathService implements IEventHandler {
     public <E extends Creature, T extends Creature> void executeDeathByEating(E predator, T victim, Cell cell) {
-        try {
             Edible<? super E, ? super T> strategy = (Edible<? super E, ? super T>) BehavorFactory.createBeingEatenStrategy(victim);
             strategy.deathByEating(predator, victim, cell);
-        } finally {
-            Logger.flush();
-        }
     }
 
     public void executeDeathFromStarvation(Animal animal, Cell cell, Island island) {
-        try {
             Starvable strategy = BehavorFactory.createStarvableStrategy(animal);
             strategy.deathFromStarvation(animal, cell, island);
-        } finally {
-            Logger.flush();
-        }
     }
 
     public void executeDeathDueToOldAge(Island island) {
-        try {
             for (Cell[] cellVertical : island.getGridCopy()) {
                 for (Cell cellHorizontal : cellVertical) {
                     if (cellHorizontal != null) {
@@ -59,9 +50,6 @@ public class DeathService implements IEventHandler {
                     }
                 }
             }
-        } finally {
-            Logger.flush();
-        }
     }
 
     @Override

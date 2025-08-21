@@ -24,15 +24,11 @@ public class MovementService implements IEventHandler {
     }
 
     public void executeMove(Animal animal, Cell currentCell, Island island, Event event) {
-        try {
             Animal currentaAnimal =currentCell.getAnimalById(animal.getId());
             if (currentaAnimal != null && !currentaAnimal.isBeingEaten()) {
                 Moveable strategy = BehavorFactory.createMoveStrategy(animal, mediator);
                 strategy.move(animal, currentCell, island, event, modelThreadPoolManager);
             }
-        }finally{
-            Logger.flush();
-        }
 
     }
 

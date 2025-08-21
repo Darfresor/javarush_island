@@ -25,7 +25,6 @@ public class ReproductionService {
     }
 
     public void executeReproduce(Island island) {
-        try {
             for (Cell[] cellVertical : island.getGridCopy()) {
                 for (Cell cellHorizontal : cellVertical) {
                     if (cellHorizontal != null) {
@@ -44,12 +43,6 @@ public class ReproductionService {
                     }
                 }
             }
-
-
-
-        }finally{
-            Logger.flush();
-        }
     }
 
     private void executeConcreteStrategy(Creature creature, Cell cell, Island island){

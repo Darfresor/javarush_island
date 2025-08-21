@@ -24,7 +24,6 @@ public class FeedingService implements IEventHandler {
     }
 
     public void executeEat(Island island) {
-        try {
             for (Cell[] cellVertical : island.getGridCopy()) {
                 for (Cell cellHorizontal : cellVertical) {
                     if (cellHorizontal != null) {
@@ -38,19 +37,11 @@ public class FeedingService implements IEventHandler {
                     }
                 }
             }
-        } finally {
-            Logger.flush();
-        }
     }
 
     public void executeEat(Animal animal, Cell cell, Island island) {
-        try {
             Eatable strategy = BehavorFactory.createEatStrategy(animal, mediator);
             strategy.eat(animal, cell, island, modelThreadPoolManager);
-
-        } finally {
-            Logger.flush();
-        }
     }
 
     @Override

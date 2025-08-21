@@ -17,10 +17,12 @@ import com.javarush.island.ostapenko.util.Logger;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Phaser;
 import java.util.concurrent.TimeUnit;
 
 public class SimulationExecutionService {
-    private final ModelThreadPoolManager modelThreadPoolManager = new ModelThreadPoolManager();
+    private final Phaser phaser = new Phaser(1);
+    private final ModelThreadPoolManager modelThreadPoolManager = new ModelThreadPoolManager(phaser);
     private final Island island;
     private final IMediator mediator = new EventMediator();
     private final FeedingService feedingService = new FeedingService(mediator, modelThreadPoolManager);
@@ -45,18 +47,11 @@ public class SimulationExecutionService {
         Logger.logIslandComposition(island);
         Logger.flush();
 
-        //modelThreadPoolManager.executeCoreTask(()->deathService.executeDeathDueToOldAge(island));
-        //modelThreadPoolManager.executeCoreTask(()->feedingService.executeEat(island));
+        modelThreadPoolManager.executeCoreTask(()->deathService.executeDeathDueToOldAge(island));
+        modelThreadPoolManager.executeCoreTask(()->feedingService.executeEat(island));
         modelThreadPoolManager.executeCoreTask(()->reproductionService.executeReproduce(island));
-        try {
-            System.out.println("Пауза на 5 секунд");
-            TimeUnit.SECONDS.sleep(5);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
 
-
-
+        modelThreadPoolManager.waitForAllTask();
         Logger.logIslandComposition(island);
         Logger.flush();
 
