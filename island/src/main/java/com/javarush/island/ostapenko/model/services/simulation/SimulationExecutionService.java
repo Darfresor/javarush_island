@@ -3,17 +3,13 @@ package com.javarush.island.ostapenko.model.services.simulation;
 
 import com.javarush.island.ostapenko.constants.EventType;
 import com.javarush.island.ostapenko.model.island.Island;
-import com.javarush.island.ostapenko.model.services.behavor.DeathService;
-import com.javarush.island.ostapenko.model.services.behavor.FeedingService;
-import com.javarush.island.ostapenko.model.services.behavor.MovementService;
-import com.javarush.island.ostapenko.model.services.behavor.ReproductionService;
+import com.javarush.island.ostapenko.model.services.behavor.*;
 import com.javarush.island.ostapenko.model.services.executors.ModelThreadPoolManager;
 import com.javarush.island.ostapenko.model.services.mediator.EventMediator;
 import com.javarush.island.ostapenko.model.services.mediator.IMediator;
 import com.javarush.island.ostapenko.util.Logger;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -22,10 +18,11 @@ public class SimulationExecutionService {
     private final ModelThreadPoolManager modelThreadPoolManager = new ModelThreadPoolManager(phaser);
     private final Island island;
     private final IMediator mediator = new EventMediator();
+    private final StatisticsService statisticsService = new StatisticsService();
     private final FeedingService feedingService = new FeedingService(mediator, modelThreadPoolManager);
     private final MovementService movementService = new MovementService(mediator, modelThreadPoolManager);
     private final ReproductionService reproductionService = new ReproductionService(mediator, modelThreadPoolManager);
-    private final DeathService deathService = new DeathService();
+    private final DeathService deathService = new DeathService(mediator, modelThreadPoolManager);
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private final AtomicBoolean isCycleRunning = new AtomicBoolean(false);
 
@@ -35,11 +32,19 @@ public class SimulationExecutionService {
     }
 
     public void start(long initialDelay, long period, TimeUnit unit) {
+
+        statisticsService.intializeFromIsland(island);
+        statisticsService.printStatistics();
         System.out.println("Запускаем цикл симуляций");
 
+        mediator.subsribe(EventType.ANIMAL_DEATH_BY_OLD, statisticsService);
+        mediator.subsribe(EventType.PLANT_DEATH_BY_OLD, statisticsService);
         mediator.subsribe(EventType.ANIMAL_EATEN, deathService);
+        mediator.subsribe(EventType.ANIMAL_EATEN, statisticsService);
         mediator.subsribe(EventType.ANIMAL_STARVATION, deathService);
+        mediator.subsribe(EventType.ANIMAL_STARVATION, statisticsService);
         mediator.subsribe(EventType.PLANT_EATEN, deathService);
+        mediator.subsribe(EventType.PLANT_EATEN,statisticsService);
         mediator.subsribe(EventType.ANIMAL_MOVE_EAT, movementService);
         mediator.subsribe(EventType.ANIMAL_MOVE_REPRODUCE, movementService);
         mediator.subsribe(EventType.ANIMAL_EAT, feedingService);
@@ -75,6 +80,8 @@ public class SimulationExecutionService {
         modelThreadPoolManager.waitForAllTask();
         Logger.logIslandComposition(island);
         Logger.flush();
+
+        statisticsService.printStatistics();
     }
 
 }

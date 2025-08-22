@@ -63,10 +63,10 @@ public class BehavorFactory {
         };
     }
 
-    public static Aging<? extends Creature> createAgingStrategy(Creature creature){
+    public static Aging<? extends Creature> createAgingStrategy(Creature creature, IMediator mediator){
         return  switch(creature){
-            case Animal a -> new GenericAnimalAgingStrategy<>();
-            case Plant p -> new GenericPlantAgingStrategy<>();
+            case Animal a -> new GenericAnimalAgingStrategy<>(mediator);
+            case Plant p -> new GenericPlantAgingStrategy<>(mediator);
             case null -> throw new RuntimeException("creature cannot be null");
             default -> throw new RuntimeException("Unknown creature: " + creature.getClass());
         };

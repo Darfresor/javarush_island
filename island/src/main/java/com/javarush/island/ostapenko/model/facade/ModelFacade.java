@@ -18,6 +18,7 @@ public class ModelFacade implements IModelFacade{
         new AnimalPopulationService(island).generate();
         new PlantPopulationService(island).generate();
 
+
         SimulationExecutionService simulationExecutionService = new SimulationExecutionService(island);
         simulationExecutionService.start(0,2, TimeUnit.SECONDS);
 
