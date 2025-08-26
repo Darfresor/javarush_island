@@ -14,7 +14,7 @@ import static com.javarush.island.ostapenko.constants.GUIViewConstans.*;
  * Class GUIView use JavaFx library.
  * Contains interface rendering and event handling.
  */
-public class GUIView implements View{
+public class GUIView implements ViewFacade {
     Stage stage;
     public GUIView(Stage stage) {
         this.stage = stage;
