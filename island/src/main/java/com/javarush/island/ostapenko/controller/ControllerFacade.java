@@ -1,5 +1,7 @@
 package com.javarush.island.ostapenko.controller;
 
+import com.javarush.island.ostapenko.model.services.command.CommandFactory;
+import com.javarush.island.ostapenko.model.services.command.ICommand;
 import com.javarush.island.ostapenko.view.IViewFacade;
 
 public class ControllerFacade implements IControllerFacade{
@@ -17,6 +19,7 @@ public class ControllerFacade implements IControllerFacade{
 
     @Override
     public void run() {
-        System.out.println(IViewFacade.getParametrs().getCommandType());
+        ICommand command = CommandFactory.createCommand(IViewFacade);
+        command.execute();
     }
 }
