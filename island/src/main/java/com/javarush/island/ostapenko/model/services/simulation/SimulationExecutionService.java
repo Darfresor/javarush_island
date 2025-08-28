@@ -30,6 +30,10 @@ public class SimulationExecutionService {
     public SimulationExecutionService(Island island) {
         this.island = island;
     }
+    public void stop(){
+        modelThreadPoolManager.shutdown();
+        scheduler.shutdownNow();
+    }
 
     public void start(long initialDelay, long period, TimeUnit unit) {
 
@@ -83,5 +87,6 @@ public class SimulationExecutionService {
 
         statisticsService.printStatistics();
     }
+
 
 }

@@ -11,7 +11,7 @@ import com.javarush.island.ostapenko.model.services.simulation.SimulationExecuti
 import java.util.concurrent.TimeUnit;
 
 public class ModelFacade implements IModelFacade{
-
+private SimulationExecutionService simulationExecutionService;
     @Override
     public ModelResponse processSimulation(ModelRequest request) {
         Island island = new IslandGenerationService().generate();
@@ -19,9 +19,14 @@ public class ModelFacade implements IModelFacade{
         new PlantPopulationService(island).generate();
 
 
-        SimulationExecutionService simulationExecutionService = new SimulationExecutionService(island);
+        simulationExecutionService = new SimulationExecutionService(island);
         simulationExecutionService.start(0,2, TimeUnit.SECONDS);
 
         return null;
+    }
+
+    @Override
+    public void stopSimulation() {
+        simulationExecutionService.stop();
     }
 }

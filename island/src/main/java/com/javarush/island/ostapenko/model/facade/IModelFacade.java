@@ -5,4 +5,5 @@ import com.javarush.island.ostapenko.dto.ModelResponse;
 
 public interface IModelFacade {
     ModelResponse processSimulation(ModelRequest request);
+    void stopSimulation();
 }
