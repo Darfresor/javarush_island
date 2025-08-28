@@ -1,30 +1,31 @@
 package com.javarush.island.ostapenko.view;
 
-import com.javarush.island.ostapenko.dto.ModelResponse;
+import com.javarush.island.ostapenko.constants.CommandType;
+import com.javarush.island.ostapenko.dto.CommandRequest;
+import com.javarush.island.ostapenko.dto.CommandResponse;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import static com.javarush.island.ostapenko.constants.GUIViewConstans.*;
+
 /**
  * Class GUIView use JavaFx library.
  * Contains interface rendering and event handling.
  */
-public class GUIView implements ViewFacade {
-    Stage stage;
-    public GUIView(Stage stage) {
+public class JavaFXViewFacade implements IViewFacade {
+    private Stage stage;
+    private Button lastClickedButton;
+    private Button startSimulation;
+    private Button stopSimulation;
+
+    public JavaFXViewFacade(Stage stage) {
         this.stage = stage;
         initUI();
-        setHandlers();
         stage.show();
     }
 
-    private void setHandlers() {
-    }
 
     private void initUI() {
 
@@ -32,20 +33,19 @@ public class GUIView implements ViewFacade {
         Tab gridTab = new Tab("Отображение острова", createGridPane());
         gridTab.setClosable(false);
 
-        Tab settingPane = new Tab("Конфигурация острова",createSetting());
+        Tab settingPane = new Tab("Конфигурация острова", createSetting());
         settingPane.setClosable(false);
 
-        Tab statisticPane = new Tab("Текущая статистика",staticticInfo());
+        Tab statisticPane = new Tab("Текущая статистика", staticticInfo());
         statisticPane.setClosable(false);
 
-        tabPane.getTabs().addAll(gridTab,settingPane,statisticPane);
+        tabPane.getTabs().addAll(gridTab, settingPane, statisticPane);
 
 
         Scene scene = new Scene(tabPane, 1600, 800);
         stage.setTitle(WINDOW_NAME);
         stage.setScene(scene);
         stage.show();
-
 
 
     }
@@ -59,7 +59,12 @@ public class GUIView implements ViewFacade {
     private Pane createSetting() {
 
         TextArea textFiled = new TextArea("Какие-то настройки");
-        VBox pane = new VBox(10,textFiled);
+        startSimulation = new Button("Запустить симуляцию");
+        startSimulation.setUserData(CommandType.START_SUMULATION);
+        stopSimulation = new Button("Оставить симуляцию");
+        stopSimulation.setUserData(CommandType.STOP_SIMULATION);
+        VBox pane = new VBox(10, textFiled, startSimulation, stopSimulation);
+
         return pane;
     }
 
@@ -91,15 +96,26 @@ public class GUIView implements ViewFacade {
     }
 
 
-
     @Override
-    public String[] getParametrs() {
-        //TODO получение параметров из интерефейса
-        return new String[0];
+    public CommandRequest getParametrs() {
+        CommandType commandType = (CommandType) lastClickedButton.getUserData();
+        return new CommandRequest(commandType,"настройки");
     }
 
     @Override
-    public void printResult(ModelResponse modelResponse) {
-    //TODO возврашение результата работы программы в интерефейс
+    public void printResult(CommandResponse commandResponse) {
+        //TODO возврашение результата работы программы в интерефейс
+    }
+
+    @Override
+    public void setupEventHandlers(Runnable runnable) {
+        stopSimulation.setOnAction(event->{
+            lastClickedButton = (Button) event.getSource();
+            runnable.run();
+        });
+        startSimulation.setOnAction(event->{
+            lastClickedButton = (Button) event.getSource();
+            runnable.run();
+        });
     }
 }

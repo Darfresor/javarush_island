@@ -1,13 +1,17 @@
 package com.javarush.island.ostapenko.app;
 
-import com.javarush.island.ostapenko.view.GUIView;
-import com.javarush.island.ostapenko.view.ViewFacade;
+import com.javarush.island.ostapenko.controller.ControllerFacade;
+import com.javarush.island.ostapenko.controller.IControllerFacade;
+import com.javarush.island.ostapenko.view.JavaFXViewFacade;
+import com.javarush.island.ostapenko.view.IViewFacade;
 import javafx.stage.Stage;
 
 public class Application  extends javafx.application.Application {
 
         @Override
         public void start(Stage stage) throws Exception {
-            ViewFacade view = new GUIView(stage);
+            IViewFacade view = new JavaFXViewFacade(stage);
+            IControllerFacade controllerFacade = new ControllerFacade(view);
+            controllerFacade.initializeCommandHandler();
         }
 }
