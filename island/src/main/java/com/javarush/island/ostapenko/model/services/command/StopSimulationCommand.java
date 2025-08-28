@@ -10,8 +10,4 @@ public class StopSimulationCommand implements ICommand{
         return null;
     }
 
-    @Override
-    public CommandType getCommandType() {
-        return null;
-    }
 }
