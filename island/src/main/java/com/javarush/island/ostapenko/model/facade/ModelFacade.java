@@ -8,6 +8,7 @@ import com.javarush.island.ostapenko.core.dto.SimulationStatistics;
 import com.javarush.island.ostapenko.core.interfaces.IModelFacade;
 import com.javarush.island.ostapenko.core.interfaces.observer.IStatisticObservable;
 import com.javarush.island.ostapenko.core.interfaces.observer.IStatisticObserver;
+import com.javarush.island.ostapenko.core.util.Logger;
 import com.javarush.island.ostapenko.model.island.Island;
 import com.javarush.island.ostapenko.model.services.generation.AnimalPopulationService;
 import com.javarush.island.ostapenko.model.services.generation.IslandGenerationService;
@@ -28,7 +29,9 @@ public class ModelFacade implements IModelFacade, IStatisticObservable {
         int getNumOfCellY = request.getData(SimulationSetting.class).getGetNumOfCellY();
         GenerateCreatureType generateCreatureType = request.getData(SimulationSetting.class).getGenerateCreatureType();
         int simulationSpeedMs = request.getData(SimulationSetting.class).getSimulationSpeedMs();
+        boolean isDebug = request.getData(SimulationSetting.class).isDebug();
 
+        Logger.setDebug(isDebug);
         Island island = new IslandGenerationService(numOfCellX, getNumOfCellY).generate(generateCreatureType);
         simulationExecutionService = new SimulationExecutionService(island, this);
         simulationExecutionService.start(0, simulationSpeedMs, TimeUnit.MILLISECONDS);

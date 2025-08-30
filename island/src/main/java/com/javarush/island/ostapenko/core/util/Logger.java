@@ -13,7 +13,7 @@ import java.util.Collection;
 import java.util.List;
 
 public class Logger {
-    private final static boolean DEBUG = true;
+    private static boolean DEBUG = true;
     private static final List<String> logBuffer = new ArrayList<>();
     private static final int BUFFER_LIMIT = 1_000;
     private static final DateTimeFormatter TIME_FORMATTER =
@@ -23,6 +23,9 @@ public class Logger {
     }
 
     ;
+    public static void setDebug(boolean b){
+        DEBUG = b;
+    }
 
     public static void log(String message) {
         if (DEBUG) {
