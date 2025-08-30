@@ -7,8 +7,7 @@ import com.javarush.island.ostapenko.model.island.Island;
 import com.javarush.island.ostapenko.model.services.executors.ModelThreadPoolManager;
 import com.javarush.island.ostapenko.model.services.mediator.IMediator;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalDeathByOld;
-import com.javarush.island.ostapenko.model.services.mediator.event.AnimalEatenEvent;
-import com.javarush.island.ostapenko.util.Logger;
+import com.javarush.island.ostapenko.core.util.Logger;
 
 public class GenericAnimalAgingStrategy<T extends Animal> implements Aging<T> {
     private final IMediator mediator;

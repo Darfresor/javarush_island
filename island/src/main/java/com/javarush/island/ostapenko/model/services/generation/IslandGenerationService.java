@@ -2,7 +2,7 @@ package com.javarush.island.ostapenko.model.services.generation;
 
 import com.javarush.island.ostapenko.model.island.Cell;
 import com.javarush.island.ostapenko.model.island.Island;
-import com.javarush.island.ostapenko.util.Logger;
+import com.javarush.island.ostapenko.core.util.Logger;
 
 public class IslandGenerationService {
     public IslandGenerationService() {

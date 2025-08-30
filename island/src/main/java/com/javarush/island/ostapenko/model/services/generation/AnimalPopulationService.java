@@ -1,14 +1,11 @@
 package com.javarush.island.ostapenko.model.services.generation;
 
 import com.javarush.island.ostapenko.constants.DietType;
-import com.javarush.island.ostapenko.model.entity.animal.Animal;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.Rabbit;
 import com.javarush.island.ostapenko.model.entity.animal.predator.Wolf;
 import com.javarush.island.ostapenko.model.island.Cell;
 import com.javarush.island.ostapenko.model.island.Island;
-import com.javarush.island.ostapenko.util.Logger;
-
-import java.util.List;
+import com.javarush.island.ostapenko.core.util.Logger;
 
 import static com.javarush.island.ostapenko.constants.Gender.FEMALE;
 import static com.javarush.island.ostapenko.constants.Gender.MALE;

@@ -10,7 +10,7 @@ import com.javarush.island.ostapenko.model.services.executors.ModelThreadPoolMan
 import com.javarush.island.ostapenko.model.services.mediator.EventMediator;
 import com.javarush.island.ostapenko.model.services.mediator.IMediator;
 import com.javarush.island.ostapenko.model.services.statictics.StatisticsService;
-import com.javarush.island.ostapenko.util.Logger;
+import com.javarush.island.ostapenko.core.util.Logger;
 
 import java.time.LocalDateTime;
 import java.util.concurrent.*;

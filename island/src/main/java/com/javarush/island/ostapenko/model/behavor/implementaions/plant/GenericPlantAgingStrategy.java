@@ -1,15 +1,13 @@
 package com.javarush.island.ostapenko.model.behavor.implementaions.plant;
 
 import com.javarush.island.ostapenko.model.behavor.interfaces.Aging;
-import com.javarush.island.ostapenko.model.entity.animal.Animal;
 import com.javarush.island.ostapenko.model.entity.plant.Plant;
 import com.javarush.island.ostapenko.model.island.Cell;
 import com.javarush.island.ostapenko.model.island.Island;
 import com.javarush.island.ostapenko.model.services.executors.ModelThreadPoolManager;
 import com.javarush.island.ostapenko.model.services.mediator.IMediator;
-import com.javarush.island.ostapenko.model.services.mediator.event.AnimalDeathByOld;
 import com.javarush.island.ostapenko.model.services.mediator.event.PlantDeathByOld;
-import com.javarush.island.ostapenko.util.Logger;
+import com.javarush.island.ostapenko.core.util.Logger;
 
 public class GenericPlantAgingStrategy<T extends Plant> implements Aging<T> {
     private final IMediator mediator;

@@ -7,7 +7,7 @@ import com.javarush.island.ostapenko.model.island.Island;
 import com.javarush.island.ostapenko.model.services.executors.ModelThreadPoolManager;
 import com.javarush.island.ostapenko.model.services.mediator.IMediator;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalMoveForReproduceEvent;
-import com.javarush.island.ostapenko.util.Logger;
+import com.javarush.island.ostapenko.core.util.Logger;
 
 import java.util.UUID;
 

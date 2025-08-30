@@ -1,4 +1,4 @@
-package com.javarush.island.ostapenko.util;
+package com.javarush.island.ostapenko.core.util;
 
 import com.javarush.island.ostapenko.model.entity.Creature;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;

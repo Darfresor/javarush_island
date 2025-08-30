@@ -11,7 +11,7 @@ import com.javarush.island.ostapenko.model.services.mediator.IMediator;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalMoveForEatEvent;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalStarvationEvent;
 import com.javarush.island.ostapenko.model.services.mediator.event.PlantEatenEvent;
-import com.javarush.island.ostapenko.util.Logger;
+import com.javarush.island.ostapenko.core.util.Logger;
 
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;

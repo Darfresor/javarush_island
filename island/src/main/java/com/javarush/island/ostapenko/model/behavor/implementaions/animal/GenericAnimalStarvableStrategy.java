@@ -4,7 +4,7 @@ import com.javarush.island.ostapenko.model.behavor.interfaces.Starvable;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
 import com.javarush.island.ostapenko.model.island.Cell;
 import com.javarush.island.ostapenko.model.island.Island;
-import com.javarush.island.ostapenko.util.Logger;
+import com.javarush.island.ostapenko.core.util.Logger;
 
 public class GenericAnimalStarvableStrategy implements Starvable {
     @Override

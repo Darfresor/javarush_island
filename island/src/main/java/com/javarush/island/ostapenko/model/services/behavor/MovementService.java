@@ -11,7 +11,6 @@ import com.javarush.island.ostapenko.model.services.mediator.IMediator;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalMoveForEatEvent;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalMoveForReproduceEvent;
 import com.javarush.island.ostapenko.model.services.mediator.event.Event;
-import com.javarush.island.ostapenko.util.Logger;
 
 
 public class MovementService implements IEventHandler {

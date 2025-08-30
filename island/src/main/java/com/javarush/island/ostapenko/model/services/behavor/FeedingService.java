@@ -10,7 +10,6 @@ import com.javarush.island.ostapenko.model.services.mediator.IEventHandler;
 import com.javarush.island.ostapenko.model.services.mediator.IMediator;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalEatEvent;
 import com.javarush.island.ostapenko.model.services.mediator.event.Event;
-import com.javarush.island.ostapenko.util.Logger;
 
 import java.util.UUID;
 
