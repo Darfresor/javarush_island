@@ -6,10 +6,16 @@ import com.javarush.island.ostapenko.core.dto.CommandResponse;
 import com.javarush.island.ostapenko.core.dto.SimulationStatistics;
 import com.javarush.island.ostapenko.core.exception.ApplicationException;
 import com.javarush.island.ostapenko.core.interfaces.IViewFacade;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.javarush.island.ostapenko.constants.GUIViewConstans.*;
 
@@ -46,6 +52,7 @@ public class JavaFXViewFacade implements IViewFacade {
         statisticPane.setClosable(false);
 
         tabPane.getTabs().addAll(gridTab, settingPane, statisticPane);
+        tabPane.getSelectionModel().select(settingPane);
 
 
         Scene scene = new Scene(tabPane, 1600, 800);
@@ -64,16 +71,43 @@ public class JavaFXViewFacade implements IViewFacade {
     }
 
     private Pane createSetting() {
+        Label islandSize = new Label("Размер острова");
+        Spinner<Integer> numOfCellX = new Spinner<>(1, 100, 1);
+        numOfCellX.setEditable(true);
+        Spinner<Integer> numOfCellY = new Spinner<>(1, 100, 1);
+        numOfCellY.setEditable(true);
+        HBox islandSizeBox = new HBox(10,islandSize ,numOfCellX, numOfCellY);
+        islandSizeBox.setPadding(new Insets(10,0,0,10));
 
-        TextArea textFiled = new TextArea("Какие-то настройки");
+        Label simulationSpeed = new Label("Скорость симуляции в ms");
+        Spinner<Integer> simulationSpeedMs = new Spinner<>(10, 10000, 10, 10);
+        simulationSpeedMs.setEditable(true);
+        HBox simulationSpeedBox = new HBox(10,simulationSpeed ,simulationSpeedMs);
+        simulationSpeedBox.setPadding(new Insets(0,0,0,10));
+
+        CheckBox isDebug = new CheckBox("Включить отображение деталей симуляции в консоли");
+        isDebug.setPadding(new Insets(0,0,0,10));
+
+        Label generateType = new Label("Тип логики генерации существ");
+        ComboBox<String> generateTypeCombo = new ComboBox<>();
+        ObservableList<String> generateTypeList = FXCollections.observableArrayList();
+        generateTypeList.add("Пример для просмотра в консоли");
+        generateTypeList.add("Стандартная генерация");
+        generateTypeCombo.setItems( generateTypeList);
+        generateTypeCombo.getSelectionModel().select(0);
+        HBox generateTypeBox = new HBox(10, generateType, generateTypeCombo);
+        generateTypeBox.setPadding(new Insets(0,0,0,10));
+
+
         startSimulation = new Button("Запустить симуляцию");
         startSimulation.setUserData(CommandType.START_SUMULATION);
         stopSimulation = new Button("Оставить симуляцию");
         stopSimulation.setUserData(CommandType.STOP_SIMULATION);
         stopSimulation.setDisable(true);
-        VBox pane = new VBox(10, textFiled, startSimulation, stopSimulation);
+        VBox buttonControlBox = new VBox(10,startSimulation ,stopSimulation);
+        buttonControlBox.setPadding(new Insets(0,0,0,10));
 
-        return pane;
+        return  new VBox(10, islandSizeBox, simulationSpeedBox, isDebug, generateTypeBox, buttonControlBox);
     }
 
     private static GridPane createGridPane() {
