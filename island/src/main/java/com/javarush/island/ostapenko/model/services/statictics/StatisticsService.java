@@ -1,4 +1,4 @@
-package com.javarush.island.ostapenko.model.services.behavor;
+package com.javarush.island.ostapenko.model.services.statictics;
 
 import com.javarush.island.ostapenko.model.island.Island;
 import com.javarush.island.ostapenko.model.services.mediator.IEventHandler;

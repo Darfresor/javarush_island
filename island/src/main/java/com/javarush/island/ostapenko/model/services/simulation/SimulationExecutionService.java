@@ -7,6 +7,7 @@ import com.javarush.island.ostapenko.model.services.behavor.*;
 import com.javarush.island.ostapenko.model.services.executors.ModelThreadPoolManager;
 import com.javarush.island.ostapenko.model.services.mediator.EventMediator;
 import com.javarush.island.ostapenko.model.services.mediator.IMediator;
+import com.javarush.island.ostapenko.model.services.statictics.StatisticsService;
 import com.javarush.island.ostapenko.util.Logger;
 
 import java.time.LocalDateTime;
