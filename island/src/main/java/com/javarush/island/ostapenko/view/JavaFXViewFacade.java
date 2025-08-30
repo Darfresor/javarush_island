@@ -1,8 +1,10 @@
 package com.javarush.island.ostapenko.view;
 
 import com.javarush.island.ostapenko.constants.CommandType;
+import com.javarush.island.ostapenko.constants.GenerateCreatureType;
 import com.javarush.island.ostapenko.core.dto.CommandRequest;
 import com.javarush.island.ostapenko.core.dto.CommandResponse;
+import com.javarush.island.ostapenko.core.dto.SimulationSetting;
 import com.javarush.island.ostapenko.core.dto.SimulationStatistics;
 import com.javarush.island.ostapenko.core.exception.ApplicationException;
 import com.javarush.island.ostapenko.core.interfaces.IViewFacade;
@@ -31,6 +33,11 @@ public class JavaFXViewFacade implements IViewFacade {
     private TextArea textFiledStatistics;
     private TabPane tabPane;
     private Tab statisticPane;
+    private Spinner<Integer> numOfCellX;
+    private Spinner<Integer> numOfCellY;
+    private Spinner<Integer> simulationSpeedMs;
+    private CheckBox isDebug;
+    private ComboBox<String> generateTypeCombo;
 
     public JavaFXViewFacade(Stage stage) {
         this.stage = stage;
@@ -72,27 +79,28 @@ public class JavaFXViewFacade implements IViewFacade {
 
     private Pane createSetting() {
         Label islandSize = new Label("Размер острова");
-        Spinner<Integer> numOfCellX = new Spinner<>(1, 100, 1);
+        numOfCellX = new Spinner<>(1, 100, 1);
         numOfCellX.setEditable(true);
-        Spinner<Integer> numOfCellY = new Spinner<>(1, 100, 1);
+        numOfCellY = new Spinner<>(1, 100, 1);
         numOfCellY.setEditable(true);
         HBox islandSizeBox = new HBox(10,islandSize ,numOfCellX, numOfCellY);
         islandSizeBox.setPadding(new Insets(10,0,0,10));
 
         Label simulationSpeed = new Label("Скорость симуляции в ms");
-        Spinner<Integer> simulationSpeedMs = new Spinner<>(10, 10000, 10, 10);
+        simulationSpeedMs = new Spinner<>(10, 10000, 1000, 10);
         simulationSpeedMs.setEditable(true);
         HBox simulationSpeedBox = new HBox(10,simulationSpeed ,simulationSpeedMs);
         simulationSpeedBox.setPadding(new Insets(0,0,0,10));
 
-        CheckBox isDebug = new CheckBox("Включить отображение деталей симуляции в консоли");
+        isDebug = new CheckBox("Включить отображение деталей симуляции в консоли");
         isDebug.setPadding(new Insets(0,0,0,10));
 
         Label generateType = new Label("Тип логики генерации существ");
-        ComboBox<String> generateTypeCombo = new ComboBox<>();
+
         ObservableList<String> generateTypeList = FXCollections.observableArrayList();
-        generateTypeList.add("Пример для просмотра в консоли");
-        generateTypeList.add("Стандартная генерация");
+        generateTypeList.add(String.valueOf(GenerateCreatureType.FOR_EXAMPLE.getGenerateTypeName()));
+        generateTypeList.add(GenerateCreatureType.DEFAULT.getGenerateTypeName());
+        generateTypeCombo = new ComboBox<>();
         generateTypeCombo.setItems( generateTypeList);
         generateTypeCombo.getSelectionModel().select(0);
         HBox generateTypeBox = new HBox(10, generateType, generateTypeCombo);
@@ -141,7 +149,16 @@ public class JavaFXViewFacade implements IViewFacade {
     @Override
     public CommandRequest getParametrs() {
         CommandType commandType = (CommandType) lastClickedButton.getUserData();
-        return new CommandRequest(commandType, "настройки");
+        SimulationSetting simulationSetting = new SimulationSetting(
+                numOfCellX.getValue(),
+                numOfCellY.getValue(),
+                simulationSpeedMs.getValue(),
+                isDebug.isSelected(),
+                GenerateCreatureType.getTypeByName(
+                        generateTypeCombo.getSelectionModel().getSelectedItem()
+                )
+        );
+        return new CommandRequest(commandType, simulationSetting);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.javarush.island.ostapenko.model.facade;
 
 import com.javarush.island.ostapenko.core.dto.ModelRequest;
 import com.javarush.island.ostapenko.core.dto.ModelResponse;
+import com.javarush.island.ostapenko.core.dto.SimulationSetting;
 import com.javarush.island.ostapenko.core.dto.SimulationStatistics;
 import com.javarush.island.ostapenko.core.interfaces.IModelFacade;
 import com.javarush.island.ostapenko.core.interfaces.observer.IStatisticObservable;
@@ -26,9 +27,10 @@ public class ModelFacade implements IModelFacade, IStatisticObservable {
         new AnimalPopulationService(island).generate();
         new PlantPopulationService(island).generate();
 
+        int simulationSpeedMs = request.getData(SimulationSetting.class).getSimulationSpeedMs();
 
         simulationExecutionService = new SimulationExecutionService(island, this);
-        simulationExecutionService.start(0, 2, TimeUnit.SECONDS);
+        simulationExecutionService.start(0, simulationSpeedMs, TimeUnit.MILLISECONDS);
 
         return null;
     }
