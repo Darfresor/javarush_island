@@ -8,8 +8,13 @@ public class CommandResponse {
     private ResultCode resultCode;
     private ApplicationException applicationException;
     private String message;
-    private Object Result;
+    private Object result;
     private CommandType commandType;
+
+    public CommandResponse(CommandType commandType, Object result){
+        this.commandType = commandType;
+        this.result = result;
+    }
 
     public ResultCode getResultCode() {
         return resultCode;
@@ -23,8 +28,8 @@ public class CommandResponse {
         return message;
     }
 
-    public Object getResult() {
-        return Result;
+    public <T> T getResult(Class<T> type) {
+        return type.cast(result);
     }
 
     public CommandType getCommandType() {

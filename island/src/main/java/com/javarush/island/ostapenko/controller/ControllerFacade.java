@@ -1,5 +1,7 @@
 package com.javarush.island.ostapenko.controller;
 
+import com.javarush.island.ostapenko.constants.CommandType;
+import com.javarush.island.ostapenko.core.dto.CommandResponse;
 import com.javarush.island.ostapenko.core.dto.SimulationStatistics;
 import com.javarush.island.ostapenko.core.exception.ApplicationException;
 import com.javarush.island.ostapenko.core.interfaces.IControllerFacade;
@@ -41,6 +43,8 @@ public class ControllerFacade implements IControllerFacade, IStatisticObserver {
 
     @Override
     public void onStaticticsUpdate(SimulationStatistics simulationStatistics) {
+        CommandResponse commandResponse = new CommandResponse(CommandType.UPDATE_STATISTICS, simulationStatistics);
+        view.printResult(commandResponse);
         System.out.println("Наблюдаемый объект сообщил контроллеру о своих изменениях в статистике");
     }
 }

@@ -3,6 +3,8 @@ package com.javarush.island.ostapenko.view;
 import com.javarush.island.ostapenko.constants.CommandType;
 import com.javarush.island.ostapenko.core.dto.CommandRequest;
 import com.javarush.island.ostapenko.core.dto.CommandResponse;
+import com.javarush.island.ostapenko.core.dto.SimulationStatistics;
+import com.javarush.island.ostapenko.core.exception.ApplicationException;
 import com.javarush.island.ostapenko.core.interfaces.IViewFacade;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -20,6 +22,7 @@ public class JavaFXViewFacade implements IViewFacade {
     private Button lastClickedButton;
     private Button startSimulation;
     private Button stopSimulation;
+    private TextArea textFiledStatistics;
 
     public JavaFXViewFacade(Stage stage) {
         this.stage = stage;
@@ -52,8 +55,9 @@ public class JavaFXViewFacade implements IViewFacade {
     }
 
     private Pane staticticInfo() {
-        TextArea textFiled = new TextArea("Статистика на текущем ходу");
-        VBox pane = new VBox(10, textFiled);
+        textFiledStatistics = new TextArea("Статистика на текущем ходу");
+        textFiledStatistics.setWrapText(true);
+        VBox pane = new VBox(10, textFiledStatistics);
         return pane;
     }
 
@@ -100,23 +104,34 @@ public class JavaFXViewFacade implements IViewFacade {
     @Override
     public CommandRequest getParametrs() {
         CommandType commandType = (CommandType) lastClickedButton.getUserData();
-        return new CommandRequest(commandType,"настройки");
+        return new CommandRequest(commandType, "настройки");
     }
 
     @Override
     public void printResult(CommandResponse commandResponse) {
-        //TODO возврашение результата работы программы в интерефейс
+        switch (commandResponse.getCommandType()) {
+            case CommandType.UPDATE_STATISTICS ->
+                    updateStatistics(commandResponse.getResult(SimulationStatistics.class));
+            case null -> throw new ApplicationException("Команда не может быть пустой");
+            default -> throw new ApplicationException("Команда не поддерживается");
+        }
     }
 
     @Override
     public void setupEventHandlers(Runnable runnable) {
-        stopSimulation.setOnAction(event->{
+        stopSimulation.setOnAction(event -> {
             lastClickedButton = (Button) event.getSource();
             runnable.run();
         });
-        startSimulation.setOnAction(event->{
+        startSimulation.setOnAction(event -> {
             lastClickedButton = (Button) event.getSource();
             runnable.run();
         });
+    }
+
+    public void updateStatistics(SimulationStatistics simulationStatistics) {
+        String totalAnimal = String.format("Общее кол-во животных = %d %n", simulationStatistics.getTotalAnimal());
+        String totalPlant = String.format("Общее кол-во растений = %d", simulationStatistics.getTotalPlants());
+        textFiledStatistics.setText(totalAnimal + totalPlant);
     }
 }
