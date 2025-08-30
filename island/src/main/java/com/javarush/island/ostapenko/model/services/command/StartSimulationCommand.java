@@ -3,7 +3,7 @@ package com.javarush.island.ostapenko.model.services.command;
 
 import com.javarush.island.ostapenko.core.dto.CommandResponse;
 import com.javarush.island.ostapenko.core.dto.ModelRequest;
-import com.javarush.island.ostapenko.model.facade.IModelFacade;
+import com.javarush.island.ostapenko.core.interfaces.IModelFacade;
 
 public class StartSimulationCommand implements ICommand{
 private final IModelFacade model;

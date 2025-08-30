@@ -1,4 +1,4 @@
-package com.javarush.island.ostapenko.view;
+package com.javarush.island.ostapenko.core.interfaces;
 
 import com.javarush.island.ostapenko.core.dto.CommandRequest;
 import com.javarush.island.ostapenko.core.dto.CommandResponse;

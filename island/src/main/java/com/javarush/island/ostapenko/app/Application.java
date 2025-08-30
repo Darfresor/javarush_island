@@ -1,11 +1,11 @@
 package com.javarush.island.ostapenko.app;
 
 import com.javarush.island.ostapenko.controller.ControllerFacade;
-import com.javarush.island.ostapenko.controller.IControllerFacade;
-import com.javarush.island.ostapenko.model.facade.IModelFacade;
+import com.javarush.island.ostapenko.core.interfaces.IControllerFacade;
+import com.javarush.island.ostapenko.core.interfaces.IModelFacade;
 import com.javarush.island.ostapenko.model.facade.ModelFacade;
 import com.javarush.island.ostapenko.view.JavaFXViewFacade;
-import com.javarush.island.ostapenko.view.IViewFacade;
+import com.javarush.island.ostapenko.core.interfaces.IViewFacade;
 import javafx.stage.Stage;
 
 public class Application  extends javafx.application.Application {

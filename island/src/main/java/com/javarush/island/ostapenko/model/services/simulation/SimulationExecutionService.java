@@ -3,7 +3,7 @@ package com.javarush.island.ostapenko.model.services.simulation;
 
 import com.javarush.island.ostapenko.constants.EventType;
 import com.javarush.island.ostapenko.core.dto.SimulationStatistics;
-import com.javarush.island.ostapenko.core.observer.IStatisticObservable;
+import com.javarush.island.ostapenko.core.interfaces.observer.IStatisticObservable;
 import com.javarush.island.ostapenko.model.island.Island;
 import com.javarush.island.ostapenko.model.services.behavor.*;
 import com.javarush.island.ostapenko.model.services.executors.ModelThreadPoolManager;

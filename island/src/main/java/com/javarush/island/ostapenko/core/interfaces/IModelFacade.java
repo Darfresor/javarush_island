@@ -1,4 +1,4 @@
-package com.javarush.island.ostapenko.model.facade;
+package com.javarush.island.ostapenko.core.interfaces;
 
 import com.javarush.island.ostapenko.core.dto.ModelRequest;
 import com.javarush.island.ostapenko.core.dto.ModelResponse;

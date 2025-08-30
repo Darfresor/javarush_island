@@ -1,4 +1,4 @@
-package com.javarush.island.ostapenko.core.observer;
+package com.javarush.island.ostapenko.core.interfaces.observer;
 
 import com.javarush.island.ostapenko.core.dto.SimulationStatistics;
 

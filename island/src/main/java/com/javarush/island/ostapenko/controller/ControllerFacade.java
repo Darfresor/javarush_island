@@ -2,12 +2,13 @@ package com.javarush.island.ostapenko.controller;
 
 import com.javarush.island.ostapenko.core.dto.SimulationStatistics;
 import com.javarush.island.ostapenko.core.exception.ApplicationException;
-import com.javarush.island.ostapenko.core.observer.IStatisticObserver;
-import com.javarush.island.ostapenko.model.facade.IModelFacade;
+import com.javarush.island.ostapenko.core.interfaces.IControllerFacade;
+import com.javarush.island.ostapenko.core.interfaces.observer.IStatisticObserver;
+import com.javarush.island.ostapenko.core.interfaces.IModelFacade;
 import com.javarush.island.ostapenko.model.facade.ModelFacade;
 import com.javarush.island.ostapenko.model.services.command.CommandFactory;
 import com.javarush.island.ostapenko.model.services.command.ICommand;
-import com.javarush.island.ostapenko.view.IViewFacade;
+import com.javarush.island.ostapenko.core.interfaces.IViewFacade;
 
 public class ControllerFacade implements IControllerFacade, IStatisticObserver {
     private final IViewFacade view;
