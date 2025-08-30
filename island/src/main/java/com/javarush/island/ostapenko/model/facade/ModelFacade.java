@@ -27,12 +27,9 @@ public class ModelFacade implements IModelFacade, IStatisticObservable {
         int numOfCellX = request.getData(SimulationSetting.class).getNumOfCellX();
         int getNumOfCellY = request.getData(SimulationSetting.class).getGetNumOfCellY();
         GenerateCreatureType generateCreatureType = request.getData(SimulationSetting.class).getGenerateCreatureType();
-        System.out.println(generateCreatureType);
-
-        Island island = new IslandGenerationService(numOfCellX, getNumOfCellY).generate(generateCreatureType);
-
         int simulationSpeedMs = request.getData(SimulationSetting.class).getSimulationSpeedMs();
 
+        Island island = new IslandGenerationService(numOfCellX, getNumOfCellY).generate(generateCreatureType);
         simulationExecutionService = new SimulationExecutionService(island, this);
         simulationExecutionService.start(0, simulationSpeedMs, TimeUnit.MILLISECONDS);
 
