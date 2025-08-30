@@ -1,6 +1,5 @@
 package com.javarush.island.ostapenko.model.services.generation;
 
-import com.javarush.island.ostapenko.constants.DietType;
 import com.javarush.island.ostapenko.constants.Gender;
 import com.javarush.island.ostapenko.constants.GenerateCreatureType;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.Rabbit;
@@ -8,10 +7,7 @@ import com.javarush.island.ostapenko.model.entity.animal.predator.Wolf;
 import com.javarush.island.ostapenko.model.island.Cell;
 import com.javarush.island.ostapenko.model.island.Island;
 import com.javarush.island.ostapenko.core.util.Logger;
-import com.javarush.island.ostapenko.model.services.generation.factory.AnimalFactory;
-
-import static com.javarush.island.ostapenko.constants.Gender.FEMALE;
-import static com.javarush.island.ostapenko.constants.Gender.MALE;
+import com.javarush.island.ostapenko.model.entity.factory.AnimalFactory;
 
 public class AnimalPopulationService {
     private final Island island;

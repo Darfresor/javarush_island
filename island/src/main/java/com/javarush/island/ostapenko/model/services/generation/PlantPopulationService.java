@@ -1,16 +1,11 @@
 package com.javarush.island.ostapenko.model.services.generation;
 
-import com.javarush.island.ostapenko.constants.Gender;
 import com.javarush.island.ostapenko.constants.GenerateCreatureType;
-import com.javarush.island.ostapenko.model.entity.animal.herbivore.Rabbit;
-import com.javarush.island.ostapenko.model.entity.animal.predator.Wolf;
-import com.javarush.island.ostapenko.model.entity.plant.Dandelion;
 import com.javarush.island.ostapenko.model.entity.plant.Plant;
 import com.javarush.island.ostapenko.model.island.Cell;
 import com.javarush.island.ostapenko.model.island.Island;
 import com.javarush.island.ostapenko.core.util.Logger;
-import com.javarush.island.ostapenko.model.services.generation.factory.AnimalFactory;
-import com.javarush.island.ostapenko.model.services.generation.factory.PlantFactory;
+import com.javarush.island.ostapenko.model.entity.factory.PlantFactory;
 
 public class PlantPopulationService {
     private final Island island;

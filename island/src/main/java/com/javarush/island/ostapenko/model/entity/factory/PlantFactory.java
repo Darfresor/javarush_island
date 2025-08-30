@@ -1,4 +1,4 @@
-package com.javarush.island.ostapenko.model.services.generation.factory;
+package com.javarush.island.ostapenko.model.entity.factory;
 
 import com.javarush.island.ostapenko.constants.DietType;
 import com.javarush.island.ostapenko.constants.Gender;
