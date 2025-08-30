@@ -5,14 +5,16 @@ import com.javarush.island.ostapenko.model.island.Island;
 import com.javarush.island.ostapenko.model.services.mediator.IEventHandler;
 import com.javarush.island.ostapenko.model.services.mediator.event.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class StatisticsService implements IEventHandler {
-    private final AtomicLong dayOfSimulation = new AtomicLong(1);
+    private final AtomicLong dayOfSimulation = new AtomicLong(0);
     private final ConcurrentHashMap<String, AtomicLong> statistics = new ConcurrentHashMap<>();
 
-    public Long incrementDay(){
+    public Long incrementDay() {
         return dayOfSimulation.incrementAndGet();
     }
 
@@ -29,7 +31,7 @@ public class StatisticsService implements IEventHandler {
     }
 
     public void printStatistics() {
-        System.out.printf("=== СТАТИСТИКА  за %d день === %n",dayOfSimulation.get());
+        System.out.printf("=== СТАТИСТИКА  за %d день === %n", dayOfSimulation.get());
         statistics.forEach((key, value) ->
                 System.out.printf("%s %d %n", key, value.get())
         );
@@ -47,8 +49,20 @@ public class StatisticsService implements IEventHandler {
         });
 
     }
-    public SimulationStatistics getSimulationStatistics(){
-        return new SimulationStatistics(dayOfSimulation.get(),statistics.get("total.animals: ").get(),statistics.get("total.plants: ").get());
+
+    public SimulationStatistics getSimulationStatistics() {
+        long currentDay = dayOfSimulation.get();
+        long totalAnimal = statistics.get("total.animals: ").get();
+        long totalPlants = statistics.get("total.plants: ").get();
+        Map<String, Long> detailStatistics = new HashMap<>();
+        for (Map.Entry<String, AtomicLong> stringAtomicLongEntry : statistics.entrySet()) {
+            if (!stringAtomicLongEntry.getKey().equals("total.animals: ")
+                    && !stringAtomicLongEntry.getKey().equals("total.plants: ")
+            ) {
+                detailStatistics.put(stringAtomicLongEntry.getKey(), stringAtomicLongEntry.getValue().get());
+            }
+        }
+        return new SimulationStatistics(currentDay, totalAnimal, totalPlants, detailStatistics);
     }
 
     public void set(String key, long value) {

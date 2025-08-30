@@ -23,6 +23,8 @@ public class JavaFXViewFacade implements IViewFacade {
     private Button startSimulation;
     private Button stopSimulation;
     private TextArea textFiledStatistics;
+    private TabPane tabPane;
+    private Tab statisticPane;
 
     public JavaFXViewFacade(Stage stage) {
         this.stage = stage;
@@ -33,14 +35,14 @@ public class JavaFXViewFacade implements IViewFacade {
 
     private void initUI() {
 
-        TabPane tabPane = new TabPane();
+        tabPane = new TabPane();
         Tab gridTab = new Tab("Отображение острова", createGridPane());
         gridTab.setClosable(false);
 
-        Tab settingPane = new Tab("Конфигурация острова", createSetting());
+        Tab settingPane = new Tab("Управление симуляцией острова", createSetting());
         settingPane.setClosable(false);
 
-        Tab statisticPane = new Tab("Текущая статистика", staticticInfo());
+        statisticPane = new Tab("Статистика текущей симуляции", staticticInfo());
         statisticPane.setClosable(false);
 
         tabPane.getTabs().addAll(gridTab, settingPane, statisticPane);
@@ -68,6 +70,7 @@ public class JavaFXViewFacade implements IViewFacade {
         startSimulation.setUserData(CommandType.START_SUMULATION);
         stopSimulation = new Button("Оставить симуляцию");
         stopSimulation.setUserData(CommandType.STOP_SIMULATION);
+        stopSimulation.setDisable(true);
         VBox pane = new VBox(10, textFiled, startSimulation, stopSimulation);
 
         return pane;
@@ -120,19 +123,28 @@ public class JavaFXViewFacade implements IViewFacade {
     @Override
     public void setupEventHandlers(Runnable runnable) {
         stopSimulation.setOnAction(event -> {
+            startSimulation.setDisable(false);
+            stopSimulation.setDisable(true);
             lastClickedButton = (Button) event.getSource();
             runnable.run();
         });
         startSimulation.setOnAction(event -> {
+            startSimulation.setDisable(true);
+            stopSimulation.setDisable(false);
             lastClickedButton = (Button) event.getSource();
+            tabPane.getSelectionModel().select(statisticPane);
             runnable.run();
         });
     }
 
     public void updateStatistics(SimulationStatistics simulationStatistics) {
-        String numOfDay = String.format("В симуляции наступил %d день %n",simulationStatistics.getCurrentDay());
+        String numOfDay = String.format("В симуляции наступил %d-й день %n",simulationStatistics.getCurrentDay());
         String totalAnimal = String.format("Общее кол-во животных = %d %n", simulationStatistics.getTotalAnimal());
-        String totalPlant = String.format("Общее кол-во растений = %d", simulationStatistics.getTotalPlants());
-        textFiledStatistics.setText(numOfDay + totalAnimal + totalPlant);
+        String totalPlant = String.format("Общее кол-во растений = %d %n", simulationStatistics.getTotalPlants());
+        StringBuilder detailStatistics = new StringBuilder(String.format("=====Детальная статистика по видам====== %n"));
+        simulationStatistics.getDetailStatistics().forEach((k,v)->{
+            detailStatistics.append(String.format("%s %d %n",k,v));
+        });
+        textFiledStatistics.setText(numOfDay + totalAnimal + totalPlant + detailStatistics);
     }
 }

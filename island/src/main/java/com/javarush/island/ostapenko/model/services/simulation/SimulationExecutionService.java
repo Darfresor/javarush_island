@@ -43,7 +43,6 @@ public class SimulationExecutionService {
     public void start(long initialDelay, long period, TimeUnit unit) {
 
         statisticsService.intializeFromIsland(island);
-        statisticsService.printStatistics();
         System.out.println("Запускаем цикл симуляций");
 
         mediator.subsribe(EventType.ANIMAL_DEATH_BY_OLD, statisticsService);
@@ -93,8 +92,6 @@ public class SimulationExecutionService {
         statisticsService.incrementDay();
         SimulationStatistics simulationStatistics = statisticsService.getSimulationStatistics();
         statisticObservable.notifyStatisticListener(simulationStatistics);
-
-        statisticsService.printStatistics();
     }
 
 
