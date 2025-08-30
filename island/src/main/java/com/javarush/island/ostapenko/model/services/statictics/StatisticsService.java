@@ -9,8 +9,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class StatisticsService implements IEventHandler {
+    private final AtomicLong dayOfSimulation = new AtomicLong(1);
     private final ConcurrentHashMap<String, AtomicLong> statistics = new ConcurrentHashMap<>();
 
+    public Long incrementDay(){
+        return dayOfSimulation.incrementAndGet();
+    }
 
     public void increment(String key) {
         statistics.computeIfAbsent(key, k -> new AtomicLong()).incrementAndGet();
@@ -25,7 +29,7 @@ public class StatisticsService implements IEventHandler {
     }
 
     public void printStatistics() {
-        System.out.println("=== СТАТИСТИКА ===");
+        System.out.printf("=== СТАТИСТИКА  за %d день === %n",dayOfSimulation.get());
         statistics.forEach((key, value) ->
                 System.out.printf("%s %d %n", key, value.get())
         );
@@ -41,9 +45,10 @@ public class StatisticsService implements IEventHandler {
             set(species + ".current.count: ", count);
             add("total.plants: ", count);
         });
+
     }
     public SimulationStatistics getSimulationStatistics(){
-        return new SimulationStatistics(0,statistics.get("total.animals: ").get(),statistics.get("total.plants: ").get());
+        return new SimulationStatistics(dayOfSimulation.get(),statistics.get("total.animals: ").get(),statistics.get("total.plants: ").get());
     }
 
     public void set(String key, long value) {

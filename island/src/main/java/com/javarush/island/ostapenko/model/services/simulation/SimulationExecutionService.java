@@ -90,6 +90,7 @@ public class SimulationExecutionService {
         Logger.logIslandComposition(island);
         Logger.flush();
 
+        statisticsService.incrementDay();
         SimulationStatistics simulationStatistics = statisticsService.getSimulationStatistics();
         statisticObservable.notifyStatisticListener(simulationStatistics);
 

@@ -3,6 +3,7 @@ package com.javarush.island.ostapenko.model.island;
 
 
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
+import com.javarush.island.ostapenko.model.entity.plant.Plant;
 
 import java.util.*;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -66,7 +67,7 @@ public class Island {
             for (int y = 0; y < grid[0].length; y++) {
                 Cell cell = grid[x][y];
                 if (cell != null) {
-                    for(com.javarush.island.ostapenko.model.entity.plant.Plant plant: cell.getPlants()){
+                    for(Plant plant: cell.getPlants()){
                         String speciesName = plant.getClass().getSimpleName();
                         countBySpecies.merge(speciesName,1L, Long::sum);
                     }

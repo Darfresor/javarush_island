@@ -130,8 +130,9 @@ public class JavaFXViewFacade implements IViewFacade {
     }
 
     public void updateStatistics(SimulationStatistics simulationStatistics) {
+        String numOfDay = String.format("В симуляции наступил %d день %n",simulationStatistics.getCurrentDay());
         String totalAnimal = String.format("Общее кол-во животных = %d %n", simulationStatistics.getTotalAnimal());
         String totalPlant = String.format("Общее кол-во растений = %d", simulationStatistics.getTotalPlants());
-        textFiledStatistics.setText(totalAnimal + totalPlant);
+        textFiledStatistics.setText(numOfDay + totalAnimal + totalPlant);
     }
 }
