@@ -1,5 +1,7 @@
 package com.javarush.island.ostapenko.model.services.executors;
 
+import com.javarush.island.ostapenko.core.util.Logger;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Phaser;
@@ -83,7 +85,7 @@ public class ModelThreadPoolManager {
 
     public void waitForAllTask() {
         phaser.arriveAndAwaitAdvance();
-        System.out.println("Наконец дождались работы всех потоков задач");
+        Logger.log("Наконец дождались работы всех потоков задач");
     }
 
     public void shutdown(){
