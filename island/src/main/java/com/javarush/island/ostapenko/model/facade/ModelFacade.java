@@ -1,7 +1,7 @@
 package com.javarush.island.ostapenko.model.facade;
 
-import com.javarush.island.ostapenko.dto.ModelRequest;
-import com.javarush.island.ostapenko.dto.ModelResponse;
+import com.javarush.island.ostapenko.core.dto.ModelRequest;
+import com.javarush.island.ostapenko.core.dto.ModelResponse;
 import com.javarush.island.ostapenko.model.island.Island;
 import com.javarush.island.ostapenko.model.services.generation.AnimalPopulationService;
 import com.javarush.island.ostapenko.model.services.generation.IslandGenerationService;

@@ -1,4 +1,4 @@
-package com.javarush.island.ostapenko.dto;
+package com.javarush.island.ostapenko.core.dto;
 
 import com.javarush.island.ostapenko.constants.CommandType;
 

@@ -1,7 +1,6 @@
 package com.javarush.island.ostapenko.model.services.command;
 
-import com.javarush.island.ostapenko.constants.CommandType;
-import com.javarush.island.ostapenko.dto.CommandResponse;
+import com.javarush.island.ostapenko.core.dto.CommandResponse;
 
 public class UnsupportedCommand implements ICommand{
     @Override

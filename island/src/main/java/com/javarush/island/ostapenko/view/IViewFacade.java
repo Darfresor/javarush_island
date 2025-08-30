@@ -1,7 +1,7 @@
 package com.javarush.island.ostapenko.view;
 
-import com.javarush.island.ostapenko.dto.CommandRequest;
-import com.javarush.island.ostapenko.dto.CommandResponse;
+import com.javarush.island.ostapenko.core.dto.CommandRequest;
+import com.javarush.island.ostapenko.core.dto.CommandResponse;
 
 public interface IViewFacade {
     CommandRequest getParametrs();

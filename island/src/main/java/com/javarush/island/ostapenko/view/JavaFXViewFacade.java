@@ -1,8 +1,8 @@
 package com.javarush.island.ostapenko.view;
 
 import com.javarush.island.ostapenko.constants.CommandType;
-import com.javarush.island.ostapenko.dto.CommandRequest;
-import com.javarush.island.ostapenko.dto.CommandResponse;
+import com.javarush.island.ostapenko.core.dto.CommandRequest;
+import com.javarush.island.ostapenko.core.dto.CommandResponse;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;

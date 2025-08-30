@@ -1,6 +1,6 @@
 package com.javarush.island.ostapenko.tests;
 
-import com.javarush.island.ostapenko.dto.ModelRequest;
+import com.javarush.island.ostapenko.core.dto.ModelRequest;
 import com.javarush.island.ostapenko.model.facade.IModelFacade;
 import com.javarush.island.ostapenko.model.facade.ModelFacade;
 
