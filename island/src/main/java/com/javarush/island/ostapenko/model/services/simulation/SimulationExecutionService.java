@@ -2,6 +2,8 @@ package com.javarush.island.ostapenko.model.services.simulation;
 
 
 import com.javarush.island.ostapenko.constants.EventType;
+import com.javarush.island.ostapenko.core.dto.SimulationStatistics;
+import com.javarush.island.ostapenko.core.observer.IStatisticObservable;
 import com.javarush.island.ostapenko.model.island.Island;
 import com.javarush.island.ostapenko.model.services.behavor.*;
 import com.javarush.island.ostapenko.model.services.executors.ModelThreadPoolManager;
@@ -15,6 +17,7 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SimulationExecutionService {
+    private final IStatisticObservable statisticObservable;
     private final Phaser phaser = new Phaser(1);
     private final ModelThreadPoolManager modelThreadPoolManager = new ModelThreadPoolManager(phaser);
     private final Island island;
@@ -28,8 +31,9 @@ public class SimulationExecutionService {
     private final AtomicBoolean isCycleRunning = new AtomicBoolean(false);
 
 
-    public SimulationExecutionService(Island island) {
+    public SimulationExecutionService(Island island, IStatisticObservable statisticObservable) {
         this.island = island;
+        this.statisticObservable = statisticObservable;
     }
     public void stop(){
         modelThreadPoolManager.shutdown();
@@ -85,6 +89,9 @@ public class SimulationExecutionService {
         modelThreadPoolManager.waitForAllTask();
         Logger.logIslandComposition(island);
         Logger.flush();
+
+        SimulationStatistics simulationStatistics = new SimulationStatistics(0,0,0);
+        statisticObservable.notifyStatisticListener(simulationStatistics);
 
         statisticsService.printStatistics();
     }
