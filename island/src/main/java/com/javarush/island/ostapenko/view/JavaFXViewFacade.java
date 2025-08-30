@@ -79,9 +79,9 @@ public class JavaFXViewFacade implements IViewFacade {
 
     private Pane createSetting() {
         Label islandSize = new Label("Размер острова");
-        numOfCellX = new Spinner<>(1, 100, 1);
+        numOfCellX = new Spinner<>(2, 100, 1);
         numOfCellX.setEditable(true);
-        numOfCellY = new Spinner<>(1, 100, 1);
+        numOfCellY = new Spinner<>(2, 100, 1);
         numOfCellY.setEditable(true);
         HBox islandSizeBox = new HBox(10,islandSize ,numOfCellX, numOfCellY);
         islandSizeBox.setPadding(new Insets(10,0,0,10));
@@ -122,20 +122,20 @@ public class JavaFXViewFacade implements IViewFacade {
         GridPane grid = new GridPane();
         grid.setGridLinesVisible(true);
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 2; i++) {
             ColumnConstraints column = new ColumnConstraints();
             column.setHgrow(Priority.ALWAYS);
             grid.getColumnConstraints().add(column);
         }
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 2; i++) {
             RowConstraints row = new RowConstraints();
             row.setVgrow(Priority.ALWAYS);
             grid.getRowConstraints().add(row);
         }
 
         // Заполнение ячеек
-        for (int row = 0; row < 20; row++) {
-            for (int col = 0; col < 20; col++) {
+        for (int row = 0; row < 2; row++) {
+            for (int col = 0; col < 2; col++) {
                 Label cell = new Label("R" + row + " C" + col);
                 cell.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
                 cell.setStyle("-fx-border-color: black; -fx-alignment: CENTER;");

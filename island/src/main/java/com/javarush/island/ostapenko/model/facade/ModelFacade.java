@@ -1,5 +1,6 @@
 package com.javarush.island.ostapenko.model.facade;
 
+import com.javarush.island.ostapenko.constants.GenerateCreatureType;
 import com.javarush.island.ostapenko.core.dto.ModelRequest;
 import com.javarush.island.ostapenko.core.dto.ModelResponse;
 import com.javarush.island.ostapenko.core.dto.SimulationSetting;
@@ -23,9 +24,12 @@ public class ModelFacade implements IModelFacade, IStatisticObservable {
 
     @Override
     public ModelResponse processSimulation(ModelRequest request) {
-        Island island = new IslandGenerationService().generate();
-        new AnimalPopulationService(island).generate();
-        new PlantPopulationService(island).generate();
+        int numOfCellX = request.getData(SimulationSetting.class).getNumOfCellX();
+        int getNumOfCellY = request.getData(SimulationSetting.class).getGetNumOfCellY();
+        GenerateCreatureType generateCreatureType = request.getData(SimulationSetting.class).getGenerateCreatureType();
+        System.out.println(generateCreatureType);
+
+        Island island = new IslandGenerationService(numOfCellX, getNumOfCellY).generate(generateCreatureType);
 
         int simulationSpeedMs = request.getData(SimulationSetting.class).getSimulationSpeedMs();
 

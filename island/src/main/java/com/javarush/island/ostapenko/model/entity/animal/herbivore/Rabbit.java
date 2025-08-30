@@ -5,8 +5,13 @@ import com.javarush.island.ostapenko.constants.Gender;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
 
 public class Rabbit extends Animal {
-    public Rabbit(String speciesName, int age, int maxAge, Gender gender, float weightInKg, float maxWeightInKg,
-                  int cellsPerTurnSpeed, float foodToBeFullySatiatedInKg, float satiety, DietType dietType) {
-        super(speciesName, age, maxAge, gender, weightInKg, maxWeightInKg, cellsPerTurnSpeed, foodToBeFullySatiatedInKg, satiety, dietType);
+    private final static int MAX_AGE_DAYS = 10 * 365;
+    private final static float MAX_WEIGHT_IN_KG = 2;
+    private final static int CELL_PER_TURN = 2;
+    private final static float FOOD_TO_BE_SATIATED_IN_KG =0.45f;
+
+    public Rabbit(String speciesName, int age, Gender gender, float weightInKg,
+                float satiety, DietType dietType) {
+        super(speciesName, age, MAX_AGE_DAYS, gender, weightInKg, MAX_WEIGHT_IN_KG, CELL_PER_TURN, FOOD_TO_BE_SATIATED_IN_KG, satiety, dietType);
     }
 }

@@ -1,11 +1,14 @@
 package com.javarush.island.ostapenko.model.services.generation;
 
 import com.javarush.island.ostapenko.constants.DietType;
+import com.javarush.island.ostapenko.constants.Gender;
+import com.javarush.island.ostapenko.constants.GenerateCreatureType;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.Rabbit;
 import com.javarush.island.ostapenko.model.entity.animal.predator.Wolf;
 import com.javarush.island.ostapenko.model.island.Cell;
 import com.javarush.island.ostapenko.model.island.Island;
 import com.javarush.island.ostapenko.core.util.Logger;
+import com.javarush.island.ostapenko.model.services.generation.factory.AnimalFactory;
 
 import static com.javarush.island.ostapenko.constants.Gender.FEMALE;
 import static com.javarush.island.ostapenko.constants.Gender.MALE;
@@ -18,25 +21,40 @@ public class AnimalPopulationService {
     }
 
 
+    public void generate(GenerateCreatureType generateCreatureType) {
+        switch (generateCreatureType) {
+            case FOR_EXAMPLE -> generateSimpleExample();
+            case DEFAULT -> generateDefaultAnimal();
+        }
+        Logger.log("Генерация животных завершена");
+    }
 
-    public void generate() {
+    private void generateSimpleExample() {
         Cell cell = new Cell(0, 0);
         Cell cell2 = new Cell(0, 1);
-        Wolf wolf1 = new Wolf("Волк",9*365+364,10*365,MALE,50f,50f,3,8,1.0f, DietType.CARNIVORE);
-        Wolf wolf2 = new Wolf("Волк",3*365,10*365,MALE,50f,50f,3,8,1.0f, DietType.CARNIVORE);
-        Wolf wolf3 = new Wolf("Волк",3*365,10*365,FEMALE,50f,50f,3,8,0.5f, DietType.CARNIVORE);
-        Rabbit rabbit1 = new Rabbit("Кролик",8*365+364,10*365,MALE,2f,2f,2,0.45f, 0.5f, DietType.HERBIVORE);
-        Rabbit rabbit2 = new Rabbit("Кролик",3*365,10*365,FEMALE,2f,2f,2,0.45f, 0.5f, DietType.HERBIVORE);
+        Wolf wolf1 = AnimalFactory.createWolf(364 + 9 * 365);
+        Wolf wolf2 = AnimalFactory.createWolf(Gender.MALE);
+        Wolf wolf3 = AnimalFactory.createWolf(Gender.FEMALE);
+        Rabbit rabbit1 = AnimalFactory.createRabbit(364 + 9 * 365);
+        Rabbit rabbit2 = AnimalFactory.createRabbit(Gender.MALE);
         cell.addAnimal(wolf1);
-        //cell.addAnimal(rabbit1);
-        //cell.addAnimal(wolf2);
+        cell.addAnimal(wolf2);
+        cell.addAnimal(rabbit1);
+        cell.addAnimal(rabbit2);
         cell2.addAnimal(wolf3);
-        cell2.addAnimal(rabbit1);
-        //cell2.addAnimal(rabbit2);
         island.setCell(cell); //0.0
         island.setCell(cell2);//0.1
-        island.setCell(new Cell(1,0));//1.0
-        island.setCell(new Cell(1,1));//1.1
-        Logger.log("Генерация животных завершена");
+        island.setCell(new Cell(1, 0));//1.0
+        island.setCell(new Cell(1, 1));//1.1
+    }
+
+    private void generateDefaultAnimal() {
+        Cell cell = new Cell(0, 0);
+        Wolf wolf1 = AnimalFactory.createWolf();
+        cell.addAnimal(wolf1);
+        island.setCell(cell); //0.0
+        island.setCell(new Cell(0, 1));//1.0
+        island.setCell(new Cell(1, 0));//1.0
+        island.setCell(new Cell(1, 1));//1.1
     }
 }
