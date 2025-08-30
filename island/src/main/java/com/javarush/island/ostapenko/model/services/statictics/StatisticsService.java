@@ -1,5 +1,6 @@
 package com.javarush.island.ostapenko.model.services.statictics;
 
+import com.javarush.island.ostapenko.core.dto.SimulationStatistics;
 import com.javarush.island.ostapenko.model.island.Island;
 import com.javarush.island.ostapenko.model.services.mediator.IEventHandler;
 import com.javarush.island.ostapenko.model.services.mediator.event.*;
@@ -40,6 +41,9 @@ public class StatisticsService implements IEventHandler {
             set(species + ".current.count: ", count);
             add("total.plants: ", count);
         });
+    }
+    public SimulationStatistics getSimulationStatistics(){
+        return new SimulationStatistics(0,statistics.get("total.animals: ").get(),statistics.get("total.plants: ").get());
     }
 
     public void set(String key, long value) {

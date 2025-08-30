@@ -90,7 +90,7 @@ public class SimulationExecutionService {
         Logger.logIslandComposition(island);
         Logger.flush();
 
-        SimulationStatistics simulationStatistics = new SimulationStatistics(0,0,0);
+        SimulationStatistics simulationStatistics = statisticsService.getSimulationStatistics();
         statisticObservable.notifyStatisticListener(simulationStatistics);
 
         statisticsService.printStatistics();

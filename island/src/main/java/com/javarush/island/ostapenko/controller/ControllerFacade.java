@@ -45,6 +45,5 @@ public class ControllerFacade implements IControllerFacade, IStatisticObserver {
     public void onStaticticsUpdate(SimulationStatistics simulationStatistics) {
         CommandResponse commandResponse = new CommandResponse(CommandType.UPDATE_STATISTICS, simulationStatistics);
         view.printResult(commandResponse);
-        System.out.println("Наблюдаемый объект сообщил контроллеру о своих изменениях в статистике");
     }
 }
