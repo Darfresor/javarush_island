@@ -2,7 +2,7 @@ package com.javarush.island.ostapenko.core.dto;
 
 import com.javarush.island.ostapenko.constants.ResultCode;
 import com.javarush.island.ostapenko.constants.CommandType;
-import com.javarush.island.ostapenko.exception.ApplicationException;
+import com.javarush.island.ostapenko.core.exception.ApplicationException;
 
 public class CommandResponse {
     private ResultCode resultCode;

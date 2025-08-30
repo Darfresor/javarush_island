@@ -1,4 +1,4 @@
-package com.javarush.island.ostapenko.exception;
+package com.javarush.island.ostapenko.core.exception;
 
 public class ApplicationException extends RuntimeException{
     public ApplicationException() {

@@ -1,7 +1,7 @@
 package com.javarush.island.ostapenko.model.services.command;
 
 
-import com.javarush.island.ostapenko.exception.ApplicationException;
+import com.javarush.island.ostapenko.core.exception.ApplicationException;
 import com.javarush.island.ostapenko.model.facade.IModelFacade;
 import com.javarush.island.ostapenko.view.IViewFacade;
 
