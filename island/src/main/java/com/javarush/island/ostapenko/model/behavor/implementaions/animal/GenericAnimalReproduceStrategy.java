@@ -34,21 +34,25 @@ public class GenericAnimalReproduceStrategy implements AnimalReproducible {
             if (cellAnimal.getClass() == animal.getClass()
                     && cellAnimal.getGender() != animal.getGender()
                     && !cellAnimal.getReprocudedInCurrentTurn()
-                    && countMaxAnimalInCell < animal.getMaxNumberOfAnimalInCell()
             ) {
-                System.out.println("кол-во животных = " + countMaxAnimalInCell);
-                Logger.logReproductionService(animal, cell, String.format("%s размножается",
-                        animal.getSpeciesName()));
-                Animal child = AnimalFactory.createAnimal(animal.getClass());
-                mediator.notify(new AnimalReproduce(animal, cell, island));
-                animal.setReprocudedInCurrentTurn(true);
-                cellAnimal.setReprocudedInCurrentTurn(true);
-                Cell originalCell = island.getCell(cell.getX(), cell.getY());
-                originalCell.removeAnimal(animal);
-                originalCell.removeAnimal(cellAnimal);
-                originalCell.addAnimal(animal);
-                originalCell.addAnimal(cellAnimal);
-                originalCell.addAnimal(child);
+                if (countMaxAnimalInCell < animal.getMaxNumberOfAnimalInCell()) {
+                    Logger.logReproductionService(animal, cell, String.format("%s размножается",
+                            animal.getSpeciesName()));
+                    Animal child = AnimalFactory.createAnimal(animal.getClass());
+                    mediator.notify(new AnimalReproduce(animal, cell, island));
+                    animal.setReprocudedInCurrentTurn(true);
+                    cellAnimal.setReprocudedInCurrentTurn(true);
+                    Cell originalCell = island.getCell(cell.getX(), cell.getY());
+                    originalCell.removeAnimal(animal);
+                    originalCell.removeAnimal(cellAnimal);
+                    originalCell.addAnimal(animal);
+                    originalCell.addAnimal(cellAnimal);
+                    originalCell.addAnimal(child);
+                } else {
+                    Logger.logReproductionService(animal, cell, String.format("%s не может размножаться так как его вид достиг предела",
+                            animal.getSpeciesName()));
+                    modelThreadPoolManager.executeMoveTask(() -> mediator.notify(new AnimalMoveForReproduceEvent(animal, cell, island)));
+                }
                 return;
             }
         }

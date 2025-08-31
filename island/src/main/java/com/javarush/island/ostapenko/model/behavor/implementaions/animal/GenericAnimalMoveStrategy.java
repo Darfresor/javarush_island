@@ -9,15 +9,13 @@ import com.javarush.island.ostapenko.model.services.mediator.IMediator;
 import com.javarush.island.ostapenko.model.services.mediator.event.*;
 import com.javarush.island.ostapenko.core.util.Logger;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class GenericAnimalMoveStrategy implements Moveable {
     private record Point(int x, int y) {
     }
+
     private final IMediator mediator;
 
     public GenericAnimalMoveStrategy(IMediator mediator) {
@@ -25,28 +23,35 @@ public class GenericAnimalMoveStrategy implements Moveable {
     }
 
 
-
     @Override
     public void move(Animal animal, Cell currentCell, Island island, Event event, ModelThreadPoolManager modelThreadPoolManager) {
         if (animal.getCellsLeftInCurrentTurn() == 0) {
             Logger.logMovementService(animal, currentCell, String.format("%s устал и больше не может двигаться", animal.getSpeciesName()));
         } else {
-            Logger.logMovementService(animal, currentCell, String.format("У %s осталось ходов %d", animal.getSpeciesName(), animal.getCellsLeftInCurrentTurn()));
+            Logger.logMovementService(animal, currentCell, String.format("У %s осталось ходов %d",
+                    animal.getSpeciesName(), animal.getCellsLeftInCurrentTurn()));
             animal.setCellsLeftInCurrentTurn(animal.getCellsLeftInCurrentTurn() - 1);
             Cell futureCell = chooseCellForMove(currentCell, island, animal);
-
-            Cell originalCurrentCell = island.getCell(currentCell.getX(), currentCell.getY());
-            originalCurrentCell.removeAnimal(animal);
-
-            Cell originalFutureCell = island.getCell(futureCell.getX(), futureCell.getY());
-            originalFutureCell.addAnimal(animal);
-            Logger.logMovementService(animal, currentCell, String.format("%s передвинулся в соседнюю клетку, у него осталось ходов %d",
-                    animal.getSpeciesName(), animal.getCellsLeftInCurrentTurn()));
-            switch (event) {
-                case AnimalMoveForEatEvent e -> modelThreadPoolManager.executeFeedTask(()->mediator.notify(new AnimalEatEvent(animal, futureCell, island)));
-                case null -> throw new RuntimeException("Event cannot be null");
-                default -> throw new RuntimeException("Unknown event: " + event.getClass());
-            };
+            int countAnimalInFutureCell = countAnimalInCell(animal, futureCell);
+            if (countAnimalInFutureCell >= animal.getMaxNumberOfAnimalInCell()) {
+                Logger.logMovementService(animal, currentCell,
+                        String.format("%s потратил силы но не смог попасть в соседнюю клетку из-за переполнения, у него осталось ходов %d",
+                                animal.getSpeciesName(), animal.getCellsLeftInCurrentTurn()));
+            } else {
+                Cell originalCurrentCell = island.getCell(currentCell.getX(), currentCell.getY());
+                originalCurrentCell.removeAnimal(animal);
+                Cell originalFutureCell = island.getCell(futureCell.getX(), futureCell.getY());
+                originalFutureCell.addAnimal(animal);
+                Logger.logMovementService(animal, currentCell, String.format("%s передвинулся в соседнюю клетку, у него осталось ходов %d",
+                        animal.getSpeciesName(), animal.getCellsLeftInCurrentTurn()));
+                switch (event) {
+                    case AnimalMoveForEatEvent e ->
+                            modelThreadPoolManager.executeFeedTask(() -> mediator.notify(new AnimalEatEvent(animal, futureCell, island)));
+                    case null -> throw new RuntimeException("Event cannot be null");
+                    default -> throw new RuntimeException("Unknown event: " + event.getClass());
+                }
+                ;
+            }
         }
 
     }
@@ -91,5 +96,17 @@ public class GenericAnimalMoveStrategy implements Moveable {
             map.put("bottom", new Point(currentCell.getX() + 1, currentCell.getY()));
         }
         return map;
+    }
+
+    private int countAnimalInCell(Animal animal, Cell cell) {
+        int countAnimal = 0;
+        for (UUID animalId : cell.getAnimalIds()) {
+            Animal cellAnimal = cell.getAnimalById(animalId);
+            if (cellAnimal.getClass() == animal.getClass()
+            ) {
+                countAnimal++;
+            }
+        }
+        return countAnimal;
     }
 }

@@ -128,6 +128,7 @@ public abstract class Animal extends Creature {
     public String toString() {
         return "Animal{" +
                 "Animal classs='" + this.getClass().getSimpleName() +":"  + this.hashCode() + '\'' +
+                "; Gender='" + gender  + '\'' +
                 '}';
     }
 }

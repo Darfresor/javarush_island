@@ -27,8 +27,10 @@ public class SimulationExecutionService {
     private final MovementService movementService = new MovementService(mediator, modelThreadPoolManager);
     private final ReproductionService reproductionService = new ReproductionService(mediator, modelThreadPoolManager);
     private final DeathService deathService = new DeathService(mediator, modelThreadPoolManager);
+    private final ResetService resetService = new ResetService();
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private final AtomicBoolean isCycleRunning = new AtomicBoolean(false);
+
 
 
     public SimulationExecutionService(Island island, IStatisticObservable statisticObservable) {
@@ -91,6 +93,7 @@ public class SimulationExecutionService {
         Logger.logIslandComposition(island);
         Logger.flush();
 
+        resetService.resetIslandFlag(island);
         statisticsService.incrementDay();
         SimulationStatistics simulationStatistics = statisticsService.getSimulationStatistics();
         statisticObservable.notifyStatisticListener(simulationStatistics);

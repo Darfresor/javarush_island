@@ -28,6 +28,8 @@ public class AnimalPopulationService {
     private void generateSimpleExample() {
         Cell cell = new Cell(0, 0);
         Cell cell2 = new Cell(0, 1);
+        Cell cell3 = new Cell(1, 0);
+        Cell cell4 = new Cell(1, 1);
        // Wolf wolf1 = AnimalFactory.createWolf(364 + 9 * 365);
         Wolf wolf2 = AnimalFactory.createWolf(Gender.MALE);
         Wolf wolf3 = AnimalFactory.createWolf(Gender.FEMALE);
@@ -38,10 +40,24 @@ public class AnimalPopulationService {
         //cell.addAnimal(rabbit1);
         //cell.addAnimal(rabbit2);
         cell.addAnimal(wolf3);
+
+        Wolf wolf10 = AnimalFactory.createWolf(Gender.MALE);
+        Wolf wolf20 = AnimalFactory.createWolf(Gender.MALE);
+        Wolf wolf30 = AnimalFactory.createWolf(Gender.MALE);
+        Wolf wolf40 = AnimalFactory.createWolf(Gender.MALE);
+        Wolf wolf50 = AnimalFactory.createWolf(Gender.MALE);
+        Wolf wolf60 = AnimalFactory.createWolf(Gender.MALE);
+        cell2.addAnimal(wolf10);
+        cell2.addAnimal(wolf20);
+        cell3.addAnimal(wolf30);
+        cell3.addAnimal(wolf40);
+        cell4.addAnimal(wolf40);
+        cell4.addAnimal(wolf50);
+
         island.setCell(cell); //0.0
         island.setCell(cell2);//0.1
-        island.setCell(new Cell(1, 0));//1.0
-        island.setCell(new Cell(1, 1));//1.1
+        island.setCell(cell3);//1.0
+        island.setCell(cell4);//1.1
     }
 
     private void generateDefaultAnimal() {
