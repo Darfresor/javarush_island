@@ -14,7 +14,7 @@ import java.util.Map;
 
 
 public class AnimalFactory {
-    private final static Map<Class<? extends Animal>, IAnimalCreator<? extends Animal>> creators = new HashMap<>();
+    private static final Map<Class<? extends Animal>, IAnimalCreator<? extends Animal>> creators = new HashMap<>();
 
     static {
         registerCreators();
