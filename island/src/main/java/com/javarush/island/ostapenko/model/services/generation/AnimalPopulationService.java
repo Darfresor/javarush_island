@@ -28,6 +28,9 @@ public class AnimalPopulationService {
         Logger.log("Генерация животных завершена");
     }
 
+   //TODO !!! Оставить пример с уткой, гусеницей и одуванчиками для примера№1 + добавить гусеницу и утку, что умирают от старости + утку в другой клетке.
+
+
     private void generateSimpleExample() {
         Cell cell = new Cell(0, 0);
         Cell cell2 = new Cell(0, 1);

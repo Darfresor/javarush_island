@@ -4,7 +4,6 @@ import com.javarush.island.ostapenko.core.exception.ApplicationException;
 import com.javarush.island.ostapenko.core.util.Logger;
 import com.javarush.island.ostapenko.model.behavor.EatingRules;
 import com.javarush.island.ostapenko.model.behavor.interfaces.Eatable;
-import com.javarush.island.ostapenko.model.entity.Creature;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
 import com.javarush.island.ostapenko.model.entity.plant.Plant;
 import com.javarush.island.ostapenko.model.island.Cell;
@@ -28,10 +27,10 @@ public class GenericOmnivoreStrategy implements Eatable {
 
     @Override
     public void eat(Animal eater, Cell cell, Island island, ModelThreadPoolManager modelThreadPoolManager) {
-       boolean  plantSuccessfullyEaten = eatPlant(eater, cell, island, modelThreadPoolManager);
-       if(!plantSuccessfullyEaten){
-           boolean  animalSuccessfullyEaten = eatAnimal(eater, cell, island, modelThreadPoolManager);
-           if(!animalSuccessfullyEaten){
+        boolean  animalSuccessfullyEaten = eatAnimal(eater, cell, island, modelThreadPoolManager);
+       if(!animalSuccessfullyEaten ){
+           boolean  plantSuccessfullyEaten = eatPlant(eater, cell, island, modelThreadPoolManager);
+           if(!plantSuccessfullyEaten){
                Logger.logFeedingService(eater, cell, String.format("%s не нашел еды в этой клетке",
                        eater.getSpeciesName()));
                if (checkDeathByStarvation(eater, cell, island, modelThreadPoolManager)) return;
