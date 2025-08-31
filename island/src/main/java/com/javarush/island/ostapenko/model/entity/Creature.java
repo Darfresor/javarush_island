@@ -1,4 +1,4 @@
 package com.javarush.island.ostapenko.model.entity;
 
-public class Creature {
+public abstract class Creature {
 }

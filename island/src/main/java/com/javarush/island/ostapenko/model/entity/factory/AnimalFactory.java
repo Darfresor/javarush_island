@@ -6,6 +6,7 @@ import com.javarush.island.ostapenko.core.exception.ApplicationException;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.Duck;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.Rabbit;
+import com.javarush.island.ostapenko.model.entity.animal.herbivore.insetcs.Caterpillar;
 import com.javarush.island.ostapenko.model.entity.animal.predator.Wolf;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class AnimalFactory {
         creators.put(Wolf.class, AnimalFactory::createWolf);
         creators.put(Rabbit.class, AnimalFactory::createRabbit);
         creators.put(Duck.class, AnimalFactory::createDuck);
+        creators.put(Caterpillar.class, AnimalFactory::createCaterpillar);
     }
 
     public static <T extends Animal> T createAnimal(Class<T> animalType) {
@@ -85,9 +87,15 @@ public class AnimalFactory {
 
     public static Duck createDuck() {
         return new Duck("Утка", (int) (Math.random() * 365 * 10) + 1,
-                Gender.values()[(int) Math.round(Math.random())], 50f,
+                Gender.values()[(int) Math.round(Math.random())], 1f,
                 1.0f, DietType.OMNIVORE);
     }
+    public static Caterpillar createCaterpillar() {
+        return new Caterpillar("Гусеница", (int) (Math.random() * 90) + 1,
+                Gender.values()[(int) Math.round(Math.random())], 0.01f,
+                0.5f, DietType.HERBIVORE);
+    }
+
 
 
 }

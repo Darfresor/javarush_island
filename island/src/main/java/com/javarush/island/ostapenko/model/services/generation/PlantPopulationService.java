@@ -22,11 +22,13 @@ public class PlantPopulationService {
     }
 
     private void generateSimpleExample() {
-        Cell cell = island.getGridCopy()[0][1];
+        Cell cell = island.getGridCopy()[0][0];
         Plant dandelion1 = PlantFactory.createDandelion(2*365+364);
         Plant dandelion2 = PlantFactory.createDandelion();
+        Plant dandelion3 = PlantFactory.createDandelion();
         cell.addPlant(dandelion1);
-        //cell.addPlant(dandelion2);
+       cell.addPlant(dandelion2);
+       cell.addPlant(dandelion3);
         island.setCell(cell);
     }
 

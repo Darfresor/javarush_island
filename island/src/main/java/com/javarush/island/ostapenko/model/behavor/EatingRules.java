@@ -4,6 +4,7 @@ import com.javarush.island.ostapenko.model.entity.Creature;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.Duck;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.Mouse;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.Rabbit;
+import com.javarush.island.ostapenko.model.entity.animal.herbivore.insetcs.Caterpillar;
 import com.javarush.island.ostapenko.model.entity.animal.predator.Wolf;
 import com.javarush.island.ostapenko.model.entity.plant.Dandelion;
 
@@ -19,8 +20,13 @@ public class EatingRules {
                     Dandelion.class,1.0
             ),
             Duck.class,Map.of(
+                    Dandelion.class,1.0,
+                    Caterpillar.class,0.9
+            ),
+            Caterpillar.class, Map.of(
                     Dandelion.class,1.0
             )
+
     );
     public static boolean canEat(Class<? extends Creature> eater,Class<? extends Creature> target){
 

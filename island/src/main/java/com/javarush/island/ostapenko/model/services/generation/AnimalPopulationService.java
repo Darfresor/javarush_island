@@ -5,6 +5,7 @@ import com.javarush.island.ostapenko.constants.GenerateCreatureType;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.Duck;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.Rabbit;
+import com.javarush.island.ostapenko.model.entity.animal.herbivore.insetcs.Caterpillar;
 import com.javarush.island.ostapenko.model.entity.animal.predator.Wolf;
 import com.javarush.island.ostapenko.model.island.Cell;
 import com.javarush.island.ostapenko.model.island.Island;
@@ -39,6 +40,7 @@ public class AnimalPopulationService {
         //Rabbit rabbit1 = AnimalFactory.createRabbit(364 + 9 * 365);
         //Rabbit rabbit2 = AnimalFactory.createRabbit(Gender.MALE);
         Duck duck1 = AnimalFactory.createDuck();
+        Caterpillar caterpillar1 = AnimalFactory.createCaterpillar();
         //Duck duck2 = AnimalFactory.createDuck();
         //cell.addAnimal(wolf1);
         //cell.addAnimal(wolf2);
@@ -47,6 +49,7 @@ public class AnimalPopulationService {
         //cell.addAnimal(wolf3);
         cell.addAnimal(duck1);
         //cell2.addAnimal(duck2);
+        cell.addAnimal(caterpillar1);
         /*
         Wolf wolf10 = AnimalFactory.createWolf(Gender.MALE);
         Wolf wolf20 = AnimalFactory.createWolf(Gender.MALE);

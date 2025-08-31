@@ -7,6 +7,7 @@ import com.javarush.island.ostapenko.model.behavor.implementaions.plant.GenericP
 import com.javarush.island.ostapenko.model.behavor.interfaces.*;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
 import com.javarush.island.ostapenko.model.entity.Creature;
+import com.javarush.island.ostapenko.model.entity.animal.herbivore.insetcs.Caterpillar;
 import com.javarush.island.ostapenko.model.entity.plant.Plant;
 import com.javarush.island.ostapenko.model.services.mediator.IMediator;
 
@@ -14,17 +15,18 @@ public class BehavorFactory {
     private BehavorFactory() {
     }
 
-    public static Moveable createMoveStrategy(Creature creature, IMediator mediator){
-     return switch(creature){
-       case Animal a -> new GenericAnimalMoveStrategy(mediator);
-       case null -> throw new RuntimeException("Animal cannot be null");
-       default -> throw new RuntimeException("Unknown animal: " + creature.getClass());
-     };
+    public static Moveable createMoveStrategy(Creature creature, IMediator mediator) {
+        return switch (creature) {
+            case Caterpillar c -> new NonMoveStrategy();
+            case Animal a -> new GenericAnimalMoveStrategy(mediator);
+            case null -> throw new RuntimeException("Animal cannot be null");
+            default -> throw new RuntimeException("Unknown animal: " + creature.getClass());
+        };
     }
 
-    public static Eatable createEatStrategy(Creature creature, IMediator mediator){
-        return switch(creature){
-            case Animal a -> switch(a.getDietType()){
+    public static Eatable createEatStrategy(Creature creature, IMediator mediator) {
+        return switch (creature) {
+            case Animal a -> switch (a.getDietType()) {
                 case CARNIVORE -> new GenericCarnivoreEatStrategy(mediator);
                 case HERBIVORE -> new GenericHerbivoreStrategy(mediator);
                 case OMNIVORE -> new GenericOmnivoreStrategy(mediator);
@@ -35,36 +37,37 @@ public class BehavorFactory {
     }
 
 
-
-    public static AnimalReproducible createReproduceStrategy(Animal animal,IMediator mediator){
-        return switch(animal){
+    public static AnimalReproducible createReproduceStrategy(Animal animal, IMediator mediator) {
+        return switch (animal) {
             case null -> throw new RuntimeException("Creature cannot be null");
             default -> new GenericAnimalReproduceStrategy(mediator);
         };
     }
-    public static PlantReproducible createReproduceStrategy(Plant plant, IMediator mediator){
-        return switch(plant){
+
+    public static PlantReproducible createReproduceStrategy(Plant plant, IMediator mediator) {
+        return switch (plant) {
             case null -> throw new RuntimeException("Plant cannot be null");
             default -> new GenericPlantReproduceStrategy(mediator);
         };
     }
-    public static Edible<? extends Creature, ? extends Creature> createBeingEatenStrategy(Creature creature){
-        return switch(creature){
+
+    public static Edible<? extends Creature, ? extends Creature> createBeingEatenStrategy(Creature creature) {
+        return switch (creature) {
             case null -> throw new RuntimeException("Creature cannot be null");
             default -> new GenericBeingEatenStrategy();
         };
     }
 
-    public static Starvable createStarvableStrategy(Creature creature){
-        return switch(creature){
+    public static Starvable createStarvableStrategy(Creature creature) {
+        return switch (creature) {
             case Animal w -> new GenericAnimalStarvableStrategy();
             case null -> throw new RuntimeException("Animal cannot be null");
             default -> throw new RuntimeException("Unknown animal: " + creature.getClass());
         };
     }
 
-    public static Aging<? extends Creature> createAgingStrategy(Creature creature, IMediator mediator){
-        return  switch(creature){
+    public static Aging<? extends Creature> createAgingStrategy(Creature creature, IMediator mediator) {
+        return switch (creature) {
             case Animal a -> new GenericAnimalAgingStrategy<>(mediator);
             case Plant p -> new GenericPlantAgingStrategy<>(mediator);
             case null -> throw new RuntimeException("creature cannot be null");
