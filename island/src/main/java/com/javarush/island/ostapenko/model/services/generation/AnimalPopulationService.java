@@ -28,16 +28,16 @@ public class AnimalPopulationService {
     private void generateSimpleExample() {
         Cell cell = new Cell(0, 0);
         Cell cell2 = new Cell(0, 1);
-        Wolf wolf1 = AnimalFactory.createWolf(364 + 9 * 365);
+       // Wolf wolf1 = AnimalFactory.createWolf(364 + 9 * 365);
         Wolf wolf2 = AnimalFactory.createWolf(Gender.MALE);
         Wolf wolf3 = AnimalFactory.createWolf(Gender.FEMALE);
-        Rabbit rabbit1 = AnimalFactory.createRabbit(364 + 9 * 365);
-        Rabbit rabbit2 = AnimalFactory.createRabbit(Gender.MALE);
-        cell.addAnimal(wolf1);
+        //Rabbit rabbit1 = AnimalFactory.createRabbit(364 + 9 * 365);
+        //Rabbit rabbit2 = AnimalFactory.createRabbit(Gender.MALE);
+        //cell.addAnimal(wolf1);
         cell.addAnimal(wolf2);
-        cell.addAnimal(rabbit1);
-        cell.addAnimal(rabbit2);
-        cell2.addAnimal(wolf3);
+        //cell.addAnimal(rabbit1);
+        //cell.addAnimal(rabbit2);
+        cell.addAnimal(wolf3);
         island.setCell(cell); //0.0
         island.setCell(cell2);//0.1
         island.setCell(new Cell(1, 0));//1.0

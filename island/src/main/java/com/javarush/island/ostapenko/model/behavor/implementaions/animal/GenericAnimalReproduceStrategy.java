@@ -2,6 +2,7 @@ package com.javarush.island.ostapenko.model.behavor.implementaions.animal;
 
 import com.javarush.island.ostapenko.model.behavor.interfaces.AnimalReproducible;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
+import com.javarush.island.ostapenko.model.entity.factory.AnimalFactory;
 import com.javarush.island.ostapenko.model.island.Cell;
 import com.javarush.island.ostapenko.model.island.Island;
 import com.javarush.island.ostapenko.model.services.executors.ModelThreadPoolManager;
@@ -33,6 +34,7 @@ public class GenericAnimalReproduceStrategy implements AnimalReproducible {
             ) {
                 Logger.logReproductionService(animal, cell, String.format("%s размножается",
                         animal.getSpeciesName()));
+                Animal child = AnimalFactory.createAnimal(animal.getClass());
                 animal.setReprocudedInCurrentTurn(true);
                 cellAnimal.setReprocudedInCurrentTurn(true);
                 Cell originalCell = island.getCell(cell.getX(),cell.getY());
@@ -40,6 +42,7 @@ public class GenericAnimalReproduceStrategy implements AnimalReproducible {
                 originalCell.removeAnimal(cellAnimal);
                 originalCell.addAnimal(animal);
                 originalCell.addAnimal(cellAnimal);
+                originalCell.addAnimal(child);
                 return;
             }
         }
