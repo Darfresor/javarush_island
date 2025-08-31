@@ -47,6 +47,8 @@ public class GenericAnimalMoveStrategy implements Moveable {
                 switch (event) {
                     case AnimalMoveForEatEvent e ->
                             modelThreadPoolManager.executeFeedTask(() -> mediator.notify(new AnimalEatEvent(animal, futureCell, island)));
+                    case AnimalMoveForReproduceEvent e->
+                            modelThreadPoolManager.executeReproduceTask(() -> mediator.notify(new AnimalCanReproduce(animal, futureCell, island)));
                     case null -> throw new RuntimeException("Event cannot be null");
                     default -> throw new RuntimeException("Unknown event: " + event.getClass());
                 }

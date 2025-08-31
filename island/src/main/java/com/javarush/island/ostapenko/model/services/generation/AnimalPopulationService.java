@@ -41,6 +41,7 @@ public class AnimalPopulationService {
         //cell.addAnimal(rabbit2);
         cell.addAnimal(wolf3);
 
+        /*
         Wolf wolf10 = AnimalFactory.createWolf(Gender.MALE);
         Wolf wolf20 = AnimalFactory.createWolf(Gender.MALE);
         Wolf wolf30 = AnimalFactory.createWolf(Gender.MALE);
@@ -53,6 +54,8 @@ public class AnimalPopulationService {
         cell3.addAnimal(wolf40);
         cell4.addAnimal(wolf40);
         cell4.addAnimal(wolf50);
+        */
+
 
         island.setCell(cell); //0.0
         island.setCell(cell2);//0.1
