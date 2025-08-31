@@ -23,24 +23,27 @@ public class GenericAnimalReproduceStrategy implements AnimalReproducible {
 
     @Override
     public void reproduce(Animal animal, Cell cell, Island island, ModelThreadPoolManager modelThreadPoolManager) {
-        if(animal.getReprocudedInCurrentTurn()){
+        if (animal.getReprocudedInCurrentTurn()) {
             Logger.logReproductionService(animal, cell, String.format("%s уже участвовал в размножении ранее",
                     animal.getSpeciesName()));
             return;
         }
         for (UUID animalId : cell.getAnimalIds()) {
+            int countMaxAnimalInCell = countAnimalInCell(animal, cell);
             Animal cellAnimal = cell.getAnimalById(animalId);
             if (cellAnimal.getClass() == animal.getClass()
                     && cellAnimal.getGender() != animal.getGender()
                     && !cellAnimal.getReprocudedInCurrentTurn()
+                    && countMaxAnimalInCell < animal.getMaxNumberOfAnimalInCell()
             ) {
+                System.out.println("кол-во животных = " + countMaxAnimalInCell);
                 Logger.logReproductionService(animal, cell, String.format("%s размножается",
                         animal.getSpeciesName()));
                 Animal child = AnimalFactory.createAnimal(animal.getClass());
                 mediator.notify(new AnimalReproduce(animal, cell, island));
                 animal.setReprocudedInCurrentTurn(true);
                 cellAnimal.setReprocudedInCurrentTurn(true);
-                Cell originalCell = island.getCell(cell.getX(),cell.getY());
+                Cell originalCell = island.getCell(cell.getX(), cell.getY());
                 originalCell.removeAnimal(animal);
                 originalCell.removeAnimal(cellAnimal);
                 originalCell.addAnimal(animal);
@@ -51,6 +54,18 @@ public class GenericAnimalReproduceStrategy implements AnimalReproducible {
         }
         Logger.logReproductionService(animal, cell, String.format("%s не нашел пары для размножения",
                 animal.getSpeciesName()));
-        modelThreadPoolManager.executeMoveTask(()->mediator.notify(new AnimalMoveForReproduceEvent(animal, cell, island)));
+        modelThreadPoolManager.executeMoveTask(() -> mediator.notify(new AnimalMoveForReproduceEvent(animal, cell, island)));
+    }
+
+    private int countAnimalInCell(Animal animal, Cell cell) {
+        int countAnimal = 0;
+        for (UUID animalId : cell.getAnimalIds()) {
+            Animal cellAnimal = cell.getAnimalById(animalId);
+            if (cellAnimal.getClass() == animal.getClass()
+            ) {
+                countAnimal++;
+            }
+        }
+        return countAnimal;
     }
 }

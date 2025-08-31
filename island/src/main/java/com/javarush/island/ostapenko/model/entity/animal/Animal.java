@@ -27,7 +27,7 @@ public abstract class Animal extends Creature {
     protected DietType dietType;
 
     public Animal(String speciesName, int ageInDay, int maxAgeInDay, Gender gender, float weightInKg,
-                  float maxWeightInKg, int cellsPerTurnSpeed, float foodToBeFullySatiatedInKg, float satiety, DietType dietType){
+                  float maxWeightInKg, int cellsPerTurnSpeed, float foodToBeFullySatiatedInKg, float satiety, DietType dietType, int maxNumberOfAnimalInCell){
         this.speciesName = speciesName;
         this.ageInDay = ageInDay;
         this.maxAgeInDay = maxAgeInDay;
@@ -38,6 +38,7 @@ public abstract class Animal extends Creature {
         this.foodToBeFullySatiatedInKg = foodToBeFullySatiatedInKg;
         this.satiety = satiety;
         this.dietType = dietType;
+        this.maxNumberOfAnimalInCell = maxNumberOfAnimalInCell;
 
         this.id = UUID.randomUUID();
         this.cellsLeftInCurrentTurn = cellsPerTurnSpeed;
