@@ -83,7 +83,7 @@ public class GenericHerbivoreStrategy implements Eatable {
     }
 
     private void reduceSatiety(Animal eater) {
-        float satiety = eater.getSatiety() - 0.3f;
+        float satiety = eater.getSatiety() - 0.15f;
         if (satiety > 0.0f) {
             eater.setSatiety(satiety);
         } else {

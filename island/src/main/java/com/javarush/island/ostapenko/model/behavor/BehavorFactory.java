@@ -27,7 +27,7 @@ public class BehavorFactory {
             case Animal a -> switch(a.getDietType()){
                 case CARNIVORE -> new GenericCarnivoreEatStrategy(mediator);
                 case HERBIVORE -> new GenericHerbivoreStrategy(mediator);
-                case OMNIVORE -> throw new RuntimeException("OMNIVORE strategy not exists ");
+                case OMNIVORE -> new GenericOmnivoreStrategy(mediator);
             };
             case null -> throw new RuntimeException("Creature cannot be null");
             default -> throw new RuntimeException("Unknown creature: " + creature.getClass());

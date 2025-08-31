@@ -26,7 +26,7 @@ public class PlantPopulationService {
         Plant dandelion1 = PlantFactory.createDandelion(2*365+364);
         Plant dandelion2 = PlantFactory.createDandelion();
         cell.addPlant(dandelion1);
-        cell.addPlant(dandelion2);
+        //cell.addPlant(dandelion2);
         island.setCell(cell);
     }
 

@@ -2,6 +2,8 @@ package com.javarush.island.ostapenko.model.services.generation;
 
 import com.javarush.island.ostapenko.constants.Gender;
 import com.javarush.island.ostapenko.constants.GenerateCreatureType;
+import com.javarush.island.ostapenko.model.entity.animal.Animal;
+import com.javarush.island.ostapenko.model.entity.animal.herbivore.Duck;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.Rabbit;
 import com.javarush.island.ostapenko.model.entity.animal.predator.Wolf;
 import com.javarush.island.ostapenko.model.island.Cell;
@@ -31,16 +33,20 @@ public class AnimalPopulationService {
         Cell cell3 = new Cell(1, 0);
         Cell cell4 = new Cell(1, 1);
        // Wolf wolf1 = AnimalFactory.createWolf(364 + 9 * 365);
-        Wolf wolf2 = AnimalFactory.createWolf(Gender.MALE);
-        Wolf wolf3 = AnimalFactory.createWolf(Gender.FEMALE);
+       // Wolf wolf2 = AnimalFactory.createWolf(Gender.MALE);
+        //Wolf wolf3 = AnimalFactory.createWolf(Gender.FEMALE);
+
         //Rabbit rabbit1 = AnimalFactory.createRabbit(364 + 9 * 365);
         //Rabbit rabbit2 = AnimalFactory.createRabbit(Gender.MALE);
+        Duck duck1 = AnimalFactory.createDuck();
+        //Duck duck2 = AnimalFactory.createDuck();
         //cell.addAnimal(wolf1);
         //cell.addAnimal(wolf2);
         //cell.addAnimal(rabbit1);
         //cell.addAnimal(rabbit2);
         //cell.addAnimal(wolf3);
-
+        cell.addAnimal(duck1);
+        //cell2.addAnimal(duck2);
         /*
         Wolf wolf10 = AnimalFactory.createWolf(Gender.MALE);
         Wolf wolf20 = AnimalFactory.createWolf(Gender.MALE);

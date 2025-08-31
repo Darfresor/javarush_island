@@ -90,8 +90,8 @@ public class SimulationExecutionService {
         Logger.flush();
 
         //modelThreadPoolManager.executeCoreTask(() -> deathService.executeDeathDueToOldAge(island));
-        //modelThreadPoolManager.executeCoreTask(() -> feedingService.executeEat(island));
-        modelThreadPoolManager.executeCoreTask(() -> reproductionService.executeReproduce(island));
+        modelThreadPoolManager.executeCoreTask(() -> feedingService.executeEat(island));
+        //modelThreadPoolManager.executeCoreTask(() -> reproductionService.executeReproduce(island));
 
         modelThreadPoolManager.waitForAllTask();
         Logger.logIslandComposition(island);

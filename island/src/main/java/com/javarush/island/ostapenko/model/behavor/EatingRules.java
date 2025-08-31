@@ -1,6 +1,7 @@
 package com.javarush.island.ostapenko.model.behavor;
 
 import com.javarush.island.ostapenko.model.entity.Creature;
+import com.javarush.island.ostapenko.model.entity.animal.herbivore.Duck;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.Mouse;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.Rabbit;
 import com.javarush.island.ostapenko.model.entity.animal.predator.Wolf;
@@ -15,6 +16,9 @@ public class EatingRules {
                     Mouse.class, 0.8
             ),
             Rabbit.class, Map.of(
+                    Dandelion.class,1.0
+            ),
+            Duck.class,Map.of(
                     Dandelion.class,1.0
             )
     );

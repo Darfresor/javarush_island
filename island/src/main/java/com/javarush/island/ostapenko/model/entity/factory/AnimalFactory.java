@@ -4,6 +4,7 @@ import com.javarush.island.ostapenko.constants.DietType;
 import com.javarush.island.ostapenko.constants.Gender;
 import com.javarush.island.ostapenko.core.exception.ApplicationException;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
+import com.javarush.island.ostapenko.model.entity.animal.herbivore.Duck;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.Rabbit;
 import com.javarush.island.ostapenko.model.entity.animal.predator.Wolf;
 
@@ -23,6 +24,7 @@ public class AnimalFactory {
     private static void registerCreators() {
         creators.put(Wolf.class, AnimalFactory::createWolf);
         creators.put(Rabbit.class, AnimalFactory::createRabbit);
+        creators.put(Duck.class, AnimalFactory::createDuck);
     }
 
     public static <T extends Animal> T createAnimal(Class<T> animalType) {
@@ -79,6 +81,12 @@ public class AnimalFactory {
         return new Rabbit("Кролик", (int) (Math.random() * 365 * 10) + 1,
                 Gender.values()[(int) Math.round(Math.random())], 2f,
                 1.0f, DietType.HERBIVORE);
+    }
+
+    public static Duck createDuck() {
+        return new Duck("Утка", (int) (Math.random() * 365 * 10) + 1,
+                Gender.values()[(int) Math.round(Math.random())], 50f,
+                1.0f, DietType.OMNIVORE);
     }
 
 
