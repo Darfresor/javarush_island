@@ -60,6 +60,7 @@ public class SimulationExecutionService {
         mediator.subsribe(EventType.ANIMAL_MOVE_REPRODUCE, movementService);
         mediator.subsribe(EventType.ANIMAL_CAN_REPRODUCE, reproductionService);
         mediator.subsribe(EventType.ANIMAL_REPRODUCE, statisticsService);
+        mediator.subsribe(EventType.PLANT_REPRODUCE, statisticsService);
         mediator.subsribe(EventType.ANIMAL_EAT, feedingService);
 
 

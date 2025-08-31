@@ -45,7 +45,7 @@ public class BehavorFactory {
     public static PlantReproducible createReproduceStrategy(Plant plant, IMediator mediator){
         return switch(plant){
             case null -> throw new RuntimeException("Plant cannot be null");
-            default -> new GenericPlantReproduceStrategy();
+            default -> new GenericPlantReproduceStrategy(mediator);
         };
     }
     public static Edible<? extends Creature, ? extends Creature> createBeingEatenStrategy(Creature creature){

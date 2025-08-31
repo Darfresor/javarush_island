@@ -15,6 +15,7 @@ public abstract class Plant extends Creature {
     protected float weightInKg;
     protected float maxWeightInKg;
     protected int maxNumberOfPlantInCell;
+    protected AtomicBoolean reprocudedInCurrentTurn = new AtomicBoolean(false);
 
 
     public Plant(String speciesName, int ageInDay, int maxAgeInDay, float weightInKg, float maxWeightInKg, int maxNumberOfPlantInCell) {
@@ -72,5 +73,12 @@ public abstract class Plant extends Creature {
 
     public void setAgeInDay(int ageInDay) {
         this.ageInDay = ageInDay;
+    }
+    public boolean getReprocudedInCurrentTurn() {
+        return reprocudedInCurrentTurn.get();
+    }
+
+    public void setReprocudedInCurrentTurn(boolean b) {
+        reprocudedInCurrentTurn.set(b);
     }
 }
