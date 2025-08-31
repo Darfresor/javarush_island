@@ -77,7 +77,9 @@ public class SimulationExecutionService {
             System.out.println("🟢 НАЧАЛО ЦИКЛА " + LocalDateTime.now());
             executeCoreThread();
             System.out.println("✅ ЗАВЕРШЕНИЕ ЦИКЛА " + LocalDateTime.now());
-        } finally {
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }finally {
             isCycleRunning.set(false);
         }
     }

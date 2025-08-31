@@ -52,8 +52,8 @@ public class StatisticsService implements IEventHandler {
 
     public SimulationStatistics getSimulationStatistics() {
         long currentDay = dayOfSimulation.get();
-        long totalAnimal = statistics.get("total.animals: ").get();
-        long totalPlants = statistics.get("total.plants: ").get();
+        long totalAnimal = statistics.computeIfAbsent("total.animals: ",k->new AtomicLong(0)).get();
+        long totalPlants  = statistics.computeIfAbsent("total.plants: ",k->new AtomicLong(0)).get();
         Map<String, Long> detailStatistics = new HashMap<>();
         for (Map.Entry<String, AtomicLong> stringAtomicLongEntry : statistics.entrySet()) {
             if (!stringAtomicLongEntry.getKey().equals("total.animals: ")

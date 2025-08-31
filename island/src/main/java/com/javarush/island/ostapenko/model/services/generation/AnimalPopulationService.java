@@ -36,10 +36,10 @@ public class AnimalPopulationService {
         //Rabbit rabbit1 = AnimalFactory.createRabbit(364 + 9 * 365);
         //Rabbit rabbit2 = AnimalFactory.createRabbit(Gender.MALE);
         //cell.addAnimal(wolf1);
-        cell.addAnimal(wolf2);
+        //cell.addAnimal(wolf2);
         //cell.addAnimal(rabbit1);
         //cell.addAnimal(rabbit2);
-        cell.addAnimal(wolf3);
+        //cell.addAnimal(wolf3);
 
         /*
         Wolf wolf10 = AnimalFactory.createWolf(Gender.MALE);
