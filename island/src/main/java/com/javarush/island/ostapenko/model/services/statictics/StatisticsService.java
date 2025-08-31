@@ -95,6 +95,10 @@ public class StatisticsService implements IEventHandler {
                 decrement(e.getPlant().getClass().getSimpleName() + ".current.count: ");
                 decrement("total.plants: ");
             }
+            case AnimalReproduce r ->{
+                increment(r.getAnimal().getClass().getSimpleName() + ".current.count: ");
+                increment("total.animals: ");
+            }
             case null -> throw new RuntimeException("Event cannot be null");
             default -> throw new RuntimeException("Unknown event: " + event.getClass());
         }

@@ -7,8 +7,10 @@ import com.javarush.island.ostapenko.model.island.Cell;
 import com.javarush.island.ostapenko.model.island.Island;
 import com.javarush.island.ostapenko.model.services.executors.ModelThreadPoolManager;
 import com.javarush.island.ostapenko.model.services.mediator.IMediator;
+import com.javarush.island.ostapenko.model.services.mediator.event.AnimalDeathByOld;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalMoveForReproduceEvent;
 import com.javarush.island.ostapenko.core.util.Logger;
+import com.javarush.island.ostapenko.model.services.mediator.event.AnimalReproduce;
 
 import java.util.UUID;
 
@@ -35,6 +37,7 @@ public class GenericAnimalReproduceStrategy implements AnimalReproducible {
                 Logger.logReproductionService(animal, cell, String.format("%s размножается",
                         animal.getSpeciesName()));
                 Animal child = AnimalFactory.createAnimal(animal.getClass());
+                mediator.notify(new AnimalReproduce(animal, cell, island));
                 animal.setReprocudedInCurrentTurn(true);
                 cellAnimal.setReprocudedInCurrentTurn(true);
                 Cell originalCell = island.getCell(cell.getX(),cell.getY());

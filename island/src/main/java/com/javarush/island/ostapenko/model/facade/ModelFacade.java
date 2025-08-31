@@ -10,9 +10,7 @@ import com.javarush.island.ostapenko.core.interfaces.observer.IStatisticObservab
 import com.javarush.island.ostapenko.core.interfaces.observer.IStatisticObserver;
 import com.javarush.island.ostapenko.core.util.Logger;
 import com.javarush.island.ostapenko.model.island.Island;
-import com.javarush.island.ostapenko.model.services.generation.AnimalPopulationService;
 import com.javarush.island.ostapenko.model.services.generation.IslandGenerationService;
-import com.javarush.island.ostapenko.model.services.generation.PlantPopulationService;
 import com.javarush.island.ostapenko.model.services.simulation.SimulationExecutionService;
 
 import java.util.ArrayList;

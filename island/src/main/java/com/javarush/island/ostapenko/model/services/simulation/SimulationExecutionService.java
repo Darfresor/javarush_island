@@ -35,7 +35,8 @@ public class SimulationExecutionService {
         this.island = island;
         this.statisticObservable = statisticObservable;
     }
-    public void stop(){
+
+    public void stop() {
         modelThreadPoolManager.shutdown();
         scheduler.shutdownNow();
     }
@@ -52,9 +53,10 @@ public class SimulationExecutionService {
         mediator.subsribe(EventType.ANIMAL_STARVATION, deathService);
         mediator.subsribe(EventType.ANIMAL_STARVATION, statisticsService);
         mediator.subsribe(EventType.PLANT_EATEN, deathService);
-        mediator.subsribe(EventType.PLANT_EATEN,statisticsService);
+        mediator.subsribe(EventType.PLANT_EATEN, statisticsService);
         mediator.subsribe(EventType.ANIMAL_MOVE_EAT, movementService);
         mediator.subsribe(EventType.ANIMAL_MOVE_REPRODUCE, movementService);
+        mediator.subsribe(EventType.ANIMAL_REPRODUCE, statisticsService);
         mediator.subsribe(EventType.ANIMAL_EAT, feedingService);
 
 
@@ -72,7 +74,7 @@ public class SimulationExecutionService {
             System.out.println("🟢 НАЧАЛО ЦИКЛА " + LocalDateTime.now());
             executeCoreThread();
             System.out.println("✅ ЗАВЕРШЕНИЕ ЦИКЛА " + LocalDateTime.now());
-        }  finally {
+        } finally {
             isCycleRunning.set(false);
         }
     }
