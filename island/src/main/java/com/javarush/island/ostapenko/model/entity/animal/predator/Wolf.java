@@ -9,7 +9,7 @@ public class Wolf extends Animal {
     private static final float MAX_WEIGHT_IN_KG = 50;
     private static final int CELL_PER_TURN = 3;
     private static final float FOOD_TO_BE_SATIATED_IN_KG = 8;
-    private static final int MAX_CREATURE_IN_CELL = 3;
+    private static final int MAX_CREATURE_IN_CELL = 30;
 
 
     public Wolf(String speciesName, int age, Gender gender, float weightInKg,

@@ -2,7 +2,6 @@ package com.javarush.island.ostapenko.model.services.generation;
 
 import com.javarush.island.ostapenko.constants.Gender;
 import com.javarush.island.ostapenko.constants.GenerateCreatureType;
-import com.javarush.island.ostapenko.model.entity.animal.Animal;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.Duck;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.Rabbit;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.insetcs.Caterpillar;
@@ -22,66 +21,71 @@ public class AnimalPopulationService {
 
     public void generate(GenerateCreatureType generateCreatureType) {
         switch (generateCreatureType) {
-            case FOR_EXAMPLE -> generateSimpleExample();
+            case FOR_EXAMPLE_DUCK -> generateSimpleExampleDuck();
+            case FOR_EXAMPLE_WOLF -> generateSimpleExampleWolf();
             case DEFAULT -> generateDefaultAnimal();
         }
         Logger.log("Генерация животных завершена");
     }
 
-   //TODO !!! Оставить пример с уткой, гусеницей и одуванчиками для примера№1 + добавить гусеницу и утку, что умирают от старости + утку в другой клетке.
 
 
-    private void generateSimpleExample() {
+    private void generateSimpleExampleDuck() {
         Cell cell = new Cell(0, 0);
         Cell cell2 = new Cell(0, 1);
         Cell cell3 = new Cell(1, 0);
         Cell cell4 = new Cell(1, 1);
-       // Wolf wolf1 = AnimalFactory.createWolf(364 + 9 * 365);
-       // Wolf wolf2 = AnimalFactory.createWolf(Gender.MALE);
-        //Wolf wolf3 = AnimalFactory.createWolf(Gender.FEMALE);
-
-        //Rabbit rabbit1 = AnimalFactory.createRabbit(364 + 9 * 365);
-        //Rabbit rabbit2 = AnimalFactory.createRabbit(Gender.MALE);
         Duck duck1 = AnimalFactory.createDuck();
         Caterpillar caterpillar1 = AnimalFactory.createCaterpillar();
-        //Duck duck2 = AnimalFactory.createDuck();
-        //cell.addAnimal(wolf1);
-        //cell.addAnimal(wolf2);
-        //cell.addAnimal(rabbit1);
-        //cell.addAnimal(rabbit2);
-        //cell.addAnimal(wolf3);
+        Caterpillar caterpillar2 = AnimalFactory.createCaterpillar();
         cell.addAnimal(duck1);
-        //cell2.addAnimal(duck2);
         cell.addAnimal(caterpillar1);
-        /*
-        Wolf wolf10 = AnimalFactory.createWolf(Gender.MALE);
-        Wolf wolf20 = AnimalFactory.createWolf(Gender.MALE);
-        Wolf wolf30 = AnimalFactory.createWolf(Gender.MALE);
-        Wolf wolf40 = AnimalFactory.createWolf(Gender.MALE);
-        Wolf wolf50 = AnimalFactory.createWolf(Gender.MALE);
-        Wolf wolf60 = AnimalFactory.createWolf(Gender.MALE);
-        cell2.addAnimal(wolf10);
-        cell2.addAnimal(wolf20);
-        cell3.addAnimal(wolf30);
-        cell3.addAnimal(wolf40);
-        cell4.addAnimal(wolf40);
-        cell4.addAnimal(wolf50);
-        */
+        cell.addAnimal(caterpillar2);
+        island.setCell(cell);
+        island.setCell(cell2);
+        island.setCell(cell3);
+        island.setCell(cell4);
+    }
 
+    private void generateSimpleExampleWolf() {
+        Cell cell = new Cell(0, 0);
+        Cell cell2 = new Cell(0, 1);
+        Cell cell3 = new Cell(1, 0);
+        Cell cell4 = new Cell(1, 1);
+        Wolf wolf1 = AnimalFactory.createWolf(364 + 9 * 365);
+        Wolf wolf2 = AnimalFactory.createWolf(Gender.MALE);
+        Wolf wolf3 = AnimalFactory.createWolf(Gender.FEMALE);
 
-        island.setCell(cell); //0.0
-        island.setCell(cell2);//0.1
-        island.setCell(cell3);//1.0
-        island.setCell(cell4);//1.1
+        Rabbit rabbit1 = AnimalFactory.createRabbit(Gender.MALE);
+        Rabbit rabbit2 = AnimalFactory.createRabbit(Gender.FEMALE);
+        Rabbit rabbit3 = AnimalFactory.createRabbit(Gender.MALE);
+        Rabbit rabbit4 = AnimalFactory.createRabbit(Gender.FEMALE);
+        Rabbit rabbit5 = AnimalFactory.createRabbit(Gender.FEMALE);
+        Rabbit rabbit6 = AnimalFactory.createRabbit(Gender.FEMALE);
+
+        cell.addAnimal(wolf1);
+        cell.addAnimal(wolf2);
+        cell.addAnimal(wolf3);
+        cell.addAnimal(rabbit1);
+        cell.addAnimal(rabbit2);
+        cell2.addAnimal(rabbit3);
+        cell2.addAnimal(rabbit4);
+        cell2.addAnimal(rabbit5);
+        cell2.addAnimal(rabbit6);
+
+        island.setCell(cell);
+        island.setCell(cell2);
+        island.setCell(cell3);
+        island.setCell(cell4);
     }
 
     private void generateDefaultAnimal() {
         Cell cell = new Cell(0, 0);
         Wolf wolf1 = AnimalFactory.createWolf();
         cell.addAnimal(wolf1);
-        island.setCell(cell); //0.0
-        island.setCell(new Cell(0, 1));//1.0
-        island.setCell(new Cell(1, 0));//1.0
-        island.setCell(new Cell(1, 1));//1.1
+        island.setCell(cell);
+        island.setCell(new Cell(0, 1));
+        island.setCell(new Cell(1, 0));
+        island.setCell(new Cell(1, 1));
     }
 }

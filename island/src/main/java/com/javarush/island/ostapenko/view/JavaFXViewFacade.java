@@ -16,9 +16,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static com.javarush.island.ostapenko.constants.GUIViewConstans.*;
 
 /**
@@ -98,7 +95,8 @@ public class JavaFXViewFacade implements IViewFacade {
         Label generateType = new Label("Тип логики генерации существ");
 
         ObservableList<String> generateTypeList = FXCollections.observableArrayList();
-        generateTypeList.add(String.valueOf(GenerateCreatureType.FOR_EXAMPLE.getGenerateTypeName()));
+        generateTypeList.add(GenerateCreatureType.FOR_EXAMPLE_DUCK.getGenerateTypeName());
+        generateTypeList.add(GenerateCreatureType.FOR_EXAMPLE_WOLF.getGenerateTypeName());
         generateTypeList.add(GenerateCreatureType.DEFAULT.getGenerateTypeName());
         generateTypeCombo = new ComboBox<>();
         generateTypeCombo.setItems( generateTypeList);

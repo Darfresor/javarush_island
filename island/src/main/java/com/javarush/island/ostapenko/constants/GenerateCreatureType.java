@@ -3,7 +3,8 @@ package com.javarush.island.ostapenko.constants;
 import com.javarush.island.ostapenko.core.exception.ApplicationException;
 
 public enum GenerateCreatureType {
-    FOR_EXAMPLE("Пример для просмотра в консоли"),
+    FOR_EXAMPLE_DUCK("Пример для утки"),
+    FOR_EXAMPLE_WOLF("Пример для волка"),
     DEFAULT("Стандартная генерация");
 
     private String generateTypeName;
