@@ -23,7 +23,7 @@ public class StatisticsService implements IEventHandler {
     }
 
     public void decrement(String key) {
-        statistics.computeIfAbsent(key, k -> new AtomicLong()).decrementAndGet();
+        statistics.computeIfAbsent(key, k -> new AtomicLong()).updateAndGet(current->Math.max(0,current-1));
     }
 
     public long add(String key, Long valueToAdd) {
