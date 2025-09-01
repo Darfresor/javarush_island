@@ -8,6 +8,7 @@ import com.javarush.island.ostapenko.core.dto.SimulationSetting;
 import com.javarush.island.ostapenko.core.dto.SimulationStatistics;
 import com.javarush.island.ostapenko.core.exception.ApplicationException;
 import com.javarush.island.ostapenko.core.interfaces.IViewFacade;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -80,17 +81,17 @@ public class JavaFXViewFacade implements IViewFacade {
         numOfCellX.setEditable(true);
         numOfCellY = new Spinner<>(2, 100, 1);
         numOfCellY.setEditable(true);
-        HBox islandSizeBox = new HBox(10,islandSize ,numOfCellX, numOfCellY);
-        islandSizeBox.setPadding(new Insets(10,0,0,10));
+        HBox islandSizeBox = new HBox(10, islandSize, numOfCellX, numOfCellY);
+        islandSizeBox.setPadding(new Insets(10, 0, 0, 10));
 
         Label simulationSpeed = new Label("Скорость симуляции в ms");
         simulationSpeedMs = new Spinner<>(10, 10000, 1000, 10);
         simulationSpeedMs.setEditable(true);
-        HBox simulationSpeedBox = new HBox(10,simulationSpeed ,simulationSpeedMs);
-        simulationSpeedBox.setPadding(new Insets(0,0,0,10));
+        HBox simulationSpeedBox = new HBox(10, simulationSpeed, simulationSpeedMs);
+        simulationSpeedBox.setPadding(new Insets(0, 0, 0, 10));
 
         isDebug = new CheckBox("Включить отображение деталей симуляции в консоли");
-        isDebug.setPadding(new Insets(0,0,0,10));
+        isDebug.setPadding(new Insets(0, 0, 0, 10));
 
         Label generateType = new Label("Тип логики генерации существ");
 
@@ -99,10 +100,10 @@ public class JavaFXViewFacade implements IViewFacade {
         generateTypeList.add(GenerateCreatureType.FOR_EXAMPLE_WOLF.getGenerateTypeName());
         generateTypeList.add(GenerateCreatureType.DEFAULT.getGenerateTypeName());
         generateTypeCombo = new ComboBox<>();
-        generateTypeCombo.setItems( generateTypeList);
+        generateTypeCombo.setItems(generateTypeList);
         generateTypeCombo.getSelectionModel().select(0);
         HBox generateTypeBox = new HBox(10, generateType, generateTypeCombo);
-        generateTypeBox.setPadding(new Insets(0,0,0,10));
+        generateTypeBox.setPadding(new Insets(0, 0, 0, 10));
 
 
         startSimulation = new Button("Запустить симуляцию");
@@ -110,10 +111,10 @@ public class JavaFXViewFacade implements IViewFacade {
         stopSimulation = new Button("Оставить симуляцию");
         stopSimulation.setUserData(CommandType.STOP_SIMULATION);
         stopSimulation.setDisable(true);
-        VBox buttonControlBox = new VBox(10,startSimulation ,stopSimulation);
-        buttonControlBox.setPadding(new Insets(0,0,0,10));
+        VBox buttonControlBox = new VBox(10, startSimulation, stopSimulation);
+        buttonControlBox.setPadding(new Insets(0, 0, 0, 10));
 
-        return  new VBox(10, islandSizeBox, simulationSpeedBox, isDebug, generateTypeBox, buttonControlBox);
+        return new VBox(10, islandSizeBox, simulationSpeedBox, isDebug, generateTypeBox, buttonControlBox);
     }
 
     private static GridPane createGridPane() {
@@ -187,13 +188,14 @@ public class JavaFXViewFacade implements IViewFacade {
     }
 
     public void updateStatistics(SimulationStatistics simulationStatistics) {
-        String numOfDay = String.format("В симуляции наступил %d-й день %n",simulationStatistics.getCurrentDay());
+        String numOfDay = String.format("В симуляции наступил %d-й день %n", simulationStatistics.getCurrentDay());
         String totalAnimal = String.format("Общее кол-во животных = %d %n", simulationStatistics.getTotalAnimal());
         String totalPlant = String.format("Общее кол-во растений = %d %n", simulationStatistics.getTotalPlants());
         StringBuilder detailStatistics = new StringBuilder(String.format("=====Детальная статистика по видам====== %n"));
-        simulationStatistics.getDetailStatistics().forEach((k,v)->{
-            detailStatistics.append(String.format("%s %d %n",k,v));
+        simulationStatistics.getDetailStatistics().forEach((k, v) -> {
+            detailStatistics.append(String.format("%s %d %n", k, v));
         });
-        textFiledStatistics.setText(numOfDay + totalAnimal + totalPlant + detailStatistics);
+        Platform.runLater(() -> textFiledStatistics.setText(numOfDay + totalAnimal + totalPlant + detailStatistics));
+
     }
 }
