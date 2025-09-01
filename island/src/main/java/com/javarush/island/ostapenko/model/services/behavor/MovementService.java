@@ -1,6 +1,6 @@
 package com.javarush.island.ostapenko.model.services.behavor;
 
-import com.javarush.island.ostapenko.model.behavor.BehavorFactory;
+import com.javarush.island.ostapenko.model.behavor.BehavorStrategyFactory;
 import com.javarush.island.ostapenko.model.behavor.interfaces.Moveable;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
 import com.javarush.island.ostapenko.model.island.Cell;
@@ -25,7 +25,7 @@ public class MovementService implements IEventHandler {
     public void executeMove(Animal animal, Cell currentCell, Island island, Event event) {
             Animal currentaAnimal =currentCell.getAnimalById(animal.getId());
             if (currentaAnimal != null && !currentaAnimal.isBeingEaten()) {
-                Moveable strategy = BehavorFactory.createMoveStrategy(animal, mediator);
+                Moveable strategy = BehavorStrategyFactory.createMoveStrategy(animal, mediator);
                 strategy.move(animal, currentCell, island, event, modelThreadPoolManager);
             }
 

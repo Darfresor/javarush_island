@@ -1,6 +1,6 @@
 package com.javarush.island.ostapenko.model.services.behavor;
 
-import com.javarush.island.ostapenko.model.behavor.BehavorFactory;
+import com.javarush.island.ostapenko.model.behavor.BehavorStrategyFactory;
 import com.javarush.island.ostapenko.model.behavor.interfaces.AnimalReproducible;
 import com.javarush.island.ostapenko.model.behavor.interfaces.PlantReproducible;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
@@ -12,8 +12,6 @@ import com.javarush.island.ostapenko.model.services.executors.ModelThreadPoolMan
 import com.javarush.island.ostapenko.model.services.mediator.IEventHandler;
 import com.javarush.island.ostapenko.model.services.mediator.IMediator;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalCanReproduce;
-import com.javarush.island.ostapenko.model.services.mediator.event.AnimalEatEvent;
-import com.javarush.island.ostapenko.model.services.mediator.event.AnimalMoveForReproduceEvent;
 import com.javarush.island.ostapenko.model.services.mediator.event.Event;
 
 import java.util.UUID;
@@ -51,11 +49,11 @@ public class ReproductionService implements IEventHandler {
     private void executeConcreteStrategy(Creature creature, Cell cell, Island island){
         switch (creature) {
             case Animal a when !a.isBeingEaten() -> {
-                AnimalReproducible strategy = BehavorFactory.createReproduceStrategy(a, mediator);
+                AnimalReproducible strategy = BehavorStrategyFactory.createReproduceStrategy(a, mediator);
                 strategy.reproduce(a, cell, island, modelThreadPoolManager);
             }
             case Plant p when !p.isBeingEaten()-> {
-                PlantReproducible strategy = BehavorFactory.createReproduceStrategy(p, mediator);
+                PlantReproducible strategy = BehavorStrategyFactory.createReproduceStrategy(p, mediator);
                 strategy.reproduce(p, cell, island, modelThreadPoolManager);
             }
             case null -> throw new RuntimeException("Creature cannot be null");

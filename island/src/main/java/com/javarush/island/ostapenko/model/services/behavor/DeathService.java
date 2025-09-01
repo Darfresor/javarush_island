@@ -1,6 +1,6 @@
 package com.javarush.island.ostapenko.model.services.behavor;
 
-import com.javarush.island.ostapenko.model.behavor.BehavorFactory;
+import com.javarush.island.ostapenko.model.behavor.BehavorStrategyFactory;
 import com.javarush.island.ostapenko.model.behavor.interfaces.Aging;
 import com.javarush.island.ostapenko.model.behavor.interfaces.Edible;
 import com.javarush.island.ostapenko.model.behavor.interfaces.Starvable;
@@ -30,12 +30,12 @@ public class DeathService implements IEventHandler {
 
 
     public <E extends Creature, T extends Creature> void executeDeathByEating(E predator, T victim, Cell cell) {
-            Edible<? super E, ? super T> strategy = (Edible<? super E, ? super T>) BehavorFactory.createBeingEatenStrategy(victim);
+            Edible<? super E, ? super T> strategy = (Edible<? super E, ? super T>) BehavorStrategyFactory.createBeingEatenStrategy(victim);
             strategy.deathByEating(predator, victim, cell);
     }
 
     public void executeDeathFromStarvation(Animal animal, Cell cell, Island island) {
-            Starvable strategy = BehavorFactory.createStarvableStrategy(animal);
+            Starvable strategy = BehavorStrategyFactory.createStarvableStrategy(animal);
             strategy.deathFromStarvation(animal, cell, island);
     }
 
@@ -46,14 +46,14 @@ public class DeathService implements IEventHandler {
                         for (UUID animalId : cellHorizontal.getAnimalIds()) {
                             Animal animal = cellHorizontal.getAnimalById(animalId);
                             if (animal != null && !animal.isBeingEaten()) {
-                                Aging<Animal> strategy = (Aging<Animal>) BehavorFactory.createAgingStrategy(animal, mediator);
+                                Aging<Animal> strategy = (Aging<Animal>) BehavorStrategyFactory.createAgingStrategy(animal, mediator);
                                 strategy.deathDueToOldAge(animal, cellHorizontal, island, modelThreadPoolManager);
                             }
                         }
                         for (UUID plantId : cellHorizontal.getPlantIds()) {
                             Plant plant = cellHorizontal.getPlantById(plantId);
                             if (plant != null && !plant.isBeingEaten()) {
-                                Aging<Plant> strategy = (Aging<Plant>) BehavorFactory.createAgingStrategy(plant, mediator);
+                                Aging<Plant> strategy = (Aging<Plant>) BehavorStrategyFactory.createAgingStrategy(plant, mediator);
                                 strategy.deathDueToOldAge(plant, cellHorizontal, island, modelThreadPoolManager);
                             }
                         }

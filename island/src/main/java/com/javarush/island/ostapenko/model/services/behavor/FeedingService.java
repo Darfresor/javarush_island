@@ -1,6 +1,6 @@
 package com.javarush.island.ostapenko.model.services.behavor;
 
-import com.javarush.island.ostapenko.model.behavor.BehavorFactory;
+import com.javarush.island.ostapenko.model.behavor.BehavorStrategyFactory;
 import com.javarush.island.ostapenko.model.behavor.interfaces.Eatable;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
 import com.javarush.island.ostapenko.model.island.Cell;
@@ -29,7 +29,7 @@ public class FeedingService implements IEventHandler {
                         for (UUID animalId : cellHorizontal.getAnimalIds()) {
                             Animal animal = cellHorizontal.getAnimalById(animalId);
                             if (animal != null && !animal.isBeingEaten()) {
-                                Eatable strategy = BehavorFactory.createEatStrategy(animal, mediator);
+                                Eatable strategy = BehavorStrategyFactory.createEatStrategy(animal, mediator);
                                 strategy.eat(animal, cellHorizontal, island, modelThreadPoolManager);
                             }
                         }
@@ -39,7 +39,7 @@ public class FeedingService implements IEventHandler {
     }
 
     public void executeEat(Animal animal, Cell cell, Island island) {
-            Eatable strategy = BehavorFactory.createEatStrategy(animal, mediator);
+            Eatable strategy = BehavorStrategyFactory.createEatStrategy(animal, mediator);
             strategy.eat(animal, cell, island, modelThreadPoolManager);
     }
 

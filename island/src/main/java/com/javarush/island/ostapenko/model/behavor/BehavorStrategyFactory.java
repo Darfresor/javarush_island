@@ -11,8 +11,8 @@ import com.javarush.island.ostapenko.model.entity.animal.herbivore.insetcs.Cater
 import com.javarush.island.ostapenko.model.entity.plant.Plant;
 import com.javarush.island.ostapenko.model.services.mediator.IMediator;
 
-public class BehavorFactory {
-    private BehavorFactory() {
+public class BehavorStrategyFactory {
+    private BehavorStrategyFactory() {
     }
 
     public static Moveable createMoveStrategy(Creature creature, IMediator mediator) {
