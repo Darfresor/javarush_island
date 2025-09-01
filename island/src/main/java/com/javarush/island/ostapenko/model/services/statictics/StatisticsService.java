@@ -26,9 +26,7 @@ public class StatisticsService implements IEventHandler {
         statistics.computeIfAbsent(key, k -> new AtomicLong()).updateAndGet(current->Math.max(0,current-1));
     }
 
-    public long add(String key, Long valueToAdd) {
-        return statistics.computeIfAbsent(key, k -> new AtomicLong(0)).addAndGet(valueToAdd);
-    }
+
 
     public void printStatistics() {
         System.out.printf("=== СТАТИСТИКА  за %d день === %n", dayOfSimulation.get());
@@ -50,6 +48,13 @@ public class StatisticsService implements IEventHandler {
 
     }
 
+    public long add(String key, Long valueToAdd) {
+        return statistics.computeIfAbsent(key, k -> new AtomicLong(0)).addAndGet(valueToAdd);
+    }
+    public void set(String key, long value) {
+        statistics.put(key, new AtomicLong(value));
+    }
+
     public SimulationStatistics getSimulationStatistics() {
         long currentDay = dayOfSimulation.get();
         long totalAnimal = statistics.computeIfAbsent("total.animals: ",k->new AtomicLong(0)).get();
@@ -65,9 +70,7 @@ public class StatisticsService implements IEventHandler {
         return new SimulationStatistics(currentDay, totalAnimal, totalPlants, detailStatistics);
     }
 
-    public void set(String key, long value) {
-        statistics.put(key, new AtomicLong(value));
-    }
+
 
     @Override
     public void handle(Event event) {
