@@ -1,4 +1,4 @@
-package com.javarush.island.ostapenko.model.entity.animal.herbivore;
+package com.javarush.island.ostapenko.model.entity.animal.omnivore;
 
 import com.javarush.island.ostapenko.constants.DietType;
 import com.javarush.island.ostapenko.constants.Gender;
