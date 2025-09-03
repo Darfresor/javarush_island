@@ -4,13 +4,10 @@ import com.javarush.island.ostapenko.constants.DietType;
 import com.javarush.island.ostapenko.constants.Gender;
 import com.javarush.island.ostapenko.core.exception.ApplicationException;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
-import com.javarush.island.ostapenko.model.entity.animal.herbivore.Deer;
-import com.javarush.island.ostapenko.model.entity.animal.herbivore.Goat;
-import com.javarush.island.ostapenko.model.entity.animal.herbivore.Horse;
+import com.javarush.island.ostapenko.model.entity.animal.herbivore.*;
 import com.javarush.island.ostapenko.model.entity.animal.omnivore.Boar;
 import com.javarush.island.ostapenko.model.entity.animal.omnivore.Mouse;
 import com.javarush.island.ostapenko.model.entity.animal.omnivore.Duck;
-import com.javarush.island.ostapenko.model.entity.animal.herbivore.Rabbit;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.insetcs.Caterpillar;
 import com.javarush.island.ostapenko.model.entity.animal.predator.*;
 
@@ -224,7 +221,7 @@ public class AnimalFactory {
         return deerList;
     }
     public static Goat createGoat() {
-        return new Goat("Овца", (int) (Math.random() * 90) + 1,
+        return new Goat("Коза", (int) (Math.random() * 90) + 1,
                 Gender.values()[(int) Math.round(Math.random())], 0.01f,
                 0.5f, DietType.HERBIVORE);
     }
@@ -234,6 +231,18 @@ public class AnimalFactory {
             goatList.add(createGoat());
         }
         return goatList;
+    }
+    public static Sheep createSheep() {
+        return new Sheep("Овца", (int) (Math.random() * 90) + 1,
+                Gender.values()[(int) Math.round(Math.random())], 0.01f,
+                0.5f, DietType.HERBIVORE);
+    }
+    public static List<Sheep> createSheeps(int countAnimal) {
+        List<Sheep> sheepList = new ArrayList<>();
+        for (int i = 0; i < countAnimal; i++) {
+            sheepList.add(createSheep());
+        }
+        return sheepList;
     }
 
 
