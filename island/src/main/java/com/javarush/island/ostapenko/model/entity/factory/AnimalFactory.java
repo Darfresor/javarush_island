@@ -109,7 +109,7 @@ public class AnimalFactory {
     public static Caterpillar createCaterpillar() {
         return new Caterpillar("Гусеница", (int) (Math.random() * 90) + 1,
                 Gender.values()[(int) Math.round(Math.random())], 0.01f,
-                0.5f, DietType.HERBIVORE);
+                1.0f, DietType.HERBIVORE);
     }
     public static List<Caterpillar> createCaterpillars(int countAnimal) {
         List<Caterpillar> caterpillarList = new ArrayList<>();
@@ -121,8 +121,8 @@ public class AnimalFactory {
 
     public static Mouse createMouse() {
         return new Mouse("Мышь", (int) (Math.random() * 90) + 1,
-                Gender.values()[(int) Math.round(Math.random())], 0.01f,
-                0.5f, DietType.OMNIVORE);
+                Gender.values()[(int) Math.round(Math.random())], 0.05f,
+                1.0f, DietType.OMNIVORE);
     }
     public static List<Mouse> createMouses(int countAnimal) {
         List<Mouse> mouseList = new ArrayList<>();
@@ -134,8 +134,8 @@ public class AnimalFactory {
 
     public static Boa createBoa() {
         return new Boa("Удав", (int) (Math.random() * 90) + 1,
-                Gender.values()[(int) Math.round(Math.random())], 0.01f,
-                0.5f, DietType.CARNIVORE);
+                Gender.values()[(int) Math.round(Math.random())], 15.0f,
+                1.0f, DietType.CARNIVORE);
     }
     public static List<Boa> createBoas(int countAnimal) {
         List<Boa> boaList = new ArrayList<>();
@@ -148,8 +148,8 @@ public class AnimalFactory {
 
     public static Boar createBoar() {
         return new Boar("Кабан", (int) (Math.random() * 90) + 1,
-                Gender.values()[(int) Math.round(Math.random())], 0.01f,
-                0.5f, DietType.OMNIVORE);
+                Gender.values()[(int) Math.round(Math.random())], 400.0f,
+                1.0f, DietType.OMNIVORE);
     }
     public static List<Boar> createBoars(int countAnimal) {
         List<Boar> boarList = new ArrayList<>();
@@ -161,8 +161,8 @@ public class AnimalFactory {
 
     public static Fox createFox() {
         return new Fox("Лиса", (int) (Math.random() * 90) + 1,
-                Gender.values()[(int) Math.round(Math.random())], 0.01f,
-                0.5f, DietType.CARNIVORE);
+                Gender.values()[(int) Math.round(Math.random())], 8.00f,
+                1.0f, DietType.CARNIVORE);
     }
     public static List<Fox> createFoxs(int countAnimal) {
         List<Fox> foxList = new ArrayList<>();
@@ -174,8 +174,8 @@ public class AnimalFactory {
 
     public static Bear createBear() {
         return new Bear("Медведь", (int) (Math.random() * 90) + 1,
-                Gender.values()[(int) Math.round(Math.random())], 0.01f,
-                0.5f, DietType.CARNIVORE);
+                Gender.values()[(int) Math.round(Math.random())], 500.0f,
+                1.0f, DietType.CARNIVORE);
     }
     public static List<Bear> createBears(int countAnimal) {
         List<Bear> bearList = new ArrayList<>();
@@ -186,8 +186,8 @@ public class AnimalFactory {
     }
     public static Eagle createEagle() {
         return new Eagle("Орел", (int) (Math.random() * 90) + 1,
-                Gender.values()[(int) Math.round(Math.random())], 0.01f,
-                0.5f, DietType.CARNIVORE);
+                Gender.values()[(int) Math.round(Math.random())], 6.0f,
+                1.0f, DietType.CARNIVORE);
     }
     public static List<Eagle> createEagles(int countAnimal) {
         List<Eagle> eagleList = new ArrayList<>();
@@ -198,8 +198,8 @@ public class AnimalFactory {
     }
     public static Horse createHorse() {
         return new Horse("Лошадь", (int) (Math.random() * 90) + 1,
-                Gender.values()[(int) Math.round(Math.random())], 0.01f,
-                0.5f, DietType.HERBIVORE);
+                Gender.values()[(int) Math.round(Math.random())], 400.0f,
+                1.0f, DietType.HERBIVORE);
     }
     public static List<Horse> createHorses(int countAnimal) {
         List<Horse> horseList = new ArrayList<>();
@@ -210,8 +210,8 @@ public class AnimalFactory {
     }
     public static Deer createDeer() {
         return new Deer("Олень", (int) (Math.random() * 90) + 1,
-                Gender.values()[(int) Math.round(Math.random())], 0.01f,
-                0.5f, DietType.HERBIVORE);
+                Gender.values()[(int) Math.round(Math.random())], 300.0f,
+                1.0f, DietType.HERBIVORE);
     }
     public static List<Deer> createDeers(int countAnimal) {
         List<Deer> deerList = new ArrayList<>();
@@ -222,8 +222,8 @@ public class AnimalFactory {
     }
     public static Goat createGoat() {
         return new Goat("Коза", (int) (Math.random() * 90) + 1,
-                Gender.values()[(int) Math.round(Math.random())], 0.01f,
-                0.5f, DietType.HERBIVORE);
+                Gender.values()[(int) Math.round(Math.random())], 60.0f,
+                1.0f, DietType.HERBIVORE);
     }
     public static List<Goat> createGoats(int countAnimal) {
         List<Goat> goatList = new ArrayList<>();
@@ -234,8 +234,8 @@ public class AnimalFactory {
     }
     public static Sheep createSheep() {
         return new Sheep("Овца", (int) (Math.random() * 90) + 1,
-                Gender.values()[(int) Math.round(Math.random())], 0.01f,
-                0.5f, DietType.HERBIVORE);
+                Gender.values()[(int) Math.round(Math.random())], 70.0f,
+                1.0f, DietType.HERBIVORE);
     }
     public static List<Sheep> createSheeps(int countAnimal) {
         List<Sheep> sheepList = new ArrayList<>();
@@ -246,8 +246,8 @@ public class AnimalFactory {
     }
     public static Buffalo createBuffalo() {
         return new Buffalo("Буйвол", (int) (Math.random() * 90) + 1,
-                Gender.values()[(int) Math.round(Math.random())], 0.01f,
-                0.5f, DietType.HERBIVORE);
+                Gender.values()[(int) Math.round(Math.random())], 700.0f,
+                1.0f, DietType.HERBIVORE);
     }
     public static List<Buffalo> createBuffalos(int countAnimal) {
         List<Buffalo> buffaloList = new ArrayList<>();

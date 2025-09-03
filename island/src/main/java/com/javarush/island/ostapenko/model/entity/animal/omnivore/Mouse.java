@@ -12,9 +12,9 @@ public class Mouse extends Animal {
     private static final float FOOD_TO_BE_SATIATED_IN_KG = 0.01f;
 
     public Mouse(String speciesName, int age, Gender gender, float weightInKg,
-                 float foodToBeFullySatiatedInKg,  DietType dietType) {
+                 float satiety,  DietType dietType) {
         super(speciesName, age, MAX_AGE_DAYS, gender, weightInKg,  MAX_WEIGHT_IN_KG, CELL_PER_TURN
-                , foodToBeFullySatiatedInKg, FOOD_TO_BE_SATIATED_IN_KG, dietType);
+                , FOOD_TO_BE_SATIATED_IN_KG, satiety,  dietType);
     }
 
     @Override
