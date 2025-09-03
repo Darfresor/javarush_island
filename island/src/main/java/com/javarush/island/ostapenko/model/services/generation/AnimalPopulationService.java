@@ -84,12 +84,13 @@ public class AnimalPopulationService {
     }
 
     private void generateDefault() {
-        Cell cell = new Cell(0, 0);
-        List<Animal> animals = DefaultBiomFactory.createAllAnimals();
-        cell.addAnimals(animals);
-        island.setCell(cell);
-        island.setCell(new Cell(0, 1));
-        island.setCell(new Cell(1, 0));
-        island.setCell(new Cell(1, 1));
+        for (Cell[] cellVertical : island.getGridCopy()) {
+            for (Cell cellHorizontal : cellVertical) {
+                cellHorizontal.addAnimals(
+                        DefaultBiomFactory.createAllAnimals()
+                );
+                island.setCell(cellHorizontal);
+            }
+        }
     }
 }
