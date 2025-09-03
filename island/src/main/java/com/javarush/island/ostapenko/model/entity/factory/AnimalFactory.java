@@ -85,11 +85,11 @@ public class AnimalFactory {
                 1.0f, DietType.HERBIVORE);
     }
     public static List<Rabbit> createRabbits(int countAnimal) {
-        List<Rabbit> RabbitList = new ArrayList<>();
+        List<Rabbit> rabbitList = new ArrayList<>();
         for (int i = 0; i < countAnimal; i++) {
-            RabbitList.add(createRabbit());
+            rabbitList.add(createRabbit());
         }
-        return RabbitList;
+        return rabbitList;
     }
 
     public static Duck createDuck() {
@@ -98,16 +98,23 @@ public class AnimalFactory {
                 1.0f, DietType.OMNIVORE);
     }
     public static List<Duck> createDucks(int countAnimal) {
-        List<Duck> DuckList = new ArrayList<>();
+        List<Duck> duckList = new ArrayList<>();
         for (int i = 0; i < countAnimal; i++) {
-            DuckList.add(createDuck());
+            duckList.add(createDuck());
         }
-        return DuckList;
+        return duckList;
     }
     public static Caterpillar createCaterpillar() {
         return new Caterpillar("Гусеница", (int) (Math.random() * 90) + 1,
                 Gender.values()[(int) Math.round(Math.random())], 0.01f,
                 0.5f, DietType.HERBIVORE);
+    }
+    public static List<Caterpillar> createCaterpillars(int countAnimal) {
+        List<Caterpillar> caterpillarList = new ArrayList<>();
+        for (int i = 0; i < countAnimal; i++) {
+            caterpillarList.add(createCaterpillar());
+        }
+        return caterpillarList;
     }
 
 

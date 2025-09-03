@@ -6,9 +6,10 @@ import com.javarush.island.ostapenko.constants.Gender;
 public class Caterpillar extends Insetcs{
     private static final int MAX_AGE_DAYS = 90;
     private static final float MAX_WEIGHT_IN_KG = 0.01f;
+    private static final int MAX_CREATURE_IN_CELL = 1000;
     private static final int CELL_PER_TURN = 0;
     private static final float FOOD_TO_BE_SATIATED_IN_KG = 0;
-    private static final int MAX_CREATURE_IN_CELL = 3;
+
 
     public Caterpillar(String speciesName, int ageInDay,
             Gender gender, float weightInKg,
