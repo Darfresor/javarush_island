@@ -33,7 +33,7 @@ public class GenericAnimalMoveStrategy implements Moveable {
             animal.setCellsLeftInCurrentTurn(animal.getCellsLeftInCurrentTurn() - 1);
             Cell futureCell = chooseCellForMove(currentCell, island, animal);
             int countAnimalInFutureCell = countAnimalInCell(animal, futureCell);
-            if (countAnimalInFutureCell >= animal.getMaxNumberOfAnimalInCell()) {
+            if (countAnimalInFutureCell + 1 >= animal.getMaxNumberOfAnimalInCell()) {
                 Logger.logMovementService(animal, currentCell,
                         String.format("%s потратил силы но не смог попасть в соседнюю клетку из-за переполнения, у него осталось ходов %d",
                                 animal.getSpeciesName(), animal.getCellsLeftInCurrentTurn()));

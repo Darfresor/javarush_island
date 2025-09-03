@@ -68,9 +68,7 @@ public abstract class Animal extends Creature {
         return maxWeightInKg;
     }
 
-    public  static int getMaxNumberOfAnimalInCell() {
-        return 0;
-    }
+    public  abstract int getMaxNumberOfAnimalInCell();
 
     public int getCellsPerTurnSpeed() {
         return cellsPerTurnSpeed;

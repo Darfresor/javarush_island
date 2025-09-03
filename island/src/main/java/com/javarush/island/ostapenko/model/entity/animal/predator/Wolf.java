@@ -18,7 +18,11 @@ public class Wolf extends Animal {
                 FOOD_TO_BE_SATIATED_IN_KG, satiety, dietType);
     }
 
-    public  static int getMaxNumberOfAnimalInCell() {
+    @Override
+    public  int getMaxNumberOfAnimalInCell() {
+        return MAX_CREATURE_IN_CELL;
+    }
+    public static int getMaxNumberOfWolfInCell(){
         return MAX_CREATURE_IN_CELL;
     }
 

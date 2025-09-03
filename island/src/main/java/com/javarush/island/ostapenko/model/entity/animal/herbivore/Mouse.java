@@ -12,7 +12,11 @@ public class Mouse extends Animal {
         super(speciesName, age, maxAge, gender, weightInKg, maxWeightInKg, cellsPerTurnSpeed, foodToBeFullySatiatedInKg, satiety, dietType);
     }
 
-    public static int getMaxNumberOfAnimalInCell() {
+    @Override
+    public  int getMaxNumberOfAnimalInCell() {
+        return MAX_CREATURE_IN_CELL;
+    }
+    public static int getMaxNumberOfMouseInCell(){
         return MAX_CREATURE_IN_CELL;
     }
 }

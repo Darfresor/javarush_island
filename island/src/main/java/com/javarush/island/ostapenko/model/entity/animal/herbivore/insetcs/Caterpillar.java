@@ -17,7 +17,11 @@ public class Caterpillar extends Insetcs{
                 CELL_PER_TURN, FOOD_TO_BE_SATIATED_IN_KG, satiety, dietType, MAX_CREATURE_IN_CELL);
     }
 
-    public  static int getMaxNumberOfAnimalInCell() {
+    @Override
+    public  int getMaxNumberOfAnimalInCell() {
+        return MAX_CREATURE_IN_CELL;
+    }
+    public static int getMaxNumberOfCaterpillarInCell(){
         return MAX_CREATURE_IN_CELL;
     }
 }

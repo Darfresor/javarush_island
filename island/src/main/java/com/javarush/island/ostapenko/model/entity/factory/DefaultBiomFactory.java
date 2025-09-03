@@ -33,7 +33,7 @@ public class DefaultBiomFactory {
 
         List<Rabbit> rabbits = AnimalFactory.createRabbits(
                 ThreadLocalRandom.current().nextInt(
-                        Rabbit.getMaxNumberOfAnimalInCell()
+                        Rabbit.getMaxNumberOfRabbitInCell()
                 )
         );
         predators.addAll(rabbits);
@@ -46,7 +46,7 @@ public class DefaultBiomFactory {
 
         List<Wolf> wolfs = AnimalFactory.createWolfs(
                 ThreadLocalRandom.current().nextInt(
-                        Wolf.getMaxNumberOfAnimalInCell()
+                        Wolf.getMaxNumberOfWolfInCell()
                 )
         );
         predators.addAll(wolfs);
@@ -59,7 +59,7 @@ public class DefaultBiomFactory {
 
         List<Duck> ducks = AnimalFactory.createDucks(
                 ThreadLocalRandom.current().nextInt(
-                        Duck.getMaxNumberOfAnimalInCell()
+                        Duck.getMaxNumberOfDuckInCell()
                 )
         );
         omnivores.addAll(ducks);
