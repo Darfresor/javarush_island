@@ -2,6 +2,7 @@ package com.javarush.island.ostapenko.model.entity.factory;
 
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.Deer;
+import com.javarush.island.ostapenko.model.entity.animal.herbivore.Goat;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.Horse;
 import com.javarush.island.ostapenko.model.entity.animal.omnivore.Boar;
 import com.javarush.island.ostapenko.model.entity.animal.omnivore.Mouse;
@@ -57,11 +58,17 @@ public class DefaultBiomFactory {
                         Deer.getMaxNumberOfDeerInCell()
                 )
         );
+        List<Goat> goats = AnimalFactory.createGoats(
+                ThreadLocalRandom.current().nextInt(
+                        Goat.getMaxNumberOfGoatInCell()
+                )
+        );
 
         herbivores.addAll(rabbits);
         herbivores.addAll(caterpillars);
         herbivores.addAll(horses);
         herbivores.addAll(deers);
+        herbivores.addAll(goats);
         return herbivores;
     }
 
