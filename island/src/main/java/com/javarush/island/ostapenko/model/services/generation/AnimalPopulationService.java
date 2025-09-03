@@ -27,7 +27,7 @@ public class AnimalPopulationService {
         switch (generateCreatureType) {
             case FOR_EXAMPLE_DUCK -> generateSimpleExampleDuck();
             case FOR_EXAMPLE_WOLF -> generateSimpleExampleWolf();
-            case DEFAULT -> generateDefaultAnimal();
+            case DEFAULT -> generateDefault();
         }
         Logger.log("Генерация животных завершена");
     }
@@ -83,7 +83,7 @@ public class AnimalPopulationService {
         island.setCell(cell4);
     }
 
-    private void generateDefaultAnimal() {
+    private void generateDefault() {
         Cell cell = new Cell(0, 0);
         List<Animal> animals = DefaultBiomFactory.createAllAnimals();
         cell.addAnimals(animals);

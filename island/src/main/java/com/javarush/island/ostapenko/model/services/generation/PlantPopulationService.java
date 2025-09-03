@@ -1,6 +1,8 @@
 package com.javarush.island.ostapenko.model.services.generation;
 
 import com.javarush.island.ostapenko.constants.GenerateCreatureType;
+import com.javarush.island.ostapenko.model.behavor.BehavorStrategyFactory;
+import com.javarush.island.ostapenko.model.behavor.interfaces.Eatable;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
 import com.javarush.island.ostapenko.model.entity.factory.DefaultBiomFactory;
 import com.javarush.island.ostapenko.model.entity.plant.Plant;
@@ -10,6 +12,7 @@ import com.javarush.island.ostapenko.core.util.Logger;
 import com.javarush.island.ostapenko.model.entity.factory.PlantFactory;
 
 import java.util.List;
+import java.util.UUID;
 
 public class PlantPopulationService {
     private final Island island;
@@ -21,7 +24,7 @@ public class PlantPopulationService {
         switch (generateCreatureType) {
             case FOR_EXAMPLE_DUCK -> generateSimpleExampleDuck();
             case FOR_EXAMPLE_WOLF -> generateSimpleExampleWolf();
-            case DEFAULT -> generateDefaultAnimal();
+            case DEFAULT -> generateDefault();
         }
         Logger.log("Генерация растений завершена");
     }
@@ -71,14 +74,14 @@ public class PlantPopulationService {
         island.setCell(cell);
     }
 
-    private void generateDefaultAnimal() {
-        Cell cell = island.getGridCopy()[0][1];
-        Plant dandelion2 = PlantFactory.createDandelion();
-
-        List<Plant> plants = DefaultBiomFactory.createAllPlants();
-        cell.addPlants(plants);
-        island.setCell(cell);
-
-
+    private void generateDefault() {
+        for (Cell[] cellVertical : island.getGridCopy()) {
+            for (Cell cellHorizontal : cellVertical) {
+                cellHorizontal.addPlants(
+                        DefaultBiomFactory.createAllPlants()
+                );
+                island.setCell(cellHorizontal);
+            }
+        }
     }
 }
