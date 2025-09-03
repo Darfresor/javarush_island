@@ -7,6 +7,7 @@ import com.javarush.island.ostapenko.model.entity.animal.herbivore.Rabbit;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.insetcs.Caterpillar;
 import com.javarush.island.ostapenko.model.entity.animal.omnivore.Duck;
 import com.javarush.island.ostapenko.model.entity.animal.predator.Boa;
+import com.javarush.island.ostapenko.model.entity.animal.predator.Fox;
 import com.javarush.island.ostapenko.model.entity.animal.predator.Wolf;
 import com.javarush.island.ostapenko.model.entity.plant.Dandelion;
 import com.javarush.island.ostapenko.model.entity.plant.Plant;
@@ -66,8 +67,14 @@ public class DefaultBiomFactory {
                         Boa.getMaxNumberOfBoaInCell()
                 )
         );
+        List<Fox> foxs = AnimalFactory.createFoxs(
+                ThreadLocalRandom.current().nextInt(
+                        Fox.getMaxNumberOfFoxInCell()
+                )
+        );
         predators.addAll(wolfs);
         predators.addAll(boas);
+        predators.addAll(foxs);
         return predators;
     }
 

@@ -10,6 +10,7 @@ import com.javarush.island.ostapenko.model.entity.animal.omnivore.Duck;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.Rabbit;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.insetcs.Caterpillar;
 import com.javarush.island.ostapenko.model.entity.animal.predator.Boa;
+import com.javarush.island.ostapenko.model.entity.animal.predator.Fox;
 import com.javarush.island.ostapenko.model.entity.animal.predator.Wolf;
 
 import java.util.ArrayList;
@@ -159,6 +160,20 @@ public class AnimalFactory {
         }
         return boarList;
     }
+
+    public static Fox createFox() {
+        return new Fox("Лиса", (int) (Math.random() * 90) + 1,
+                Gender.values()[(int) Math.round(Math.random())], 0.01f,
+                0.5f, DietType.CARNIVORE);
+    }
+    public static List<Fox> createFoxs(int countAnimal) {
+        List<Fox> foxList = new ArrayList<>();
+        for (int i = 0; i < countAnimal; i++) {
+            foxList.add(createFox());
+        }
+        return foxList;
+    }
+
 
 
 
