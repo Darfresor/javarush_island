@@ -4,6 +4,7 @@ import com.javarush.island.ostapenko.constants.DietType;
 import com.javarush.island.ostapenko.constants.Gender;
 import com.javarush.island.ostapenko.core.exception.ApplicationException;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
+import com.javarush.island.ostapenko.model.entity.animal.herbivore.Mouse;
 import com.javarush.island.ostapenko.model.entity.animal.omnivore.Duck;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.Rabbit;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.insetcs.Caterpillar;
@@ -115,6 +116,19 @@ public class AnimalFactory {
             caterpillarList.add(createCaterpillar());
         }
         return caterpillarList;
+    }
+
+    public static Mouse createMouse() {
+        return new Mouse("Мышь", (int) (Math.random() * 90) + 1,
+                Gender.values()[(int) Math.round(Math.random())], 0.01f,
+                0.5f, DietType.HERBIVORE);
+    }
+    public static List<Mouse> createMouses(int countAnimal) {
+        List<Mouse> mouseList = new ArrayList<>();
+        for (int i = 0; i < countAnimal; i++) {
+            mouseList.add(createMouse());
+        }
+        return mouseList;
     }
 
 

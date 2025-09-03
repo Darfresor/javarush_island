@@ -71,7 +71,7 @@ public class JavaFXViewFacade implements IViewFacade {
     private Pane staticticInfo() {
         textFiledStatistics = new TextArea("Статистика на текущем ходу");
         textFiledStatistics.setWrapText(true);
-        VBox pane = new VBox(10, textFiledStatistics);
+        BorderPane pane = new BorderPane(textFiledStatistics);
         return pane;
     }
 
