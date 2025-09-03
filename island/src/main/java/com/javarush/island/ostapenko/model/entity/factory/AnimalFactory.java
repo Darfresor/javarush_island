@@ -9,10 +9,7 @@ import com.javarush.island.ostapenko.model.entity.animal.omnivore.Mouse;
 import com.javarush.island.ostapenko.model.entity.animal.omnivore.Duck;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.Rabbit;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.insetcs.Caterpillar;
-import com.javarush.island.ostapenko.model.entity.animal.predator.Bear;
-import com.javarush.island.ostapenko.model.entity.animal.predator.Boa;
-import com.javarush.island.ostapenko.model.entity.animal.predator.Fox;
-import com.javarush.island.ostapenko.model.entity.animal.predator.Wolf;
+import com.javarush.island.ostapenko.model.entity.animal.predator.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -187,7 +184,18 @@ public class AnimalFactory {
         }
         return bearList;
     }
-
+    public static Eagle createEagle() {
+        return new Eagle("Орел", (int) (Math.random() * 90) + 1,
+                Gender.values()[(int) Math.round(Math.random())], 0.01f,
+                0.5f, DietType.CARNIVORE);
+    }
+    public static List<Eagle> createEagles(int countAnimal) {
+        List<Eagle> eagleList = new ArrayList<>();
+        for (int i = 0; i < countAnimal; i++) {
+            eagleList.add(createEagle());
+        }
+        return eagleList;
+    }
 
 
 
