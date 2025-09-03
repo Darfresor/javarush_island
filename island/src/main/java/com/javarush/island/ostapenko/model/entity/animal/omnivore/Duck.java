@@ -1,4 +1,4 @@
-package com.javarush.island.ostapenko.model.entity.animal.herbivore;
+package com.javarush.island.ostapenko.model.entity.animal.omnivore;
 
 import com.javarush.island.ostapenko.constants.DietType;
 import com.javarush.island.ostapenko.constants.Gender;
@@ -13,6 +13,10 @@ public class Duck extends Animal {
     public Duck(String speciesName, int ageInDay,  Gender gender, float weightInKg,
                 float satiety, DietType dietType) {
         super(speciesName, ageInDay, MAX_AGE_DAYS, gender, weightInKg, MAX_WEIGHT_IN_KG,
-                CELL_PER_TURN, FOOD_TO_BE_SATIATED_IN_KG, satiety, dietType, MAX_CREATURE_IN_CELL);
+                CELL_PER_TURN, FOOD_TO_BE_SATIATED_IN_KG, satiety, dietType);
+    }
+
+    public  static int getMaxNumberOfAnimalInCell() {
+        return MAX_CREATURE_IN_CELL;
     }
 }

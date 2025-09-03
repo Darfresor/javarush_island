@@ -4,6 +4,7 @@ import com.javarush.island.ostapenko.model.entity.animal.Animal;
 import com.javarush.island.ostapenko.model.entity.plant.Plant;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -17,6 +18,12 @@ public class Cell {
     public Cell(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+    public void addAnimals(List<Animal> animals){
+        for (Animal animal : animals) {
+            this.animals.putIfAbsent(animal.getId(), animal);
+        }
     }
 
     public boolean  addAnimal(Animal animal){

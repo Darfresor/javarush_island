@@ -2,14 +2,18 @@ package com.javarush.island.ostapenko.model.services.generation;
 
 import com.javarush.island.ostapenko.constants.Gender;
 import com.javarush.island.ostapenko.constants.GenerateCreatureType;
-import com.javarush.island.ostapenko.model.entity.animal.herbivore.Duck;
+import com.javarush.island.ostapenko.model.entity.animal.Animal;
+import com.javarush.island.ostapenko.model.entity.animal.omnivore.Duck;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.Rabbit;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.insetcs.Caterpillar;
 import com.javarush.island.ostapenko.model.entity.animal.predator.Wolf;
+import com.javarush.island.ostapenko.model.entity.factory.DefaultBiomFactory;
 import com.javarush.island.ostapenko.model.island.Cell;
 import com.javarush.island.ostapenko.model.island.Island;
 import com.javarush.island.ostapenko.core.util.Logger;
 import com.javarush.island.ostapenko.model.entity.factory.AnimalFactory;
+
+import java.util.List;
 
 public class AnimalPopulationService {
     private final Island island;
@@ -81,8 +85,8 @@ public class AnimalPopulationService {
 
     private void generateDefaultAnimal() {
         Cell cell = new Cell(0, 0);
-        Wolf wolf1 = AnimalFactory.createWolf();
-        cell.addAnimal(wolf1);
+        List<Animal> animals = DefaultBiomFactory.createAllAnimals();
+        cell.addAnimals(animals);
         island.setCell(cell);
         island.setCell(new Cell(0, 1));
         island.setCell(new Cell(1, 0));

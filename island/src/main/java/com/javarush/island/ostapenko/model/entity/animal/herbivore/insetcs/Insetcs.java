@@ -9,6 +9,6 @@ public abstract class Insetcs extends Animal {
             , float weightInKg, float maxWeightInKg, int cellsPerTurnSpeed, float foodToBeFullySatiatedInKg
             , float satiety, DietType dietType, int maxNumberOfAnimalInCell) {
         super(speciesName, ageInDay, maxAgeInDay, gender, weightInKg, maxWeightInKg
-                ,cellsPerTurnSpeed, foodToBeFullySatiatedInKg, satiety, dietType, maxNumberOfAnimalInCell);
+                ,cellsPerTurnSpeed, foodToBeFullySatiatedInKg, satiety, dietType);
     }
 }

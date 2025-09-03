@@ -15,7 +15,11 @@ public class Wolf extends Animal {
     public Wolf(String speciesName, int age, Gender gender, float weightInKg,
                 float satiety, DietType dietType) {
         super(speciesName, age, MAX_AGE_DAYS, gender, weightInKg, MAX_WEIGHT_IN_KG, CELL_PER_TURN,
-                FOOD_TO_BE_SATIATED_IN_KG, satiety, dietType, MAX_CREATURE_IN_CELL);
+                FOOD_TO_BE_SATIATED_IN_KG, satiety, dietType);
+    }
+
+    public  static int getMaxNumberOfAnimalInCell() {
+        return MAX_CREATURE_IN_CELL;
     }
 
 }

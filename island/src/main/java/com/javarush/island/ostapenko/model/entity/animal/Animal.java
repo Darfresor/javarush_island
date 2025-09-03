@@ -9,6 +9,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 
 public abstract class Animal extends Creature {
+
     private final UUID id;
 
     private final AtomicBoolean isBeingEaten = new AtomicBoolean(false);
@@ -18,7 +19,7 @@ public abstract class Animal extends Creature {
     protected Gender gender;
     protected float weightInKg;
     protected float maxWeightInKg;
-    protected int maxNumberOfAnimalInCell;
+
     protected int cellsPerTurnSpeed;
     protected int cellsLeftInCurrentTurn;
     protected float satiety;
@@ -27,7 +28,7 @@ public abstract class Animal extends Creature {
     protected DietType dietType;
 
     public Animal(String speciesName, int ageInDay, int maxAgeInDay, Gender gender, float weightInKg,
-                  float maxWeightInKg, int cellsPerTurnSpeed, float foodToBeFullySatiatedInKg, float satiety, DietType dietType, int maxNumberOfAnimalInCell){
+                  float maxWeightInKg, int cellsPerTurnSpeed, float foodToBeFullySatiatedInKg, float satiety, DietType dietType){
         this.speciesName = speciesName;
         this.ageInDay = ageInDay;
         this.maxAgeInDay = maxAgeInDay;
@@ -38,7 +39,6 @@ public abstract class Animal extends Creature {
         this.foodToBeFullySatiatedInKg = foodToBeFullySatiatedInKg;
         this.satiety = satiety;
         this.dietType = dietType;
-        this.maxNumberOfAnimalInCell = maxNumberOfAnimalInCell;
 
         this.id = UUID.randomUUID();
         this.cellsLeftInCurrentTurn = cellsPerTurnSpeed;
@@ -68,8 +68,8 @@ public abstract class Animal extends Creature {
         return maxWeightInKg;
     }
 
-    public int getMaxNumberOfAnimalInCell() {
-        return maxNumberOfAnimalInCell;
+    public  static int getMaxNumberOfAnimalInCell() {
+        return 0;
     }
 
     public int getCellsPerTurnSpeed() {

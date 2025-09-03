@@ -23,9 +23,8 @@ public class StatisticsService implements IEventHandler {
     }
 
     public void decrement(String key) {
-        statistics.computeIfAbsent(key, k -> new AtomicLong()).updateAndGet(current->Math.max(0,current-1));
+        statistics.computeIfAbsent(key, k -> new AtomicLong()).updateAndGet(current -> Math.max(0, current - 1));
     }
-
 
 
     public void printStatistics() {
@@ -51,14 +50,15 @@ public class StatisticsService implements IEventHandler {
     public long add(String key, Long valueToAdd) {
         return statistics.computeIfAbsent(key, k -> new AtomicLong(0)).addAndGet(valueToAdd);
     }
+
     public void set(String key, long value) {
         statistics.put(key, new AtomicLong(value));
     }
 
     public SimulationStatistics getSimulationStatistics() {
         long currentDay = dayOfSimulation.get();
-        long totalAnimal = statistics.computeIfAbsent("total.animals: ",k->new AtomicLong(0)).get();
-        long totalPlants  = statistics.computeIfAbsent("total.plants: ",k->new AtomicLong(0)).get();
+        long totalAnimal = statistics.computeIfAbsent("total.animals: ", k -> new AtomicLong(0)).get();
+        long totalPlants = statistics.computeIfAbsent("total.plants: ", k -> new AtomicLong(0)).get();
         Map<String, Long> detailStatistics = new HashMap<>();
         for (Map.Entry<String, AtomicLong> stringAtomicLongEntry : statistics.entrySet()) {
             if (!stringAtomicLongEntry.getKey().equals("total.animals: ")
@@ -69,7 +69,6 @@ public class StatisticsService implements IEventHandler {
         }
         return new SimulationStatistics(currentDay, totalAnimal, totalPlants, detailStatistics);
     }
-
 
 
     @Override
@@ -98,11 +97,11 @@ public class StatisticsService implements IEventHandler {
                 decrement(e.getPlant().getClass().getSimpleName() + ".current.count: ");
                 decrement("total.plants: ");
             }
-            case AnimalReproduce r ->{
+            case AnimalReproduce r -> {
                 increment(r.getAnimal().getClass().getSimpleName() + ".current.count: ");
                 increment("total.animals: ");
             }
-            case PlantReproduce r->{
+            case PlantReproduce r -> {
                 increment(r.getPlant().getClass().getSimpleName() + ".current.count: ");
                 increment("total.plants: ");
             }
