@@ -65,6 +65,11 @@ public class DefaultBiomFactory {
                         Sheep.getMaxNumberOfSheepInCell()
                 )
         );
+        List<Buffalo> buffalos = AnimalFactory.createBuffalos(
+                ThreadLocalRandom.current().nextInt(
+                        Buffalo.getMaxNumberOfBuffaloInCell()
+                )
+        );
 
         herbivores.addAll(rabbits);
         herbivores.addAll(caterpillars);
@@ -72,6 +77,7 @@ public class DefaultBiomFactory {
         herbivores.addAll(deers);
         herbivores.addAll(goats);
         herbivores.addAll(sheeps);
+        herbivores.addAll(buffalos);
         return herbivores;
     }
 

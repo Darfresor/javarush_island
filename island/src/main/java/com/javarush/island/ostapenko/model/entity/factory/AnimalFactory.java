@@ -244,6 +244,18 @@ public class AnimalFactory {
         }
         return sheepList;
     }
+    public static Buffalo createBuffalo() {
+        return new Buffalo("Буйвол", (int) (Math.random() * 90) + 1,
+                Gender.values()[(int) Math.round(Math.random())], 0.01f,
+                0.5f, DietType.HERBIVORE);
+    }
+    public static List<Buffalo> createBuffalos(int countAnimal) {
+        List<Buffalo> buffaloList = new ArrayList<>();
+        for (int i = 0; i < countAnimal; i++) {
+            buffaloList.add(createBuffalo());
+        }
+        return buffaloList;
+    }
 
 
 
