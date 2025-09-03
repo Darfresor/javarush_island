@@ -45,14 +45,9 @@ public class DefaultBiomFactory {
                         Caterpillar.getMaxNumberOfCaterpillarInCell()
                 )
         );
-        List<Mouse> mouses = AnimalFactory.createMouses(
-                ThreadLocalRandom.current().nextInt(
-                        Mouse.getMaxNumberOfMouseInCell()
-                )
-        );
+
         herbivores.addAll(rabbits);
         herbivores.addAll(caterpillars);
-        herbivores.addAll(mouses);
         return herbivores;
     }
 
@@ -84,7 +79,13 @@ public class DefaultBiomFactory {
                         Duck.getMaxNumberOfDuckInCell()
                 )
         );
+        List<Mouse> mouses = AnimalFactory.createMouses(
+                ThreadLocalRandom.current().nextInt(
+                        Mouse.getMaxNumberOfMouseInCell()
+                )
+        );
         omnivores.addAll(ducks);
+        omnivores.addAll(mouses);
         return omnivores;
     }
 

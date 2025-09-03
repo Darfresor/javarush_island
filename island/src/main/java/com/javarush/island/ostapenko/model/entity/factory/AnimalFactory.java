@@ -122,7 +122,7 @@ public class AnimalFactory {
     public static Mouse createMouse() {
         return new Mouse("Мышь", (int) (Math.random() * 90) + 1,
                 Gender.values()[(int) Math.round(Math.random())], 0.01f,
-                0.5f, DietType.HERBIVORE);
+                0.5f, DietType.OMNIVORE);
     }
     public static List<Mouse> createMouses(int countAnimal) {
         List<Mouse> mouseList = new ArrayList<>();
