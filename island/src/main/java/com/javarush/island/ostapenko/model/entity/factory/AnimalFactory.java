@@ -4,6 +4,7 @@ import com.javarush.island.ostapenko.constants.DietType;
 import com.javarush.island.ostapenko.constants.Gender;
 import com.javarush.island.ostapenko.core.exception.ApplicationException;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
+import com.javarush.island.ostapenko.model.entity.animal.omnivore.Boar;
 import com.javarush.island.ostapenko.model.entity.animal.omnivore.Mouse;
 import com.javarush.island.ostapenko.model.entity.animal.omnivore.Duck;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.Rabbit;
@@ -143,6 +144,20 @@ public class AnimalFactory {
             boaList.add(createBoa());
         }
         return boaList;
+    }
+
+
+    public static Boar createBoar() {
+        return new Boar("Кабан", (int) (Math.random() * 90) + 1,
+                Gender.values()[(int) Math.round(Math.random())], 0.01f,
+                0.5f, DietType.OMNIVORE);
+    }
+    public static List<Boar> createBoars(int countAnimal) {
+        List<Boar> boarList = new ArrayList<>();
+        for (int i = 0; i < countAnimal; i++) {
+            boarList.add(createBoar());
+        }
+        return boarList;
     }
 
 
