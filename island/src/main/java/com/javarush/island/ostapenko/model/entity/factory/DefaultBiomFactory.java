@@ -5,6 +5,7 @@ import com.javarush.island.ostapenko.model.entity.animal.herbivore.Rabbit;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.insetcs.Caterpillar;
 import com.javarush.island.ostapenko.model.entity.animal.omnivore.Duck;
 import com.javarush.island.ostapenko.model.entity.animal.predator.Wolf;
+import com.javarush.island.ostapenko.model.entity.plant.Dandelion;
 import com.javarush.island.ostapenko.model.entity.plant.Plant;
 
 import java.util.ArrayList;
@@ -75,7 +76,15 @@ public class DefaultBiomFactory {
 
 
     public static List<Plant> createAllPlants() {
-        return List.of();
+        List<Plant> plants = new ArrayList<>();
+
+        List<Dandelion> dandelions = PlantFactory.createDandelions(
+                ThreadLocalRandom.current().nextInt(
+                        Dandelion.getMaxNumberOfDandelionInCell()
+                )
+        );
+        plants.addAll(dandelions);
+        return plants;
     }
 
 }

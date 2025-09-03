@@ -14,17 +14,15 @@ public abstract class Plant extends Creature {
     protected int maxAgeInDay;
     protected float weightInKg;
     protected float maxWeightInKg;
-    protected int maxNumberOfPlantInCell;
     protected AtomicBoolean reprocudedInCurrentTurn = new AtomicBoolean(false);
 
 
-    public Plant(String speciesName, int ageInDay, int maxAgeInDay, float weightInKg, float maxWeightInKg, int maxNumberOfPlantInCell) {
+    public Plant(String speciesName, int ageInDay, int maxAgeInDay, float weightInKg, float maxWeightInKg) {
         this.speciesName = speciesName;
         this.ageInDay = ageInDay;
         this.maxAgeInDay = maxAgeInDay;
         this.weightInKg = weightInKg;
         this.maxWeightInKg = maxWeightInKg;
-        this.maxNumberOfPlantInCell = maxNumberOfPlantInCell;
 
         this.id = UUID.randomUUID();
     }
@@ -56,9 +54,8 @@ public abstract class Plant extends Creature {
         return maxWeightInKg;
     }
 
-    public int getMaxNumberOfPlantInCell() {
-        return maxNumberOfPlantInCell;
-    }
+    public abstract int getMaxNumberOfPlantInCell();
+
     public boolean markAsEaten() {
         return isBeingEaten.compareAndSet(false, true);
     }

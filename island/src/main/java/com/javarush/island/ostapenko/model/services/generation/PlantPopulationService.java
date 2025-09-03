@@ -1,11 +1,15 @@
 package com.javarush.island.ostapenko.model.services.generation;
 
 import com.javarush.island.ostapenko.constants.GenerateCreatureType;
+import com.javarush.island.ostapenko.model.entity.animal.Animal;
+import com.javarush.island.ostapenko.model.entity.factory.DefaultBiomFactory;
 import com.javarush.island.ostapenko.model.entity.plant.Plant;
 import com.javarush.island.ostapenko.model.island.Cell;
 import com.javarush.island.ostapenko.model.island.Island;
 import com.javarush.island.ostapenko.core.util.Logger;
 import com.javarush.island.ostapenko.model.entity.factory.PlantFactory;
+
+import java.util.List;
 
 public class PlantPopulationService {
     private final Island island;
@@ -70,7 +74,11 @@ public class PlantPopulationService {
     private void generateDefaultAnimal() {
         Cell cell = island.getGridCopy()[0][1];
         Plant dandelion2 = PlantFactory.createDandelion();
-        cell.addPlant(dandelion2);
+
+        List<Plant> plants = DefaultBiomFactory.createAllPlants();
+        cell.addPlants(plants);
         island.setCell(cell);
+
+
     }
 }

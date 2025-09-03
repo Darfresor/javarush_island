@@ -25,6 +25,11 @@ public class Cell {
             this.animals.putIfAbsent(animal.getId(), animal);
         }
     }
+    public void addPlants(List<Plant> plants){
+        for (Plant plant : plants) {
+            this.plants.putIfAbsent(plant.getId(), plant);
+        }
+    }
 
     public boolean  addAnimal(Animal animal){
         return animals.putIfAbsent(animal.getId(), animal) == null;
