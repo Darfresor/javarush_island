@@ -39,6 +39,7 @@ public class GenericAnimalReproduceStrategy implements AnimalReproducible {
                     Logger.logReproductionService(animal, cell, String.format("%s размножается",
                             animal.getSpeciesName()));
                     Animal child = AnimalFactory.createAnimal(animal.getClass());
+                    child.setReprocudedInCurrentTurn(true);
                     mediator.notify(new AnimalReproduce(animal, cell, island));
                     animal.setReprocudedInCurrentTurn(true);
                     cellAnimal.setReprocudedInCurrentTurn(true);
