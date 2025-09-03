@@ -19,7 +19,6 @@ public class DefaultBiomFactory {
     }
 
 
-
     public static List<Animal> createAllAnimals() {
         List<Animal> animals = new ArrayList<>();
         List<Animal> predators = createPredators();
@@ -148,9 +147,7 @@ public class DefaultBiomFactory {
         List<Plant> plants = new ArrayList<>();
 
         List<Dandelion> dandelions = PlantFactory.createDandelions(
-                ThreadLocalRandom.current().nextInt(
-                        Dandelion.getMaxNumberOfDandelionInCell()
-                )
+                Dandelion.getMaxNumberOfDandelionInCell()
         );
         plants.addAll(dandelions);
         return plants;
