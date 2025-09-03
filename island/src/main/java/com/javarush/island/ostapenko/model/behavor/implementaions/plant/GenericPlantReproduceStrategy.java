@@ -21,26 +21,28 @@ public class GenericPlantReproduceStrategy implements PlantReproducible {
 
     @Override
     public void reproduce(Plant plant, Cell cell, Island island, ModelThreadPoolManager modelThreadPoolManager) {
-        for (UUID plantId : cell.getPlantIds()) {
             int countMaxPlantInCell = countPlantInCell(plant, cell);
-            Plant cellPlant = cell.getPlantById(plantId);
-                if (countMaxPlantInCell < plant.getMaxNumberOfPlantInCell()) {
+            if(plant.getReprocudedInCurrentTurn()){
+                Logger.logReproductionService(plant, cell, String.format("%s уже размножался в этом ходу",
+                        plant.getSpeciesName()));
+            }else if (countMaxPlantInCell < plant.getMaxNumberOfPlantInCell()) {
                     Logger.logReproductionService(plant, cell, String.format("%s размножается",
                             plant.getSpeciesName()));
-                    Plant child = PlantFactory.createPlant(plant.getClass());
-                    child.setReprocudedInCurrentTurn(true);
+                    Plant child1 = PlantFactory.createPlant(plant.getClass());
+                    child1.setReprocudedInCurrentTurn(true);
                     mediator.notify(new PlantReproduce(plant, cell, island));
                     plant.setReprocudedInCurrentTurn(true);
                     Cell originalCell = island.getCell(cell.getX(), cell.getY());
                     originalCell.removePlant(plant);
                     originalCell.addPlant(plant);
-                    originalCell.addPlant(child);
+                    originalCell.addPlant(child1);
                 } else {
                     Logger.logReproductionService(plant, cell, String.format("%s не может размножаться так как его вид достиг предела",
                             plant.getSpeciesName()));
+                Logger.logReproductionService(plant, cell, String.format("%s не может размножаться так кол-во = %d",
+                        plant.getSpeciesName(),countMaxPlantInCell));
+
                 }
-                return;
-        }
     }
 
     private int countPlantInCell(Plant plant, Cell cell) {
