@@ -7,9 +7,10 @@ import com.javarush.island.ostapenko.model.entity.animal.Animal;
 public class Rabbit extends Animal {
     private static final int MAX_AGE_DAYS = 10 * 365;
     private static final float MAX_WEIGHT_IN_KG = 2;
+    private static final int MAX_CREATURE_IN_CELL = 150;
     private static final int CELL_PER_TURN = 2;
     private static final float FOOD_TO_BE_SATIATED_IN_KG =0.45f;
-    private static final int MAX_CREATURE_IN_CELL = 150;
+
 
     public Rabbit(String speciesName, int age, Gender gender, float weightInKg,
                 float satiety, DietType dietType) {

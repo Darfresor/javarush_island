@@ -1,6 +1,8 @@
 package com.javarush.island.ostapenko.model.entity.factory;
 
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
+import com.javarush.island.ostapenko.model.entity.animal.herbivore.Rabbit;
+import com.javarush.island.ostapenko.model.entity.animal.omnivore.Duck;
 import com.javarush.island.ostapenko.model.entity.animal.predator.Wolf;
 import com.javarush.island.ostapenko.model.entity.plant.Plant;
 
@@ -12,19 +14,30 @@ public class DefaultBiomFactory {
     private DefaultBiomFactory() {
     }
 
-    ;
 
 
     public static List<Animal> createAllAnimals() {
         List<Animal> animals = new ArrayList<>();
         List<Animal> predators = createPredators();
+        List<Animal> herbivores = createHerbivores();
+        List<Animal> omnivores = createOmnivores();
         animals.addAll(predators);
+        animals.addAll(herbivores);
+        animals.addAll(omnivores);
         return animals;
     }
 
 
     public static List<Animal> createHerbivores() {
-        return List.of();
+        List<Animal> predators = new ArrayList<>();
+
+        List<Rabbit> rabbits = AnimalFactory.createRabbits(
+                ThreadLocalRandom.current().nextInt(
+                        Rabbit.getMaxNumberOfAnimalInCell()
+                )
+        );
+        predators.addAll(rabbits);
+        return predators;
     }
 
 
@@ -42,7 +55,15 @@ public class DefaultBiomFactory {
 
 
     public static List<Animal> createOmnivores() {
-        return List.of();
+        List<Animal> omnivores = new ArrayList<>();
+
+        List<Duck> ducks = AnimalFactory.createDucks(
+                ThreadLocalRandom.current().nextInt(
+                        Duck.getMaxNumberOfAnimalInCell()
+                )
+        );
+        omnivores.addAll(ducks);
+        return omnivores;
     }
 
 

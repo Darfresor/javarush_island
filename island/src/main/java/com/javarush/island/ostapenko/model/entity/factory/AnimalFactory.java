@@ -84,11 +84,25 @@ public class AnimalFactory {
                 Gender.values()[(int) Math.round(Math.random())], 2f,
                 1.0f, DietType.HERBIVORE);
     }
+    public static List<Rabbit> createRabbits(int countAnimal) {
+        List<Rabbit> RabbitList = new ArrayList<>();
+        for (int i = 0; i < countAnimal; i++) {
+            RabbitList.add(createRabbit());
+        }
+        return RabbitList;
+    }
 
     public static Duck createDuck() {
         return new Duck("Утка", (int) (Math.random() * 365 * 10) + 1,
                 Gender.values()[(int) Math.round(Math.random())], 1f,
                 1.0f, DietType.OMNIVORE);
+    }
+    public static List<Duck> createDucks(int countAnimal) {
+        List<Duck> DuckList = new ArrayList<>();
+        for (int i = 0; i < countAnimal; i++) {
+            DuckList.add(createDuck());
+        }
+        return DuckList;
     }
     public static Caterpillar createCaterpillar() {
         return new Caterpillar("Гусеница", (int) (Math.random() * 90) + 1,
