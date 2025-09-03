@@ -8,6 +8,7 @@ import com.javarush.island.ostapenko.model.entity.animal.herbivore.Mouse;
 import com.javarush.island.ostapenko.model.entity.animal.omnivore.Duck;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.Rabbit;
 import com.javarush.island.ostapenko.model.entity.animal.herbivore.insetcs.Caterpillar;
+import com.javarush.island.ostapenko.model.entity.animal.predator.Boa;
 import com.javarush.island.ostapenko.model.entity.animal.predator.Wolf;
 
 import java.util.ArrayList;
@@ -129,6 +130,19 @@ public class AnimalFactory {
             mouseList.add(createMouse());
         }
         return mouseList;
+    }
+
+    public static Boa createBoa() {
+        return new Boa("Удав", (int) (Math.random() * 90) + 1,
+                Gender.values()[(int) Math.round(Math.random())], 0.01f,
+                0.5f, DietType.CARNIVORE);
+    }
+    public static List<Boa> createBoas(int countAnimal) {
+        List<Boa> boaList = new ArrayList<>();
+        for (int i = 0; i < countAnimal; i++) {
+            boaList.add(createBoa());
+        }
+        return boaList;
     }
 
 
