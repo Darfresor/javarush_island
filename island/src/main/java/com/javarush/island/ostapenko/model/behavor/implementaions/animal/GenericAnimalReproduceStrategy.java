@@ -13,6 +13,7 @@ import com.javarush.island.ostapenko.core.util.Logger;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalReproduce;
 
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class GenericAnimalReproduceStrategy implements AnimalReproducible {
     private final IMediator mediator;
@@ -44,18 +45,27 @@ public class GenericAnimalReproduceStrategy implements AnimalReproducible {
                     && cellAnimal.getGender() != animal.getGender()
                     && !cellAnimal.getReprocudedInCurrentTurn()
             ) {
-                Logger.logReproductionService(animal, cell, String.format("%s размножается",
-                        animal.getSpeciesName()));
+                if (ThreadLocalRandom.current().nextDouble() < 0.5f) {
+                    Logger.logReproductionService(animal, cell, String.format("%s размножается",
+                            animal.getSpeciesName()));
 
-                Animal child = AnimalFactory.createAnimal(animal.getClass());
-                child.setReprocudedInCurrentTurn(true);
-                animal.setReprocudedInCurrentTurn(true);
-                cellAnimal.setReprocudedInCurrentTurn(true);
+                    Animal child = AnimalFactory.createAnimal(animal.getClass());
+                    child.setReprocudedInCurrentTurn(true);
+                    animal.setReprocudedInCurrentTurn(true);
+                    cellAnimal.setReprocudedInCurrentTurn(true);
 
-                cell.addAnimal(child);
-                mediator.notify(new AnimalReproduce(animal, cell, island));
+                    cell.addAnimal(child);
+                    mediator.notify(new AnimalReproduce(animal, cell, island));
 
-                return;
+                    return;
+                } else {
+                    animal.setReprocudedInCurrentTurn(true);
+                    cellAnimal.setReprocudedInCurrentTurn(true);
+                    Logger.logReproductionService(animal, cell, String.format("%s потерпел неудачу в размножении",
+                            animal.getSpeciesName()));
+                    return;
+                }
+
             }
         }
 
