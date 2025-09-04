@@ -88,20 +88,19 @@ public class SimulationExecutionService {
     private void executeCoreThread() {
         Logger.logIslandComposition(island);
         Logger.flush();
+            modelThreadPoolManager.executeCoreTask(() -> deathService.executeDeathDueToOldAge(island));
+            modelThreadPoolManager.executeCoreTask(() -> feedingService.executeEat(island));
+            modelThreadPoolManager.executeCoreTask(() -> reproductionService.executeReproduce(island));
 
-        modelThreadPoolManager.executeCoreTask(() -> deathService.executeDeathDueToOldAge(island));
-        modelThreadPoolManager.executeCoreTask(() -> feedingService.executeEat(island));
-        modelThreadPoolManager.executeCoreTask(() -> reproductionService.executeReproduce(island));
+            modelThreadPoolManager.waitForAllTask();
+            Logger.logIslandComposition(island);
+            Logger.flush();
 
-        modelThreadPoolManager.waitForAllTask();
-        Logger.logIslandComposition(island);
-        Logger.flush();
-
-        resetService.resetIslandFlag(island);
-        statisticsService.incrementDay();
-        statisticsService.recalculateStatistics(island);
-        SimulationStatistics simulationStatistics = statisticsService.getSimulationStatistics();
-        statisticObservable.notifyStatisticListener(simulationStatistics);
+            resetService.resetIslandFlag(island);
+            statisticsService.incrementDay();
+            statisticsService.recalculateStatistics(island);
+            SimulationStatistics simulationStatistics = statisticsService.getSimulationStatistics();
+            statisticObservable.notifyStatisticListener(simulationStatistics);
     }
 
 

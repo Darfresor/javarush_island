@@ -104,6 +104,7 @@ public class GenericAnimalMoveStrategy implements Moveable {
         int countAnimal = 0;
         for (UUID animalId : cell.getAnimalIds()) {
             Animal cellAnimal = cell.getAnimalById(animalId);
+            if(cellAnimal==null) continue;
             if (cellAnimal.getClass() == animal.getClass()
             ) {
                 countAnimal++;

@@ -28,40 +28,37 @@ public class GenericAnimalReproduceStrategy implements AnimalReproducible {
                     animal.getSpeciesName()));
             return;
         }
-        for (UUID animalId : cell.getAnimalIds()) {
-            int countMaxAnimalInCell = countAnimalInCell(animal, cell);
-            Animal cellAnimal = cell.getAnimalById(animalId);
-            if(cellAnimal==null) return;
+
+        int currentCount = countAnimalInCell(animal, cell);
+        if (currentCount >= animal.getMaxNumberOfAnimalInCell()) {
+            Logger.logReproductionService(animal, cell, String.format("%s не может размножаться так как его вид достиг предела",
+                    animal.getSpeciesName()));
+            modelThreadPoolManager.executeMoveTask(() -> mediator.notify(new AnimalMoveForReproduceEvent(animal, cell, island)));
+            return;
+        }
+
+        for (Animal cellAnimal : cell.getAnimals()) {
+            if (cellAnimal == null) continue;
+
             if (cellAnimal.getClass() == animal.getClass()
                     && cellAnimal.getGender() != animal.getGender()
                     && !cellAnimal.getReprocudedInCurrentTurn()
             ) {
-                if (countMaxAnimalInCell < animal.getMaxNumberOfAnimalInCell()) {
-                    Logger.logReproductionService(animal, cell, String.format("%s размножается",
-                            animal.getSpeciesName()));
-                    Animal child = AnimalFactory.createAnimal(animal.getClass());
-                    child.setReprocudedInCurrentTurn(true);
+                Logger.logReproductionService(animal, cell, String.format("%s размножается",
+                        animal.getSpeciesName()));
 
-                    animal.setReprocudedInCurrentTurn(true);
-                    cellAnimal.setReprocudedInCurrentTurn(true);
-                    Cell originalCell = island.getCell(cell.getX(), cell.getY());
-                    synchronized (originalCell){
-                        originalCell.removeAnimal(animal);
-                        originalCell.removeAnimal(cellAnimal);
-                        originalCell.addAnimal(animal);
-                        originalCell.addAnimal(cellAnimal);
-                        originalCell.addAnimal(child);
-                    }
-                    mediator.notify(new AnimalReproduce(animal, cell, island));
+                Animal child = AnimalFactory.createAnimal(animal.getClass());
+                child.setReprocudedInCurrentTurn(true);
+                animal.setReprocudedInCurrentTurn(true);
+                cellAnimal.setReprocudedInCurrentTurn(true);
 
-                } else {
-                    Logger.logReproductionService(animal, cell, String.format("%s не может размножаться так как его вид достиг предела",
-                            animal.getSpeciesName()));
-                    modelThreadPoolManager.executeMoveTask(() -> mediator.notify(new AnimalMoveForReproduceEvent(animal, cell, island)));
-                }
+                cell.addAnimal(child);
+                mediator.notify(new AnimalReproduce(animal, cell, island));
+
                 return;
             }
         }
+
         Logger.logReproductionService(animal, cell, String.format("%s не нашел пары для размножения",
                 animal.getSpeciesName()));
         modelThreadPoolManager.executeMoveTask(() -> mediator.notify(new AnimalMoveForReproduceEvent(animal, cell, island)));
@@ -69,11 +66,12 @@ public class GenericAnimalReproduceStrategy implements AnimalReproducible {
 
     private int countAnimalInCell(Animal animal, Cell cell) {
         int countAnimal = 0;
-        for (UUID animalId : cell.getAnimalIds()) {
-            Animal cellAnimal = cell.getAnimalById(animalId);
-            if (cellAnimal.getClass() == animal.getClass()
-            ) {
+        for (Animal cellAnimal : cell.getAnimals()) {
+            if (cellAnimal != null && cellAnimal.getClass() == animal.getClass()) {
                 countAnimal++;
+                if (countAnimal >= animal.getMaxNumberOfAnimalInCell()) {
+                    break;
+                }
             }
         }
         return countAnimal;
