@@ -1,5 +1,6 @@
 package com.javarush.island.ostapenko.model.services.behavor;
 
+import com.javarush.island.ostapenko.core.util.Logger;
 import com.javarush.island.ostapenko.model.behavor.BehavorStrategyFactory;
 import com.javarush.island.ostapenko.model.behavor.interfaces.Aging;
 import com.javarush.island.ostapenko.model.behavor.interfaces.Edible;
@@ -30,16 +31,30 @@ public class DeathService implements IEventHandler {
 
 
     public <E extends Creature, T extends Creature> void executeDeathByEating(E predator, T victim, Cell cell) {
+        Logger.log("DeathService: STARTED");
+        try {
             Edible<? super E, ? super T> strategy = (Edible<? super E, ? super T>) BehavorStrategyFactory.createBeingEatenStrategy(victim);
             strategy.deathByEating(predator, victim, cell);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Logger.log("DeathService: FINISHED");
     }
 
     public void executeDeathFromStarvation(Animal animal, Cell cell, Island island) {
+        Logger.log("DeathService: STARTED");
+        try {
             Starvable strategy = BehavorStrategyFactory.createStarvableStrategy(animal);
             strategy.deathFromStarvation(animal, cell, island);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Logger.log("DeathService: FINISHED");
     }
 
     public void executeDeathDueToOldAge(Island island) {
+        Logger.log("DeathService: STARTED");
+        try {
             for (Cell[] cellVertical : island.getGridCopy()) {
                 for (Cell cellHorizontal : cellVertical) {
                     if (cellHorizontal != null) {
@@ -60,6 +75,10 @@ public class DeathService implements IEventHandler {
                     }
                 }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Logger.log("DeathService: FINISHED");
     }
 
     @Override

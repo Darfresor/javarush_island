@@ -1,6 +1,7 @@
 package com.javarush.island.ostapenko.model.services.behavor;
 
 
+import com.javarush.island.ostapenko.core.util.Logger;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
 import com.javarush.island.ostapenko.model.entity.plant.Plant;
 import com.javarush.island.ostapenko.model.island.Cell;
@@ -15,6 +16,7 @@ public class ResetService {
 
         }
     }
+
     public void resetPlantReproducedFlag(Collection<Plant> plants) {
         for (Plant plant : plants) {
             plant.setReprocudedInCurrentTurn(false);
@@ -32,19 +34,26 @@ public class ResetService {
         resetAnimalReproducedFlag(animals);
         resetAnimalMovementFlag(animals);
     }
+
     public void resetAllPlantFlag(Collection<Plant> plants) {
         resetPlantReproducedFlag(plants);
     }
 
     public void resetIslandFlag(Island island) {
-        for (Cell[] cellVertical : island.getGridCopy()) {
-            for (Cell cellHorizontal : cellVertical) {
-                if (cellHorizontal != null) {
-                    resetAllAnimalFlag(cellHorizontal.getAnimals());
-                    resetAllPlantFlag(cellHorizontal.getPlants());
+        Logger.log("ResetService: STARTED");
+        try {
+            for (Cell[] cellVertical : island.getGridCopy()) {
+                for (Cell cellHorizontal : cellVertical) {
+                    if (cellHorizontal != null) {
+                        resetAllAnimalFlag(cellHorizontal.getAnimals());
+                        resetAllPlantFlag(cellHorizontal.getPlants());
+                    }
                 }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        Logger.log("ResetService: FINISHED");
     }
 
 }

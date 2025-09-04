@@ -1,5 +1,6 @@
 package com.javarush.island.ostapenko.model.services.behavor;
 
+import com.javarush.island.ostapenko.core.util.Logger;
 import com.javarush.island.ostapenko.model.behavor.BehavorStrategyFactory;
 import com.javarush.island.ostapenko.model.behavor.interfaces.Moveable;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
@@ -23,19 +24,25 @@ public class MovementService implements IEventHandler {
     }
 
     public void executeMove(Animal animal, Cell currentCell, Island island, Event event) {
-            Animal currentaAnimal =currentCell.getAnimalById(animal.getId());
+        Logger.log("MovementService: STARTED");
+        try {
+            Animal currentaAnimal = currentCell.getAnimalById(animal.getId());
             if (currentaAnimal != null && !currentaAnimal.isBeingEaten()) {
                 Moveable strategy = BehavorStrategyFactory.createMoveStrategy(animal, mediator);
                 strategy.move(animal, currentCell, island, event, modelThreadPoolManager);
             }
-
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Logger.log("MovementService: FINISHED");
     }
+
 
     @Override
     public void handle(Event event) {
-        switch(event){
-            case AnimalMoveForEatEvent e-> executeMove(e.getAnimal(), e.getCurrentCell(), e.getIsland(), e);
-            case AnimalMoveForReproduceEvent e-> executeMove(e.getAnimal(), e.getCurrentCell(), e.getIsland(), e);
+        switch (event) {
+            case AnimalMoveForEatEvent e -> executeMove(e.getAnimal(), e.getCurrentCell(), e.getIsland(), e);
+            case AnimalMoveForReproduceEvent e -> executeMove(e.getAnimal(), e.getCurrentCell(), e.getIsland(), e);
             case null -> throw new RuntimeException("Event cannot be null");
             default -> throw new RuntimeException("Unknown event: " + event.getClass());
         }
