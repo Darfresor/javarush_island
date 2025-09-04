@@ -3,12 +3,15 @@ package com.javarush.island.ostapenko.model.island;
 import com.javarush.island.ostapenko.model.entity.animal.Animal;
 import com.javarush.island.ostapenko.model.entity.plant.Plant;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Cell {
+    private final Object lock = new Object();
+    private final Object plantModificationLock = new Object();
     private final int x;
     private final int y;
     private final ConcurrentHashMap<UUID, Animal> animals = new ConcurrentHashMap<>();
@@ -18,6 +21,24 @@ public class Cell {
     public Cell(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+    public boolean addPlantAtomically(Plant existingPlant, Plant newPlant) {
+        synchronized (plantModificationLock) {
+            if (!plants.containsKey(existingPlant.getId())) {
+                return false;
+            }
+
+            long count = plants.values().stream()
+                    .filter(p -> p.getClass() == existingPlant.getClass())
+                    .count();
+
+            if (count >= existingPlant.getMaxNumberOfPlantInCell()) {
+                return false;
+            }
+
+            return plants.putIfAbsent(newPlant.getId(), newPlant) == null;
+        }
     }
 
     public void addAnimals(List<Animal> animals){
@@ -32,10 +53,12 @@ public class Cell {
     }
 
     public boolean moveAnimalTo(Animal animal, Cell destination) {
-        if (animals.remove(animal.getId(), animal)) {
-            return destination.addAnimal(animal);
+        synchronized (lock) {
+            if (animals.remove(animal.getId(), animal)) {
+                return destination.addAnimal(animal);
+            }
+            return false;
         }
-        return false;
     }
 
     public boolean  addAnimal(Animal animal){
@@ -44,9 +67,12 @@ public class Cell {
     public boolean removeAnimal(Animal animal){
         return animals.remove(animal.getId(), animal);
     }
-
+    /*
     public Collection<Animal> getAnimals(){
         return animals.values();
+    }*/
+    public List<Animal> getAnimals() {
+        return new ArrayList<>(animals.values());
     }
     public boolean addPlant(Plant plant){
         return plants.putIfAbsent(plant.getId(), plant) == null;
@@ -63,6 +89,7 @@ public class Cell {
     public UUID[] getAnimalIds() {
         return animals.keySet().toArray(new UUID[0]);
     }
+
 
     public Animal getAnimalById(UUID id) {
         return animals.get(id);

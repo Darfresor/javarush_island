@@ -40,15 +40,19 @@ public class GenericAnimalReproduceStrategy implements AnimalReproducible {
                             animal.getSpeciesName()));
                     Animal child = AnimalFactory.createAnimal(animal.getClass());
                     child.setReprocudedInCurrentTurn(true);
-                    mediator.notify(new AnimalReproduce(animal, cell, island));
+
                     animal.setReprocudedInCurrentTurn(true);
                     cellAnimal.setReprocudedInCurrentTurn(true);
                     Cell originalCell = island.getCell(cell.getX(), cell.getY());
-                    originalCell.removeAnimal(animal);
-                    originalCell.removeAnimal(cellAnimal);
-                    originalCell.addAnimal(animal);
-                    originalCell.addAnimal(cellAnimal);
-                    originalCell.addAnimal(child);
+                    synchronized (originalCell){
+                        originalCell.removeAnimal(animal);
+                        originalCell.removeAnimal(cellAnimal);
+                        originalCell.addAnimal(animal);
+                        originalCell.addAnimal(cellAnimal);
+                        originalCell.addAnimal(child);
+                    }
+                    mediator.notify(new AnimalReproduce(animal, cell, island));
+
                 } else {
                     Logger.logReproductionService(animal, cell, String.format("%s не может размножаться так как его вид достиг предела",
                             animal.getSpeciesName()));
