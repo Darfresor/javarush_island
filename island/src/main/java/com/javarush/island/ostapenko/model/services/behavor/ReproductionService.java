@@ -55,11 +55,11 @@ public class ReproductionService implements IEventHandler {
 
     private void executeConcreteStrategy(Creature creature, Cell cell, Island island){
         switch (creature) {
-            case Animal a when !a.isBeingEaten() -> {
+            case Animal a  -> {
                 AnimalReproducible strategy = BehavorStrategyFactory.createReproduceStrategy(a, mediator);
                 strategy.reproduce(a, cell, island, modelThreadPoolManager);
             }
-            case Plant p when !p.isBeingEaten()-> {
+            case Plant p -> {
                 PlantReproducible strategy = BehavorStrategyFactory.createReproduceStrategy(p, mediator);
                 strategy.reproduce(p, cell, island, modelThreadPoolManager);
             }

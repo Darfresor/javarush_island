@@ -14,7 +14,7 @@ public class ModelThreadPoolManager {
     private final ExecutorService reproduceServiceThread;
     private final Phaser phaser;
 
-    private final ThreadLocal<Phaser> currentTaskPhaser = new ThreadLocal<>();
+    private volatile Phaser currentCyclePhaser;
 
     public ModelThreadPoolManager(Phaser phaser) {
         this.phaser = phaser;
@@ -29,9 +29,9 @@ public class ModelThreadPoolManager {
         phaser.register();
         simulationCoreThread.submit(() -> {
             try {
-                currentTaskPhaser.set(new Phaser(1));
+                currentCyclePhaser = new Phaser(1);
                 task.run();
-                currentTaskPhaser.get().arriveAndAwaitAdvance();
+                currentCyclePhaser.arriveAndAwaitAdvance();
             } finally {
                 phaser.arriveAndDeregister();
             }
@@ -39,7 +39,7 @@ public class ModelThreadPoolManager {
     }
 
     public void executeFeedTask(Runnable task) {
-        Phaser taskPhaser = getCurrentTaskPhaser();
+        Phaser taskPhaser = currentCyclePhaser;
         if (taskPhaser == null) {
             Logger.log("Ошибка: попытка выполнить задачу вне цикла");
             return;
@@ -56,7 +56,7 @@ public class ModelThreadPoolManager {
     }
 
     public void executeMoveTask(Runnable task) {
-        Phaser taskPhaser = getCurrentTaskPhaser();
+        Phaser taskPhaser = currentCyclePhaser;
         if (taskPhaser == null) {
             Logger.log("Ошибка: попытка выполнить задачу вне цикла");
             return;
@@ -73,7 +73,7 @@ public class ModelThreadPoolManager {
     }
 
     public void executeDeathTask(Runnable task) {
-        Phaser taskPhaser = getCurrentTaskPhaser();
+        Phaser taskPhaser = currentCyclePhaser;
         if (taskPhaser == null) {
             Logger.log("Ошибка: попытка выполнить задачу вне цикла");
             return;
@@ -89,7 +89,7 @@ public class ModelThreadPoolManager {
     }
 
     public void executeReproduceTask(Runnable task) {
-        Phaser taskPhaser = getCurrentTaskPhaser();
+        Phaser taskPhaser = currentCyclePhaser;
         if (taskPhaser == null) {
             Logger.log("Ошибка: попытка выполнить задачу вне цикла");
             return;
@@ -105,13 +105,6 @@ public class ModelThreadPoolManager {
         });
     }
 
-    private Phaser getCurrentTaskPhaser() {
-        Phaser phaser = currentTaskPhaser.get();
-        if (phaser == null) {
-            throw new IllegalStateException("Попытка выполнить задачу вне цикла симуляции");
-        }
-        return phaser;
-    }
 
     public void waitForAllTask() {
         phaser.arriveAndAwaitAdvance();
