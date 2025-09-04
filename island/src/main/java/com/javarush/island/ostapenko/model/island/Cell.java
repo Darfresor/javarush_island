@@ -10,8 +10,6 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Cell {
-    private final Object lock = new Object();
-    private final Object plantModificationLock = new Object();
     private final int x;
     private final int y;
     private final ConcurrentHashMap<UUID, Animal> animals = new ConcurrentHashMap<>();
@@ -24,33 +22,35 @@ public class Cell {
     }
 
     public int addPlantsAtomicallyWithCount(Plant existingPlant, List<Plant> newPlants) {
-        synchronized (plantModificationLock) {
-            if (!plants.containsKey(existingPlant.getId())) {
-                return 0;
-            }
-
-            long currentCount = plants.values().stream()
-                    .filter(p -> p.getClass() == existingPlant.getClass())
-                    .count();
-            int maxAllowed = existingPlant.getMaxNumberOfPlantInCell();
-            int availableSpace = maxAllowed - (int) currentCount;
-
-
-            if (availableSpace <= 0) {
-                return 0;
-            }
-            int plantsToAdd = Math.min(availableSpace, newPlants.size());
-
-            int actuallyAdded = 0;
-            for (int i = 0; i < plantsToAdd; i++) {
-                Plant newPlant = newPlants.get(i);
-                if (plants.putIfAbsent(newPlant.getId(), newPlant) == null) {
-                    actuallyAdded++;
-                }
-            }
-
-            return actuallyAdded;
+        if (!plants.containsKey(existingPlant.getId())) {
+            return 0;
         }
+
+        int currentCount = 0;
+        for (Plant plant : plants.values()) {
+            if (plant != null && plant.getClass() == existingPlant.getClass()) {
+                currentCount++;
+            }
+        }
+
+        int maxAllowed = existingPlant.getMaxNumberOfPlantInCell();
+        int availableSpace = maxAllowed - currentCount;
+
+        if (availableSpace <= 0) {
+            return 0;
+        }
+
+        int plantsToAdd = Math.min(availableSpace, newPlants.size());
+        int actuallyAdded = 0;
+
+        for (int i = 0; i < plantsToAdd; i++) {
+            Plant newPlant = newPlants.get(i);
+            if (plants.putIfAbsent(newPlant.getId(), newPlant) == null) {
+                actuallyAdded++;
+            }
+        }
+
+        return actuallyAdded;
     }
 
     public void addAnimals(List<Animal> animals){
@@ -65,12 +65,19 @@ public class Cell {
     }
 
     public boolean moveAnimalTo(Animal animal, Cell destination) {
-        synchronized (lock) {
-            if (animals.remove(animal.getId(), animal)) {
-                return destination.addAnimal(animal);
-            }
+        if (!animals.containsKey(animal.getId())) {
             return false;
         }
+
+        if (animals.remove(animal.getId(), animal)) {
+            boolean added = destination.animals.putIfAbsent(animal.getId(), animal) == null;
+            if (!added) {
+                animals.putIfAbsent(animal.getId(), animal);
+                return false;
+            }
+            return true;
+        }
+        return false;
     }
 
     public boolean  addAnimal(Animal animal){
