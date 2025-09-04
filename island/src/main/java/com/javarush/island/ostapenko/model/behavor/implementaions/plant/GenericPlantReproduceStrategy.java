@@ -10,6 +10,7 @@ import com.javarush.island.ostapenko.model.services.executors.ModelThreadPoolMan
 import com.javarush.island.ostapenko.model.services.mediator.IMediator;
 import com.javarush.island.ostapenko.model.services.mediator.event.PlantReproduce;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,17 +29,17 @@ public class GenericPlantReproduceStrategy implements PlantReproducible {
             return;
         }
 
-        boolean reproductionSuccessful = attemptPlantReproduction(plant, cell);
+        int countReproductionSuccessful = attemptPlantReproduction(plant, cell);
 
-        if (reproductionSuccessful) {
-            mediator.notify(new PlantReproduce(plant, cell, island));
+        if (countReproductionSuccessful>0) {
+            mediator.notify(new PlantReproduce(plant, cell, island, countReproductionSuccessful));
         }
     }
 
-    private boolean attemptPlantReproduction(Plant plant, Cell cell) {
+    private int attemptPlantReproduction(Plant plant, Cell cell) {
         synchronized (plant) {
             if (plant.getReprocudedInCurrentTurn()) {
-                return false; // Уже размножались в другом потоке
+                return 0;
             }
 
 
@@ -49,7 +50,7 @@ public class GenericPlantReproduceStrategy implements PlantReproducible {
                 Logger.logReproductionService(plant, cell,
                         String.format("%s не может размножаться. Лимит: %d, текущее: %d",
                                 plant.getSpeciesName(), plant.getMaxNumberOfPlantInCell(), currentCount));
-                return false;
+                return 0;
             }
 
             return performPlantReproduction(plant, cell);
@@ -67,22 +68,26 @@ public class GenericPlantReproduceStrategy implements PlantReproducible {
         return count;
     }
 
-    private boolean performPlantReproduction(Plant plant, Cell cell) {
-        Plant child = PlantFactory.createPlant(plant.getClass());
-        child.setReprocudedInCurrentTurn(true);
+    private int performPlantReproduction(Plant plant, Cell cell) {
+        List<Plant> children = new ArrayList<>();
+        for (int i = 0; i < 3000; i++) {
+            Plant child = PlantFactory.createPlant(plant.getClass());
+            child.setReprocudedInCurrentTurn(true);
+            children.add(child);
+        }
+
         plant.setReprocudedInCurrentTurn(true);
 
-        boolean added = cell.addPlantAtomically(plant, child);
-
-        if (added) {
+        int addedCount = cell.addPlantsAtomicallyWithCount(plant, children);
+        if (addedCount > 0) {
             Logger.logReproductionService(plant, cell,
                     String.format("%s успешно размножился", plant.getSpeciesName()));
-            return true;
+            return addedCount;
         } else {
             plant.setReprocudedInCurrentTurn(false);
             Logger.logReproductionService(plant, cell,
                     String.format("%s не смог размножиться (конфликт)", plant.getSpeciesName()));
-            return false;
+            return 0;
         }
     }
 

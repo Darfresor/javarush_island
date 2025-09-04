@@ -1,7 +1,6 @@
 package com.javarush.island.ostapenko.model.services.mediator.event;
 
 import com.javarush.island.ostapenko.constants.EventType;
-import com.javarush.island.ostapenko.model.entity.animal.Animal;
 import com.javarush.island.ostapenko.model.entity.plant.Plant;
 import com.javarush.island.ostapenko.model.island.Cell;
 import com.javarush.island.ostapenko.model.island.Island;
@@ -10,11 +9,13 @@ public class PlantReproduce implements Event{
     private final Plant plant;
     private final Cell cell;
     private final Island island;
+    private final int countReproductionSuccessful;
 
-    public PlantReproduce(Plant plant, Cell cell, Island island) {
+    public PlantReproduce(Plant plant, Cell cell, Island island, int countReproductionSuccessful) {
         this.plant = plant;
         this.cell = cell;
         this.island = island;
+        this.countReproductionSuccessful = countReproductionSuccessful;
     }
 
 
@@ -33,5 +34,9 @@ public class PlantReproduce implements Event{
 
     public Cell getCell() {
         return cell;
+    }
+
+    public long getCountReproductionSuccessful() {
+        return countReproductionSuccessful;
     }
 }

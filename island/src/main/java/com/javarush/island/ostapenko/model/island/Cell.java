@@ -23,21 +23,33 @@ public class Cell {
         this.y = y;
     }
 
-    public boolean addPlantAtomically(Plant existingPlant, Plant newPlant) {
+    public int addPlantsAtomicallyWithCount(Plant existingPlant, List<Plant> newPlants) {
         synchronized (plantModificationLock) {
             if (!plants.containsKey(existingPlant.getId())) {
-                return false;
+                return 0;
             }
 
-            long count = plants.values().stream()
+            long currentCount = plants.values().stream()
                     .filter(p -> p.getClass() == existingPlant.getClass())
                     .count();
+            int maxAllowed = existingPlant.getMaxNumberOfPlantInCell();
+            int availableSpace = maxAllowed - (int) currentCount;
 
-            if (count >= existingPlant.getMaxNumberOfPlantInCell()) {
-                return false;
+
+            if (availableSpace <= 0) {
+                return 0;
+            }
+            int plantsToAdd = Math.min(availableSpace, newPlants.size());
+
+            int actuallyAdded = 0;
+            for (int i = 0; i < plantsToAdd; i++) {
+                Plant newPlant = newPlants.get(i);
+                if (plants.putIfAbsent(newPlant.getId(), newPlant) == null) {
+                    actuallyAdded++;
+                }
             }
 
-            return plants.putIfAbsent(newPlant.getId(), newPlant) == null;
+            return actuallyAdded;
         }
     }
 
