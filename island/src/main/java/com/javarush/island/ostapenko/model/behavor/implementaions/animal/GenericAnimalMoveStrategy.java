@@ -38,22 +38,18 @@ public class GenericAnimalMoveStrategy implements Moveable {
                         String.format("%s потратил силы но не смог попасть в соседнюю клетку из-за переполнения, у него осталось ходов %d",
                                 animal.getSpeciesName(), animal.getCellsLeftInCurrentTurn()));
             } else {
-                Cell originalCurrentCell = island.getCell(currentCell.getX(), currentCell.getY());
-                originalCurrentCell.removeAnimal(animal);
-                Cell originalFutureCell = island.getCell(futureCell.getX(), futureCell.getY());
-                originalFutureCell.addAnimal(animal);
-                if(currentCell.moveAnimalTo(animal, futureCell)){
+                if (currentCell.moveAnimalTo(animal, futureCell)) {
                     Logger.logMovementService(animal, currentCell, String.format("%s передвинулся в соседнюю клетку, у него осталось ходов %d",
                             animal.getSpeciesName(), animal.getCellsLeftInCurrentTurn()));
                     switch (event) {
                         case AnimalMoveForEatEvent e ->
                                 modelThreadPoolManager.executeFeedTask(() -> mediator.notify(new AnimalEatEvent(animal, futureCell, island)));
-                        case AnimalMoveForReproduceEvent e->
+                        case AnimalMoveForReproduceEvent e ->
                                 modelThreadPoolManager.executeReproduceTask(() -> mediator.notify(new AnimalCanReproduce(animal, futureCell, island)));
                         case null -> throw new RuntimeException("Event cannot be null");
                         default -> throw new RuntimeException("Unknown event: " + event.getClass());
                     }
-                }else{
+                } else {
                     Logger.logMovementService(animal, currentCell, String.format("%s уже передвинулся в соседнюю клетку или был удален",
                             animal.getSpeciesName()));
                 }
