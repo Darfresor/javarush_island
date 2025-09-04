@@ -31,6 +31,13 @@ public class Cell {
         }
     }
 
+    public boolean moveAnimalTo(Animal animal, Cell destination) {
+        if (animals.remove(animal.getId(), animal)) {
+            return destination.addAnimal(animal);
+        }
+        return false;
+    }
+
     public boolean  addAnimal(Animal animal){
         return animals.putIfAbsent(animal.getId(), animal) == null;
     }

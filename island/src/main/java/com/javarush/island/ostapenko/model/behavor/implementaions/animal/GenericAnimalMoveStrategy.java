@@ -42,17 +42,21 @@ public class GenericAnimalMoveStrategy implements Moveable {
                 originalCurrentCell.removeAnimal(animal);
                 Cell originalFutureCell = island.getCell(futureCell.getX(), futureCell.getY());
                 originalFutureCell.addAnimal(animal);
-                Logger.logMovementService(animal, currentCell, String.format("%s передвинулся в соседнюю клетку, у него осталось ходов %d",
-                        animal.getSpeciesName(), animal.getCellsLeftInCurrentTurn()));
-                switch (event) {
-                    case AnimalMoveForEatEvent e ->
-                            modelThreadPoolManager.executeFeedTask(() -> mediator.notify(new AnimalEatEvent(animal, futureCell, island)));
-                    case AnimalMoveForReproduceEvent e->
-                            modelThreadPoolManager.executeReproduceTask(() -> mediator.notify(new AnimalCanReproduce(animal, futureCell, island)));
-                    case null -> throw new RuntimeException("Event cannot be null");
-                    default -> throw new RuntimeException("Unknown event: " + event.getClass());
+                if(currentCell.moveAnimalTo(animal, futureCell)){
+                    Logger.logMovementService(animal, currentCell, String.format("%s передвинулся в соседнюю клетку, у него осталось ходов %d",
+                            animal.getSpeciesName(), animal.getCellsLeftInCurrentTurn()));
+                    switch (event) {
+                        case AnimalMoveForEatEvent e ->
+                                modelThreadPoolManager.executeFeedTask(() -> mediator.notify(new AnimalEatEvent(animal, futureCell, island)));
+                        case AnimalMoveForReproduceEvent e->
+                                modelThreadPoolManager.executeReproduceTask(() -> mediator.notify(new AnimalCanReproduce(animal, futureCell, island)));
+                        case null -> throw new RuntimeException("Event cannot be null");
+                        default -> throw new RuntimeException("Unknown event: " + event.getClass());
+                    }
+                }else{
+                    Logger.logMovementService(animal, currentCell, String.format("%s уже передвинулся в соседнюю клетку или был удален",
+                            animal.getSpeciesName()));
                 }
-                ;
             }
         }
 
