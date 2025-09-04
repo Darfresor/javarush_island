@@ -16,13 +16,15 @@ public class IslandGenerationService {
     }
 
     public Island generate(GenerateCreatureType generateCreatureType) {
+
+
         Cell[][] grid = new Cell[numOfCellX][getNumOfCellY];
         for (int y = 0; y < getNumOfCellY; y++) {
             for (int x = 0; x < numOfCellX; x++) {
                 grid[x][y] = new Cell(x, y);
             }
         }
-        Island island = new Island(grid);
+        Island island = new Island(numOfCellX, getNumOfCellY);
         Logger.log("Генерация пустого острова завершена");
         new AnimalPopulationService(island).generate(generateCreatureType);
         new PlantPopulationService(island).generate(generateCreatureType);
