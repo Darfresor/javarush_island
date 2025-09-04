@@ -26,9 +26,21 @@ public class AnimalFactory {
 
     private static void registerCreators() {
         creators.put(Wolf.class, AnimalFactory::createWolf);
+        creators.put(Boa.class, AnimalFactory::createBoa);
+        creators.put(Fox.class, AnimalFactory::createFox);
+        creators.put(Bear.class, AnimalFactory::createBear);
+        creators.put(Eagle.class, AnimalFactory::createEagle);
+        creators.put(Horse.class, AnimalFactory::createHorse);
+        creators.put(Deer.class, AnimalFactory::createDeer);
         creators.put(Rabbit.class, AnimalFactory::createRabbit);
+        creators.put(Mouse.class, AnimalFactory::createMouse);
+        creators.put(Goat.class, AnimalFactory::createGoat);
+        creators.put(Sheep.class, AnimalFactory::createSheep);
+        creators.put(Boar.class, AnimalFactory::createBoar);
+        creators.put(Buffalo.class, AnimalFactory::createBuffalo);
         creators.put(Duck.class, AnimalFactory::createDuck);
         creators.put(Caterpillar.class, AnimalFactory::createCaterpillar);
+
     }
 
     public static <T extends Animal> T createAnimal(Class<T> animalType) {
