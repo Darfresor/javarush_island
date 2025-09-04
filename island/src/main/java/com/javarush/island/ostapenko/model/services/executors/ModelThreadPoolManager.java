@@ -13,7 +13,8 @@ public class ModelThreadPoolManager {
     private final ExecutorService deathServiceThread;
     private final ExecutorService reproduceServiceThread;
     private final Phaser phaser;
-    private Phaser currentTaskPhaser;
+
+    private final ThreadLocal<Phaser> currentTaskPhaser = new ThreadLocal<>();
 
     public ModelThreadPoolManager(Phaser phaser) {
         this.phaser = phaser;
@@ -28,9 +29,9 @@ public class ModelThreadPoolManager {
         phaser.register();
         simulationCoreThread.submit(() -> {
             try {
-                currentTaskPhaser = new Phaser(1);
+                currentTaskPhaser.set(new Phaser(1));
                 task.run();
-                currentTaskPhaser.arriveAndAwaitAdvance();
+                currentTaskPhaser.get().arriveAndAwaitAdvance();
             } finally {
                 phaser.arriveAndDeregister();
             }
@@ -38,50 +39,79 @@ public class ModelThreadPoolManager {
     }
 
     public void executeFeedTask(Runnable task) {
-        currentTaskPhaser.register();
+        Phaser taskPhaser = getCurrentTaskPhaser();
+        if (taskPhaser == null) {
+            Logger.log("Ошибка: попытка выполнить задачу вне цикла");
+            return;
+        }
+        taskPhaser.register();
+
         feedingServiceThread.submit(() -> {
             try {
                 task.run();
             } finally {
-                currentTaskPhaser.arriveAndDeregister();
+                taskPhaser.arriveAndDeregister();
             }
         });
     }
 
     public void executeMoveTask(Runnable task) {
-        currentTaskPhaser.register();
+        Phaser taskPhaser = getCurrentTaskPhaser();
+        if (taskPhaser == null) {
+            Logger.log("Ошибка: попытка выполнить задачу вне цикла");
+            return;
+        }
+
+        taskPhaser.register();
         movementServiceThread.submit(() -> {
             try {
                 task.run();
             } finally {
-                currentTaskPhaser.arriveAndDeregister();
+                taskPhaser.arriveAndDeregister();
             }
         });
     }
 
     public void executeDeathTask(Runnable task) {
-        currentTaskPhaser.register();
+        Phaser taskPhaser = getCurrentTaskPhaser();
+        if (taskPhaser == null) {
+            Logger.log("Ошибка: попытка выполнить задачу вне цикла");
+            return;
+        }
+        taskPhaser.register();
         deathServiceThread.submit(() -> {
             try {
                 task.run();
             } finally {
-                currentTaskPhaser.arriveAndDeregister();
+                taskPhaser.arriveAndDeregister();
             }
         });
     }
 
     public void executeReproduceTask(Runnable task) {
-        currentTaskPhaser.register();
+        Phaser taskPhaser = getCurrentTaskPhaser();
+        if (taskPhaser == null) {
+            Logger.log("Ошибка: попытка выполнить задачу вне цикла");
+            return;
+        }
+
+        taskPhaser.register();
         reproduceServiceThread.submit(() -> {
             try {
                 task.run();
             } finally {
-                currentTaskPhaser.arriveAndDeregister();
+                taskPhaser.arriveAndDeregister();
             }
         });
     }
 
-
+    private Phaser getCurrentTaskPhaser() {
+        Phaser phaser = currentTaskPhaser.get();
+        if (phaser == null) {
+            throw new IllegalStateException("Попытка выполнить задачу вне цикла симуляции");
+        }
+        return phaser;
+    }
 
     public void waitForAllTask() {
         phaser.arriveAndAwaitAdvance();
