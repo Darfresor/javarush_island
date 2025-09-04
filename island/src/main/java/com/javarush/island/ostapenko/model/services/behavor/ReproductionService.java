@@ -1,5 +1,6 @@
 package com.javarush.island.ostapenko.model.services.behavor;
 
+import com.javarush.island.ostapenko.core.util.Logger;
 import com.javarush.island.ostapenko.model.behavor.BehavorStrategyFactory;
 import com.javarush.island.ostapenko.model.behavor.interfaces.AnimalReproducible;
 import com.javarush.island.ostapenko.model.behavor.interfaces.PlantReproducible;
@@ -26,6 +27,8 @@ public class ReproductionService implements IEventHandler {
     }
 
     public void executeReproduce(Island island) {
+        Logger.log("ReproductionService: STARTED");
+        try {
             for (Cell[] cellVertical : island.getGridCopy()) {
                 for (Cell cellHorizontal : cellVertical) {
                     if (cellHorizontal != null) {
@@ -37,13 +40,17 @@ public class ReproductionService implements IEventHandler {
                         }
                         for (UUID plantId : cellHorizontal.getPlantIds()) {
                             Plant plant = cellHorizontal.getPlantById(plantId);
-                            if (plant != null ) {
+                            if (plant != null) {
                                 executeConcreteStrategy(plant, cellHorizontal, island);
                             }
                         }
                     }
                 }
             }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        Logger.log("ReproductionService: FINISHED");
     }
 
     private void executeConcreteStrategy(Creature creature, Cell cell, Island island){

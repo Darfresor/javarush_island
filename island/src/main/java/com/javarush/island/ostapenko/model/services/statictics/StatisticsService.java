@@ -70,6 +70,22 @@ public class StatisticsService implements IEventHandler {
         return new SimulationStatistics(currentDay, totalAnimal, totalPlants, detailStatistics);
     }
 
+    public void recalculateStatistics(Island island) {
+        // Полностью пересчитываем статистику из актуального состояния острова
+        statistics.clear();
+
+        island.getAnimalCountBySpecies().forEach((species, count) -> {
+            set(species + ".current.count: ", count);
+            add("total.animals: ", count);
+        });
+
+        island.getPlantCountBySpecies().forEach((species, count) -> {
+            set(species + ".current.count: ", count);
+            add("total.plants: ", count);
+        });
+    }
+
+
 
     @Override
     public void handle(Event event) {

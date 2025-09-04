@@ -70,7 +70,7 @@ public class GenericPlantReproduceStrategy implements PlantReproducible {
 
     private int performPlantReproduction(Plant plant, Cell cell) {
         List<Plant> children = new ArrayList<>();
-        for (int i = 0; i < 3000; i++) {
+        for (int i = 0; i < 5; i++) {
             Plant child = PlantFactory.createPlant(plant.getClass());
             child.setReprocudedInCurrentTurn(true);
             children.add(child);

@@ -31,6 +31,7 @@ public class GenericAnimalReproduceStrategy implements AnimalReproducible {
         for (UUID animalId : cell.getAnimalIds()) {
             int countMaxAnimalInCell = countAnimalInCell(animal, cell);
             Animal cellAnimal = cell.getAnimalById(animalId);
+            if(cellAnimal==null) return;
             if (cellAnimal.getClass() == animal.getClass()
                     && cellAnimal.getGender() != animal.getGender()
                     && !cellAnimal.getReprocudedInCurrentTurn()

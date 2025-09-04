@@ -99,6 +99,7 @@ public class SimulationExecutionService {
 
         resetService.resetIslandFlag(island);
         statisticsService.incrementDay();
+        statisticsService.recalculateStatistics(island);
         SimulationStatistics simulationStatistics = statisticsService.getSimulationStatistics();
         statisticObservable.notifyStatisticListener(simulationStatistics);
     }
