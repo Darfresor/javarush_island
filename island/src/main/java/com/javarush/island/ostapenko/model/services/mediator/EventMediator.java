@@ -7,7 +7,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class EventMediator implements IMediator{
-    private final Map<EventType, List<IEventHandler>> handlers = new ConcurrentHashMap<>();
+    private final Map<EventType, List<IEventHandler>> handlers = new HashMap<>();
 
     @Override
     public void subsribe(EventType type, IEventHandler handler) {
