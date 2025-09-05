@@ -47,8 +47,8 @@ public class JavaFXViewFacade implements IViewFacade {
     private void initUI() {
 
         tabPane = new TabPane();
-        // Tab gridTab = new Tab("Отображение острова", createGridPane());
-        //gridTab.setClosable(false);
+        Tab gridTab = new Tab("Отображение острова", createGridPane());
+        gridTab.setClosable(false);
 
         Tab settingPane = new Tab("Управление симуляцией острова", createSetting());
         settingPane.setClosable(false);
@@ -56,7 +56,7 @@ public class JavaFXViewFacade implements IViewFacade {
         statisticPane = new Tab("Статистика текущей симуляции", staticticInfo());
         statisticPane.setClosable(false);
 
-        tabPane.getTabs().addAll(/*gridTab,*/ settingPane, statisticPane);
+        tabPane.getTabs().addAll(gridTab,settingPane, statisticPane);
         tabPane.getSelectionModel().select(settingPane);
 
 
