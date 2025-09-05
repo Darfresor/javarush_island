@@ -1,0 +1,12 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+
+UserOfApplication->IControllerFacade: кнопка запуска симуляции
+IControllerFacade -> IViewFacade: getParametrs()
+IControllerFacade <- IViewFacade: CommandRequest
+IControllerFacade -> ICommand : CommandFactory.createCommand(..).execute()
+ICommand->IModelFacade: StartSimulationCommand.processSimulation()
+IModelFacade->SimulationExecutionService: start(parameters): new SimulationExecutionService
+SimulationExecutionService-> CycleOfSimulation : scheduler.scheduleAtFixedRate(...)
+CycleOfSimulation->CycleOfSimulation
+@enduml

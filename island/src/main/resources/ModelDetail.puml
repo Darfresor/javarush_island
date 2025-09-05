@@ -1,0 +1,69 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+interface IViewFacade {
+    +getParametrs(): CommandRequest
+    +printResult(CommandResponse commandResponse): void
+    +setupEventHandlers(Runnable runnable): void
+}
+
+interface IControllerFacade {
+ +run():void
+ +initializeCommandHandler():void
+}
+
+interface IModelFacade {
+    +processSimulation(ModelRequest request): ModelResponse
+    +stopSimulation(): void
+}
+
+interface IStatisticObservable {
+    +addStatisticListener(IStatisticObserver listener): void
+    +notifyStatisticListener(SimulationStatistics simulationStatistics): void
+}
+
+interface IStatisticObserver {
+    +onStaticticsUpdate(SimulationStatistics simulationStatistics):void
+}
+
+class ControllerFacade{
+-view: IViewFacade
+-model: IModelFacade
+        ControllerFacade(IViewFacade view, IModelFacade model): ControllerFacade
+}
+
+interface ICommand {
+ +execute(): CommandResponse
+}
+
+class JavaFXViewFacade{
++JavaFXViewFacade(Stage stage): JavaFXViewFacade
+}
+class StartSimulationCommand{
+StartSimulationCommand(IModelFacade model, SimulationSetting simulationSetting): StartSimulationCommand
+}
+class StopSimulationCommand{
+StopSimulationCommand(IModelFacade model): StopSimulationCommand
+}
+class ModelFacade{
+- statisticObservers: List~IStatisticObserver~
+- simulationExecutionService: SimulationExecutionService
+}
+class CommandFactory {
+    +createCommand(IViewFacade, IModelFacade): ICommand
+}
+
+ControllerFacade..|> IControllerFacade
+ControllerFacade..|> IStatisticObserver
+JavaFXViewFacade..|> IViewFacade
+StartSimulationCommand..|> ICommand
+StopSimulationCommand..|> ICommand
+UnsupportedCommand..|> ICommand
+ModelFacade..|> IModelFacade
+ModelFacade..|> IStatisticObservable
+ControllerFacade *-- IViewFacade
+ControllerFacade *-- IModelFacade
+
+ControllerFacade --> CommandFactory : createCommand()
+CommandFactory --> ICommand : «create»
+ICommand --> IModelFacade : «create»
+@enduml

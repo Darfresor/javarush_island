@@ -1,17 +1,46 @@
+plantuml
 @startuml
-title Activity Diagram для 3 потоков
+title Простая схема работы потоков ModelThreadPoolManager
 
-start
+participant "Главный поток" as Main
+participant "Ядро симуляции" as Core
+box "Сервисные потоки"
+participant "Питание" as Feed
+participant "Движение" as Move
+participant "Смерть" as Death
+participant "Размножение" as Reproduce
+end box
 
-fork
-  :Thread1: Генерация данных;
-fork again
-  :Thread2: Обработка данных;
-fork again
-  :Thread3: Сохранение результата;
-end fork
+== Цикл симуляции ==
 
-:Все потоки завершены;
+Main -> Core: executeCoreTask()
+Core -> Core: Создает Phaser для цикла
+Core -> Core: Запускает основную задачу
 
+Core -> Feed: executeFeedTask()
+Core -> Move: executeMoveTask()
+Core -> Death: executeDeathTask()
+Core -> Reproduce: executeReproduceTask()
+
+par Параллельное выполнение
+    Feed -> Feed: Задача питания
+    Move -> Move: Задача движения
+    Death -> Death: Задача смерти
+    Reproduce -> Reproduce: Задача размножения
+end
+
+Core -> Core: Ждет завершения всех задач
+
+== Завершение цикла ==
+
+Core -> Main: Цикл завершен
+Main -> Main: waitForAllTask()
+
+== Остановка ==
+Main -> Core: shutdown()
+Main -> Feed: shutdown()
+Main -> Move: shutdown()
+Main -> Death: shutdown()
+Main -> Reproduce: shutdown()
 
 @enduml
