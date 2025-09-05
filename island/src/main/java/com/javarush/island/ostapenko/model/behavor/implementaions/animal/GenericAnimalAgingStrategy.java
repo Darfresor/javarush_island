@@ -9,7 +9,11 @@ import com.javarush.island.ostapenko.model.services.mediator.IMediator;
 import com.javarush.island.ostapenko.model.services.mediator.event.AnimalDeathByOld;
 import com.javarush.island.ostapenko.core.util.Logger;
 
+import static com.javarush.island.ostapenko.constants.LogConstants.PATTERN_AGE_INFO;
+import static com.javarush.island.ostapenko.constants.LogConstants.PATTERN_DEAT_BY_OLD;
+
 public class GenericAnimalAgingStrategy<T extends Animal> implements Aging<T> {
+
     private final IMediator mediator;
 
     public GenericAnimalAgingStrategy(IMediator mediator) {
@@ -21,14 +25,14 @@ public class GenericAnimalAgingStrategy<T extends Animal> implements Aging<T> {
         int currentAge = animal.getAgeInDay() + 1;
         int maxAge = animal.getMaxAgeInDay();
         if (currentAge != maxAge) {
-            Logger.logDeathService(animal, cell, String.format("%s исполнилось %d дней из %d возможных",
+            Logger.logDeathService(animal, cell, String.format(PATTERN_AGE_INFO,
                     animal.getSpeciesName(), currentAge, maxAge));
         } else {
             animal.setAgeInDay(currentAge);
             Cell originalCell = island.getCell(cell.getX(), cell.getY());
             originalCell.removeAnimal(animal);
             modelThreadPoolManager.executeDeathTask(() -> mediator.notify(new AnimalDeathByOld(animal, cell, island)));
-            Logger.logDeathService(animal, cell, String.format("%s исполнилось %d дней из %d возможных и он умер от старости.",
+            Logger.logDeathService(animal, cell, String.format(PATTERN_DEAT_BY_OLD,
                     animal.getSpeciesName(), currentAge, maxAge));
         }
     }
